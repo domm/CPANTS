@@ -1,0 +1,14 @@
+[% pager = list.pager %]
+<h1>Distributions Hall of Shame: [% pager.total_entries %] Entries</h1>
+
+<p>These distributions have the least Kwalitee:</p>
+
+[% IF list %]
+[% nav_pager = INCLUDE 'widgets/pager' action='hall_of_shame' %]
+[% nav_pager %]
+
+[% INCLUDE 'highscores/distlist' %]
+
+[% nav_pager %]
+[% END %]
+

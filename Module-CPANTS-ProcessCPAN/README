@@ -1,0 +1,13 @@
+NAME
+    Module::CPANTS::ProcessCPANTS - tests all dist for Kwalitee
+
+DESCRIPTION
+    This module is part of the beta CPANTS project.
+    http://cpants.perl.org
+    
+AUTHOR
+    Thomas Klausner, <domm@cpan.org>
+
+LICENSE
+    This code is distributed under the same license as Perl.
+

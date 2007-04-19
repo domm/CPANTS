@@ -1,0 +1,12 @@
+[% IF  pager.total_entries > 40 %]
+<p>Page: 
+[% FOREACH num = [pager.first_page .. pager.last_page] %]
+        [% IF num == pager.current_page %]
+                <b>[% num %]</b> 
+        [% ELSE %]
+                <a href="[% action %]?page=[% num %]&[% params %]">[% num %]</a>
+        [% END %]
+        [% " | " UNLESS loop.last %]
+[% END %]
+</p>
+[% END %]

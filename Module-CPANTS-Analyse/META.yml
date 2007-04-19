@@ -1,0 +1,54 @@
+---
+name: Module-CPANTS-Analyse
+version: 0.69
+author:
+  - 'Thomas Klausner, <domm@cpan.org>, http://domm.zsi.at'
+  - |-
+    Based on work by Leon Brocard <acme@astray.com> and the original idea
+    proposed by Michael G. Schwern <schwern@pobox.com>
+abstract: Generate Kwalitee ratings for a distribution
+license: perl
+resources:
+  license: http://dev.perl.org/licenses/
+requires:
+  Archive::Any: 0.06
+  Archive::Tar: 1.30
+  CPAN::DistnameInfo: 0.06
+  Class::Accessor: 0.19
+  IO::Capture: 0.05
+  Module::ExtractUse: 0.18
+  Module::Pluggable: 2.96
+  Pod::Simple::Checker: 2.02
+  YAML: 0.58
+provides:
+  Module::CPANTS::Analyse:
+    file: lib/Module/CPANTS/Analyse.pm
+    version: 0.69
+  Module::CPANTS::Kwalitee:
+    file: lib/Module/CPANTS/Kwalitee.pm
+  Module::CPANTS::Kwalitee::BrokenInstaller:
+    file: lib/Module/CPANTS/Kwalitee/BrokenInstaller.pm
+  Module::CPANTS::Kwalitee::CpantsErrors:
+    file: lib/Module/CPANTS/Kwalitee/CpantsErrors.pm
+  Module::CPANTS::Kwalitee::Distname:
+    file: lib/Module/CPANTS/Kwalitee/Distname.pm
+  Module::CPANTS::Kwalitee::Files:
+    file: lib/Module/CPANTS/Kwalitee/Files.pm
+  Module::CPANTS::Kwalitee::FindModules:
+    file: lib/Module/CPANTS/Kwalitee/FindModules.pm
+  Module::CPANTS::Kwalitee::License:
+    file: lib/Module/CPANTS/Kwalitee/License.pm
+  Module::CPANTS::Kwalitee::Manifest:
+    file: lib/Module/CPANTS/Kwalitee/Manifest.pm
+  Module::CPANTS::Kwalitee::MetaYML:
+    file: lib/Module/CPANTS/Kwalitee/MetaYML.pm
+  Module::CPANTS::Kwalitee::Pod:
+    file: lib/Module/CPANTS/Kwalitee/Pod.pm
+  Module::CPANTS::Kwalitee::Prereq:
+    file: lib/Module/CPANTS/Kwalitee/Prereq.pm
+  Module::CPANTS::Kwalitee::Uses:
+    file: lib/Module/CPANTS/Kwalitee/Uses.pm
+generated_by: Module::Build version 0.2805
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.2.html
+  version: 1.2

@@ -1,0 +1,7 @@
+<h1>Indicator: [% indicator.name %]</h1>
+
+<p>Problem: [% indicator.error %]</p>
+
+<p>Remedy: [% indicator.remedy %]</p>
+
+<p><a href="/dist/shortcoming?metric=[% indicator.name %]">Show distributions with this shortcoming</a></p>

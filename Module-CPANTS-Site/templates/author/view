@@ -1,0 +1,78 @@
+[% IF item %]
+[% IF item.pauseid == 'BOOK' %]
+<script language="JavaScript">
+document.getElementById('top').style.backgroundColor="#ff66cc";
+</script>
+[% ELSIF item.pauseid == 'LBROCARD' %]
+<script language="JavaScript">
+document.getElementById('top').style.backgroundColor="#ff7300";
+</script>
+[% END %]
+
+<h1>Author: [% item.name %] ([% item.pauseid %])</h1>
+
+<table id='info'>
+<tr>
+    <td><b>Email</b></td><td>[% item.email %]</td>
+</tr>
+<tr>
+    <td><b>Average Kwalitee</b></td>
+    <td>[% item.average_kwalitee %]</td>
+</tr>
+<tr>
+    <td><b>Liga</b></td>
+    <td><a href='/highscores/[% item.num_dists >=5 ? "many'>5 or more" : "few'>less than 5" %]</a></td>
+</tr>
+<tr>
+    <td><b>Rank</td>
+    <td>[% item.rank %]</td>
+</tr>
+</table>
+
+<h4>[% item.num_dists %] Dist[% "s" UNLESS item.num_dists == 1 %]:</h4>
+
+<table id='grid'>
+<tr><td>Dist</td><td>Kwalitee</td>
+
+[% FOREACH kw IN mck.core_indicator_names.sort %]
+<td style="text"><a title="[% kw %]" href="/kwalitee/shortcoming?name=[% kw %]">#</a></td>
+[% END %]
+<td></td>
+[% FOREACH kw IN mck.optional_indicator_names.sort %]
+<td style="text"><a title="[% kw %]" href="/kwalitee/shortcoming?name=[% kw %]">#</a></td>
+[% END %]
+
+
+</tr>
+[% FOREACH d IN item.dists( {}, { 'order_by' => 'dist' } ) %]
+[% kwal = d.kwalitee %]
+<tr>
+<td><a href="/dist/[% d.dist %]">[% d.dist %]</td>
+<td align="center">[% kwal.kwalitee %]</td>
+
+[% FOREACH kw IN mck.core_indicator_names.sort %]
+<td class="[% kwal.$kw ? 'ok' : 'not_ok' %]" align="center" title="[% kw %]">[% kwal.$kw ? '+' : '-' %]</td>
+[% END %]
+<td></td>
+[% FOREACH kw IN mck.optional_indicator_names.sort %]
+<td class="[% kwal.$kw ? 'ok' : 'opt_not_ok' %]" align="center" title="[% kw %]">[% kwal.$kw ? '+' : '~' %]</td>
+[% END %]
+
+</tr>
+[% END %]
+</table>
+
+<p>
+<img src="/static/graphs/[% item.pauseid %]_dists.png" alt="Number of Dists for [% item.pauseid %]">
+</p>
+
+<p>
+<img src="/static/graphs/[% item.pauseid %]_kw.png" alt="Average Kwalitee for [%
+item.pauseid %]">
+
+[% ELSE %]
+<p>Invalid PAUSE ID specified.</p>
+[% END %]
+
+
+

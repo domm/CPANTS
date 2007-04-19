@@ -1,0 +1,21 @@
+<h1>Search authors</h1>
+[% pager = list.pager %]
+<form action="/author/search">
+<p>Please enter a PAUSE ID: <input type="text" name="pauseid" size="10" value=[% term %]> <input type="submit" value="search"></p>
+
+[% IF list %]
+<p><b>[% pager.total_entries %] Author[% 's' IF pager.total_entries > 1 %] matching  '<code>[% term %]</code>':</b> </p>
+
+[% nav_pager = INCLUDE 'widgets/pager' action='search' params="pauseid=" _ term %]
+[% nav_pager %]
+
+<ul>
+[% WHILE (a = list.next) %]
+<li><a href="/author/[% a.pauseid %]">[% a.pauseid %]</a> ([% a.name %])
+[% END%]
+</ul>
+
+[% nav_pager %]
+
+[% END %]
+

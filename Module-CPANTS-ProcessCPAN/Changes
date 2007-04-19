@@ -1,0 +1,32 @@
+#-----------------------------------------------------------------
+# Changes for Module::CPANTS::ProcessCPAN
+# $Rev$
+# $Date$ 
+#-----------------------------------------------------------------
+
+0.63    2006-09-13
+    - added new metrics to DB Classes (has_license, has_example,
+      buildtool_not_executable, manifest_matches_dist
+
+      
+0.62    2006-07-31
+    - added t/99_pod.t test (I'm not in the mood right now to write docs
+      so t/99_pod_coverage.t has to wait a bit...)
+    - adapted DBIx::Class calls to 0.07000
+    - delete dist from DB if they are no longer on CPAN
+      thanks to BDFOY and TINITA for pointing it out.
+
+
+0.61    2006-07-20
+    - added MCK::BrokenInstaller
+    - removed bugs in author hist
+    - added --force to analyse_cpan.pl
+    - used Getopt::Long in analyse_cpan.pl
+    - changed kwalitee to a percentage, added abs_kw
+    - added distinction between normal and optional metrics
+    - changed caluclation of rank in CPANTS game
+    
+
+0.60    2006-05-18
+    - first release
+

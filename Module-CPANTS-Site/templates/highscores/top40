@@ -1,0 +1,44 @@
+[% titles = {
+   many=>"Authors with five or more dists on CPAN",
+   few=>"Authors with less than five dists on CPAN"
+} %]
+[% pager = list.pager %]
+
+<h1>[% pager.total_entries %] [% titles.$top40type %]</h1>
+
+<p>This list is in no way meant as a list of 'best' or 'good' Perl programmers. It is a list of good CPANTS players. Also note that <b>optional metrics</b> (like <code>is_prereq</code>) are <b>not</b> considered in this statistic.</p>
+</p>
+
+<table cellspacing=5>
+<tr><th>Rank</th><th>Pause-ID</th><th>Name</th><th>Average Kwalitee</th><th>Number of dists</th></tr>
+[% rank %] 
+[% WHILE (a = list.next ) %]
+<tr><td align="center">
+
+[% IF rank != a.rank %][% a.rank %][% rank = a.rank %][% ELSE %].[% END %]</td><td><a href="/author/[% a.pauseid %]">[% a.pauseid %]</td><td>[% a.name %]</td><td>
+
+[% IF ! a.prev_av_kw %]
+<img src="/static/new.png" ALT="NEW" title="New entry" width="8" height="8">
+[% ELSIF a.average_kwalitee > a.prev_av_kw %]
+<img src="/static/up.png" ALT="UP" title="UP from [% a.prev_av_kw %] (Rank: [% a.prev_rank %])" width="8" height="8">
+[% ELSIF a.average_kwalitee < a.prev_av_kw %]
+<img src="/static/down.png" ALT="DOWN" title="DOWN from [% a.prev_av_kw %] (Rank: [% a.prev_rank %])" width="8" height="8">
+[% ELSIF a.average_kwalitee == a.prev_av_kw %]
+<img src="/static/same.png" ALT="no change" title="no change" width="8" height="8">
+[% END %]
+
+[% a.average_kwalitee | format('%.5f') %]
+</td><td align="center">[% a.num_dists %]</td></tr>
+[% END%]
+</table>
+
+[% IF pager.previous_page %]
+<a href="[% top40type %]?page=[% pager.previous_page %]">
+prev [% pager.entries_per_page %]</a> |
+[% END %]
+[% IF pager.next_page %]
+<a href="[% top40type %]?page=[% pager.next_page %]">
+next [% pager.entries_per_page %]</a>
+[% END %]
+
+

@@ -1,0 +1,86 @@
+<p>CPANTS is an acronym for <b>CPAN</b> <b>T</b>esting <b>S</b>ervice. The goals of the CPANTS project are to provide some sort of quality measure (called <b>"<a href="/kwalitee.html">Kwalitee</a>"</b>) and lots of metadata for all distributions on CPAN.</p>
+
+<p>Please take all the information presented here with a grain of salt. The methods used to test the distributions are a bit flakey, and some of the Kwalitee indicators are still subjects of discussions (which should happen on the <a href="http://lists.cpan.org/showlist.cgi?name=perl-qa">perl-qa</a> list).</p>
+
+<h3>Why don't you...</h3>
+
+<ul>
+<li>Search for <a href="/author/search">authors</a> and <a href="/dist/search">distributions</a>.
+<li>Take a look at the various <a href="graphs.html">reports</a> generated at this site.
+<li>Admire the top gamers of the <a href="highscores">CPANTS game</a>. 
+<li>Download the latest CPANTS data as a SQLite DB form here
+<blockquote><a href='/static/sqlite/cpants_all.db.gz'>cpants_all.db.gz</a>
+</blockquote>
+</ul>
+
+<h3>News</h3>
+
+<dt>2007-04-02: Old metrics<dt>
+<dd>Now that April 1sth is over, we're back to the regular metrics...</dd>
+
+
+<dt>2007-04-01: New metrics</dt>
+<dd>Thanks to Catalyst & DBIx::Class I finished my <a
+href="http://oe1.orf.at">$big_project</a> a bit early. I
+used this time to implement a few long-pending metrics:
+
+<ul>
+<li>docs_make_sense
+<li>mentions_kwalitee
+<li>uses_version_control
+<li>reuses_code
+<li>uses_recursion
+<li>correct_speling
+<li>nice_code_layout
+</ul>
+
+You can find a more detailed description <a
+href="/kwalitee_april_1st_2007.html">here</a><br><br>
+Happy gaming!</dd>
+
+<dt>2007-03-10: New server! SQLite Dump!</dt>
+<dd>CPANTS now lives on a <b>new server provided by <a
+href="http://hexten.net">hexten.net</a></b>. Thanks!!<br>
+Starting tomorrow, there will again be daily updates, so you can now continue
+playing the CPANTS game and raising your kwalitee (and hopefully making CPAN a
+nicer place in the process...)<br><br>
+
+Thanks to the nice <a
+href="http://search.cpan.org/dist/DBD-PgLite/">DBD::PgLite::MirrorPgToSQLite</a>
+there is now a <b>daily SQLite dump of the CPANTS database</b> available. I hope you
+won't get blind from looking at the schema...<br>
+You can get the latest dump from this URL: <a
+href="http://cpants.perl.org/static/sqlite/cpants_all.db.gz">http://cpants.perl.org/static/sqlite/cpants_all.db.gz</a>.<br>
+Have fun playing with the data!</dd>
+<dl>
+<dt>2006-11-04: metayml_conforms_spec_1_0 and _current</dt>
+<dd>After some discussions on perl-qa I split metayml_conforms_spec into metayml_conforms_spec_1_0 and
+metayml_conforms_spec_current (which is an optional metric).</dd>
+
+</dl>
+
+<a href="/news.html">Not news anymore...</a>
+
+<h3>Limitations</h3>
+
+<p>CPANTS is not about running the test suite that most distributions ship with. This is done by the <a href="http://testers.cpan.org/">CPAN testers</a>.</p>
+
+<p>One big limitation of CPANTS is that it cannot actually execute any code: The module might not run on the machine doing the testing, it might have third-party dependencies, etc. CPANTS can only gather data and Kwalitee by looking at files, source code etc. This means that there are a lot of bugs in the Kwalitee-calculating code. Don't take everything here too serious! In a future version it might be possible to collect metadata from various distributed testers who run the tests on different platforms and settings (as CPAN testers do).</p>
+
+
+<h3>More information</h3>
+
+<p>Various talks I held on CPANTS at various Conferences / Workshops:</p>
+
+<ul>
+<li><a href="http://domm.plix.at/talks/2006_birmingham_cpants">YAPC::Europe 2006, Birmingham</a>
+<li><a href="http://domm.zsi.at/talks/2005_braga_cpants">YAPC::Europe 2005, Braga</a>
+<li><a href="http://domm.zsi.at/talks/2005_brussels_cpants">FOSDEM 2005, Brussels</a>
+<li><a href="http://domm.zsi.at/talks/2004_belfast_cpants">YAPC::Europe 2004, Belfast</a>
+<li><a href="http://domm.zsi.at/talks/2004_budapest_cpants">2nd Hungarian Perl Workshop 2004, Budapest</a>
+<li><a href="http://domm.zsi.at/talks/2003_vienna_cpants">Vienna.pm Techmeet 2003, Vienna</a>
+</ul>
+
+<p><a href="http://schwern.org/~schwern/talks/CPANTS/">Slides</a> of the talk given by Michael G. Schwern at YAPC::Europe 2001 in Amsterdam.</p>
+
+<p>Please report bugs etc via <a href="https://rt.cpan.org/NoAuth/Bugs.html?Dist=Module-CPANTS-Analyse">rt.perl.org</a></p>

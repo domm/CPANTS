@@ -1,0 +1,47 @@
+#-----------------------------------------------------------------
+# TODO Module-CPANTS-Analyse
+# $Rev: 409 $
+# $Date: 2006-09-14 19:42:31 +0200 (Thu, 14 Sep 2006) $ 
+#-----------------------------------------------------------------
+
+
+#-----------------------------------------------------------------
+# BUGS
+#-----------------------------------------------------------------
+
+Robert 'phaylon' Sedlacek <phaylon@dunkelheit.at>
+  2. Bei einer $VERSION = '0.01_02'; bekomme ich von cpants_lint.pl die           
+  Meldung, dass 'has_proper_version' nicht bestanden wird.     
+
+http://rt.cpan.org/Ticket/Display.html?id=21370
+  Win32 test fail:  analyse.t, analyse_afs.t, calc.t, testfile.t
+
+#-----------------------------------------------------------------
+# New Metrics
+#-----------------------------------------------------------------
+
+- no_boilerplate
+- has_valid_filenames
+- declares_dependencies
+- no_open_bugs
+
+- Signature checking ?
+- has_rating ?
+- relation of subs to lines of code ?
+
+- change has_license to has_license_in_yaml,
+  put the actual name of the license (perl, etc.) in the 
+  database for later retreival
+- has_license_in_source
+    Module::License::Report  integration
+    (though I am not sure if that should mean the main .pm
+        file only or all the files or what)
+- licenses_are_consistent
+
+#-----------------------------------------------------------------
+# Other Stuff 
+#-----------------------------------------------------------------
+
+- include more dists in test (for better test coverage)
+
+

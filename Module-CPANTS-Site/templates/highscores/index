@@ -1,0 +1,19 @@
+<h1>The CPANTS mulitplayer online game</h1>
+
+<p>Here you find some 'highscores' or Top-20ies of module authores and distributions. Please note that Kwalitee is still a very ALPHA concept and might be quite buggy. And some of the metrics might make no sense. Those lists are in no way meant as a list of 'best' or 'good' Perl programmers. They are rather comperable to XP on <a href="http://www.perlmonks.org">perlmonks</a>).</p>
+
+<p>They are lists of good CPANTS players ... it's a game, after all!</p>
+
+<p>Also note that <b>optional metrics</b> (like <code>is_prereq</code>) are <b>not</b> considered in this statistics.</p>
+
+<!--<p>Currently data is created in the night from Saturday to Sunday (CET). You should upload your improved distributions on Friday at the latests, as it may take the CPAN-mirror I'm using some time to catch up.</p>
+-->
+
+<ul>
+<li><a href="many">Authors with 5 or more dists</a>
+<li><a href="few">Authors with less than 5 dists</a>
+<li><a href="hall_of_fame">Hall of Fame - Best Distributions</a>
+<li><a href="hall_of_shame">Hall of Shame - Worst Distributions</a>
+</ul>
+
+

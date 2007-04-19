@@ -1,0 +1,11 @@
+---
+name: Module::CPANTS::Site
+View::TT:
+  WRAPPER: wrapper
+  INCLUDE_PATH: __HOME__/templates
+Model::DBIC:
+  schema_class: Module::CPANTS::DB
+  connect_info:
+    - dbi:Pg:dbname=cpants
+    - username
+    - password

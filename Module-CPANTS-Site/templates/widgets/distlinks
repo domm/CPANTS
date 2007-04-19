@@ -1,0 +1,13 @@
+[% IF dist %]
+<div class='distlinks'>
+[% distname = dist.dist %]
+[% distname %]:  
+<a href="http://search.cpan.org/dist/[% distname %]">search.cpan.org</a> |
+<a href="http://cpan.uwinnipeg.ca/dist/[% distname %]">Kobes search</a> |
+<a href="http://rt.cpan.org/NoAuth/Bugs.html?Dist=[% distname %]">rt.cpan.org</a> | 
+<a href="http://cpanratings.perl.org/d/[% distname %]">ratings</a> |
+<a href="http://testers.cpan.org/show/[% distname %].html">cpantesters</a> |
+<a href="http://www.cpanforum.com/dist/[% distname %]">CPAN::Forum</a> |
+<a href="http://search.cpan.org/src/[% dist.author.pauseid %]/[% dist.vname %]">browse source</a>
+</div>
+[% END %]

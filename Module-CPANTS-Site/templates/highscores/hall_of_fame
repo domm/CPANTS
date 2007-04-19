@@ -1,0 +1,14 @@
+[% pager = list.pager %]
+<h1>Hall of Fame: [% pager.total_entries %] Entries</h1>
+
+<p>These distributions have the most Kwalitee:</p>
+
+[% IF list %]
+[% nav_pager = INCLUDE 'widgets/pager' action='hall_of_fame' %]
+[% nav_pager %]
+
+[% INCLUDE 'highscores/distlist' %]
+
+[% nav_pager %]
+[% END %]
+

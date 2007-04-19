@@ -1,0 +1,18 @@
+[% pager = list.pager %]
+
+<h1>[% pager.total_entries %] Distribution[%  's' IF pager.total_entries > 1 %] failing '[% c.req.param('metric') %]'</h1>
+
+[% IF list %]
+[% nav_pager = INCLUDE 'widgets/pager' action='shortcoming' params="metric=" _ c.req.param('metric') %]
+[% nav_pager %]
+
+<ul>
+[% WHILE (d = list.next) %]
+<li><a href="/dist/[% d.dist %]">[% d.dist %]</a>
+[% END %]
+</ul>
+
+[% nav_pager %]
+[% END %]
+
+

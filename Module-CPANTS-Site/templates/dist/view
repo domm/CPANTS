@@ -1,0 +1,101 @@
+<h1>[% dist.dist %]</h1>
+
+<table>
+<tr><td valign="top">
+<table>
+<tr>
+<td><b>Author:</b></td>
+<td><a href="/author/[% dist.author.pauseid %]">[% dist.author.name %]</a></td>
+</tr>
+<tr>
+<td><b>Kwalitee:</b></td>
+<td>[% dist.kwalitee.kwalitee %]% - <a href="/kwalitee/[% dist.dist %]">details</a> </td>
+</tr>
+[% IF mck.total_kwalitee == dist.kwalitee.abs_kw %]
+<tr><td colspan=2>This distribution passes all CPANTS tests. Yay!</td></tr>
+[% ELSE %]
+[% kwal = dist.kwalitee %]
+<tr><td colspan=2><b>How to raise Kwalitee:</b><br>
+<ul>
+[% FOREACH kw IN kwal.columns.sort %]
+[% NEXT IF kwal.$kw %]
+[% name = kwalitee_hash.$kw.name %]
+[% NEXT UNLESS name %]
+<li>[% kwalitee_hash.$kw.remedy %] (<a href="/kwalitee/shortcoming?name=[% name %]">[% name %]</a>)</li>
+[% END %]
+</ul></td>
+
+</tr>
+[% END %]
+<tr><td>&nbsp;</td></tr>
+<tr>
+<td colspan="2" class="grey"><b>Metadata</b></td>
+</tr>
+[% FOREACH c IN dist.columns.sort %]
+[% NEXT IF c == 'author' || c == 'kwalitee' || c == 'id' %]
+<tr>
+    <td valign="top"><b>[% c %]</b></td>
+    <td valign="top">
+[% IF c.match('_list$') %]
+    [% dist.$c.replace(';','<br>') %]
+[% ELSE %]
+    [% dist.$c %]
+[% END %]
+    </td>
+</tr>
+[% END %]
+</table>
+</td>
+<td valign=top>
+<table>
+<tr>
+<td class="grey"><b>Listed Prerequisites</b></td><td class="grey">Version</td></tr>
+</tr>
+[% IF prereqs %]
+[% WHILE (prereq = prereqs.next) %]
+<tr><td><a href="/dist/[% prereq.requires.replace('::','-') %]">[% prereq.requires %]</a></td><td>[% prereq.version %]</td><tr>
+[% END %]
+[% ELSE %]
+<tr><td colspan=2>none listed.</td></tr>
+[% END %]
+
+<tr>
+<td class="grey"><b>Modules/pragmas/etc <code>use</code>'d by [% dist.dist %]</b></td><td class="grey">cnt</td>
+</tr>
+<tr><td><b>in code:</b></td></tr>
+[% FOREACH used IN dist.uses_in_code %]
+<tr><td>[% IF used.in_dist %]<a href="/dist/[% used.in_dist.dist %]">[% used.module %]</a>[% ELSE %][% used.module %][% END %]</td><td>[% used.in_code %]</td></tr>
+[% END %]
+<tr><td><b>in tests:</b></td></tr>
+[% FOREACH used IN dist.uses_in_tests %]
+<tr><td>[% IF used.in_dist %]<a href="/dist/[% used.in_dist.dist %]">[% used.module %]</a>[% ELSE %][% used.module %][% END %]
+</td><td>[% used.in_tests %]</td></tr>
+[% END %]
+
+
+<tr>
+<td class="grey"><b>Modules provided by [% dist.dist %]</b></td>
+</tr>
+<tr><td>
+[% FOREACH module IN dist.modules %]
+[% module.module %]<br>
+[% END %]
+</td></tr>
+
+<tr>
+<td class="grey"><b>Other Dists requiring [% dist.dist %]</b></td><td class='grey'>PauseID</td>
+</tr>
+[% IF requiring %]
+[% WHILE (od = requiring.next) %]
+<tr><td><a href="/dist/[% od.dist.dist %]">[% od.dist.dist %]</a></td><td><a href="/author/[% od.dist.author.pauseid %]">[% od.dist.author.pauseid %]</a></td></tr>
+[% END %]
+[% ELSE %]
+<tr><td>none found.</td></tr>
+[% END %]
+</td></tr>
+</table>
+</td></tr>
+</table>
+
+
+

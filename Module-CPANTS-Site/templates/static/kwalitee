@@ -1,0 +1,43 @@
+<h1>Kwalitee</h1>
+
+<h3>What's "Kwalitee", anyway?</h3>
+
+<p>I'll hand the micropohone over to Schwern (or rather: I'll copy'n'paste from his <a href="http://schwern.org/~schwern/talks/CPANTS/">old CPANTS slides</a>):
+
+<pre>
+  What is a good module? That's hard to say.
+  
+  What is good code? That's also hard to say.
+  
+  "Quality" is not a well-defined term in computing ... and especially not Perl.
+
+  One man's Thing of Beauty is another's man's Evil Hack
+  
+  Since we can't define quality, how do we write a program to assure it?
+</pre>
+  
+<p>Schwern decided to cleverly avoid this problem by not testing for quality but for Kwalitee: It looks like quality, it sounds like quality, but it's not quite quality.</p>
+
+<h3>Current Kwalitee Indicators</h3>
+
+<p><b>Available Kwalitee: [% mck.available_kwalitee %] (including optional metrics: [% mck.total_kwalitee %])</b></p>
+
+<p>If you want to discuss Kwalitee indicators or suggest new ones, please use the <a href="http://lists.cpan.org/showlist.cgi?name=perl-qa">perl-qa</a> list.</p>
+
+<dl>
+[% FOREACH k IN mck.get_indicators %]
+<dt>[% k.name %] [% k.fake %] [% IF k.is_extra %](optional)[% END%]
+ </dt>
+<dd>
+[% IF k.is_extra %]This metric is optional.<br>[% END%]
+<b>Shortcoming:</b> [% k.error %]<br>
+<b>Remedy:</b> [% k.remedy %]<br>
+<b>Defined in:</b> [% k.defined_in %]<br>
+<a href="/dist/shortcoming?metric=[% k.name %]">Show failing dists</a>
+</dd>
+
+[% END%]
+</dl>
+
+
+

@@ -1,0 +1,83 @@
+<h2>News</h2>
+
+<dl>
+
+<dt>2007-04-02: Old metrics<dt>
+<dd>Now that April 1sth is over, we're back to the regular metrics...</dd>
+
+
+<dt>2007-04-01: New metrics</dt>
+<dd>Thanks to Catalyst & DBIx::Class I finished my <a
+href="http://oe1.orf.at">$big_project</a> a bit early. I
+used this time to implement a few long-pending metrics:
+
+<ul>
+<li>docs_make_sense
+<li>mentions_kwalitee
+<li>uses_version_control
+<li>reuses_code
+<li>uses_recursion
+<li>correct_speling
+<li>nice_code_layout
+</ul>
+
+You can find a more detailed description <a
+href="/kwalitee_april_1st_2007.html">here</a><br><br>
+Happy gaming!</dd>
+
+<dt>2007-03-10: New server! SQLite Dump!</dt>
+<dd>CPANTS now lives on a <b>new server provided by <a
+href="http://hexten.net">hexten.net</a></b>. Thanks!!<br>
+Starting tomorrow, there will again be daily updates, so you can now continue
+playing the CPANTS game and raising your kwalitee (and hopefully making CPAN a
+nicer place in the process...)<br><br>
+
+Thanks to the nice <a
+href="http://search.cpan.org/dist/DBD-PgLite/">DBD::PgLite::MirrorPgToSQLite</a>
+there is now a daily SQLite dump of the CPANTS database available. I hope you
+won't get blind from looking at the schema...<br>
+You can get the latest dump from this URL: <a
+href="http://cpants.perl.org/static/sqlite/cpants_all.db.gz">http://cpants.perl.org/static/sqlite/cpants_all.db.gz</a>.<br>
+Have fun playing with the data!
+</dd>
+
+<dt>2006-11-04: metayml_conforms_spec_1_0 and _current</dt>
+<dd>After some discussions on perl-qa I split metayml_conforms_spec into metayml_conforms_spec_1_0 and
+metayml_conforms_spec_current (which is an optional metric).</dd>
+
+<dt>2006-10-30: More Graphs & has_license changes</dt>
+<dd>There are now graphs showing the kwalitee of a distribution and the
+average kwalitee and number of dists of an author over time. They are located
+at the bottom of the authors page and the kwalitee detail page of a dist. I
+also reworked the has_license metric a bit. It has been replaced by
+has_humanreadable_license, metayml_has_license and the new
+metayml_conforms_spec.</dd>
+
+<dt>2006-09-28: Cronjob</dt>
+<dd>I finally managed to set up a working cronjob for CPANTS. You can expect new data each day around 02:45 EDT. Only newly uploaded dists will be checked daily. I will only do a full run (which takes some hours) if there's a change to the metrics.</dd>
+
+<dt>2006-09-26: Revamped Website</dt>
+<dd>Thanks to the incredibly helpful <a href="http://search.cpan.org/~bricas/">Brian Cassidy</a> the site is now working much better than before. He submitted several patches that cleaned up my horrible Catalyst code in Module::CPANTS::Site.</dd>
+
+<dt>2006-09-13: has_license</dt>
+<dd>A new metric, implemented by <a href="http://www.szabgab.com/">Gabor Szabo</a>, has_license checks if there is a license specified in META.yml. This metric will be soon enhances to also look in other places for a license.</dt>
+
+<dt>2006-09-05: New metrics</dt>
+<dd>During YAPC::Europe 2007 I did a small CPANTS hackathon, which resulted in several new metrics: manifest_matches_dist, buildtool_not_executable and has_exampel (which is an optional metric).<br>
+I also changed the authors page a bit so: optional metrics are now clearly marked as such.
+</dd>
+
+<dt>2006-07-19</dt>
+<dd>
+Added News section<br>
+New metric: <code>has_working_buildtool</code>. Thanks to <a href="http://steffen-mueller.net">Steffen Müller</a> for suggesting & implementing it!
+Re-indexed the whole of CPAN.
+</dd>
+<dt>2006-07-18</dt>
+<dd>
+Added support for optional metrics (eg <code>is_prereq</code>).<br>
+Changed Kwalitee from absolut to relative values (i.e. percentages)<br>
+Changed ranking in CPANTS game to only use non-optional metrics. Now releasing a new distribution (which fulfills all core metrics) won't lower owns rank.
+</dd>
+</dl>
+

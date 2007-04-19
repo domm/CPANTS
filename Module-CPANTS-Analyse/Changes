@@ -1,0 +1,104 @@
+#-----------------------------------------------------------------
+# Changes for Module::CPANTS::Analyse
+# $Rev: 433 $
+# $Date: 2006-11-04 09:02:03 +0100 (Sat, 04 Nov 2006) $ 
+#-----------------------------------------------------------------
+
+0.69    2006-11-04
+    - splited up metayml_conforms_spec to metayml_conforms_spec_1_0
+      and metayml_conforms_spec_1_2 (which is optional)
+    - added metayml_error and docu pointers to it.
+
+
+0.68    2006-10-28
+    - fixed bug in MCK::FindModules reported by JDHEDDEN in RT #22081
+      (the module name of modules living in the top-level namespace (eg
+      'threads/pm') was not guessed correctly
+    - use META.yml 'provides' (if it exists) instead of guessing module names in
+      MCK::FindModules
+    - modifed changelog-regex in MCK::Files as suggested by CDOLAN in 
+      RT #21999
+    - added MCK::License
+    - moved license checking to MCK::License
+    - added checks for LICENSE file and LICENSE POD section
+    - moved meta_yml parsing to MCK::MetaYML
+    - changed has_license error text after Schwern (and Andreas Koenig) suggested
+      that MakeMaker now suppor ts a license field
+
+
+0.67    2006-09-13
+    - cpants_lint.pl now handles reporting of optional metrics
+      better.
+    - added t/99_critic.t (Gabor Szabo)
+    - some code cleanups as reported by Test::Perl::Critic
+      (Gabor Szabo)
+    - new metric: has_license; MCK::MetaYML (Gabor Szabo)
+    - MCK::Pod now reports the error messages returned by
+      Pod::Simple::Checker (suggested by Gabor Szabo)
+
+
+0.66    2006-09-06
+    - added optional_indicator_names utility method
+
+
+0.65    2006-09-05   (YAPC::Europe hackathon release)
+    - updated test suite
+    - added has_example to MCK::Files
+    - added buildtool_not_executable to MCK::Files
+    - added MCK::Manifest (manifest_matches_dist)
+
+
+0.64	2006-08-29
+    - updated MCK::BrokenInstaller
+      submitted by Steffen Müller smueller@cpan.org
+
+
+0.63    2006-07-31
+    - we now also find README.txt
+      resolves RT #20633 reported by MBARBON (thanks for the patch!)
+
+
+0.62    2006-07-20
+   - added MCK::BrokenInstaller,
+     submitted by Steffen Müller smueller@cpan.org
+
+
+0.61    2006-07-17
+  - Kwalitee metrics can now be marked as 'is_extra'
+    Such metrics do not count for available kwalitee
+  - marked is_prereq as 'is_extra'
+  - cpants_lint now reports percentages additional to absolut
+    values
+  - cpants_lint won't list failed is_extra metrics
+  - added some method caching to M:C:Kwalitee
+  - added total_kwalitee to M:C:Kwalitee.
+
+
+0.60    2006-05-18
+  - activated is_prereq metric
+  - added helper method (available_kwalitee)
+  - MCK::FindModules: skip stuff in inc (Module::Install)
+
+    
+0.52    2006-03-12
+  - added some dependencies to Build.PL/META.yml (thanks to Achim Grolms 
+    and BLBLACK (RT #17977))
+  - enhanced output of cpants_lint.pl (list failed tests)
+  - MCK::FindModules: die if we cannot find a namespace
+  - MCK::FindModules: remove stuff that doesn't seems to be namespace (eg lowercase) from module names
+  - changed the name of some fields to work with the (upcoming) DB
+  - added some tests
+
+  
+0.51   2006-02-16
+  - adapted Module::CPANTS::Kwalitee::Prereq to work with newer versions
+    of YAML (reported by Andreas Koenig as RT #17670)
+
+
+0.50   2006-01-26
+  - first release to CPAN
+
+
+0.01    
+  - started rewrite
+

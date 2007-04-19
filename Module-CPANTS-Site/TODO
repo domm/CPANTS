@@ -1,0 +1,21 @@
+
+# Dists
+
+* rearrange dist/view
+  - core infos:
+    name, author, version, release date, kwalitee
+  - howto improve kwalitee
+  - kwalitee matrix
+  - history
+  - dependencie tree
+  - listed prereqs
+  - other dists using ... (recursive ?)
+  - modules provided
+  - stuff used
+  - metadata
+
+* AJAXify dist/view
+
+* various statistic views
+  (sorted by prereqs, by depenecies, ..)
+

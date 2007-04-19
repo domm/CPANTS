@@ -1,0 +1,94 @@
+<h2>April 1st 2007 Kwalitee Metrics</h2>
+
+<dl>
+
+<dt>docs_make_sense 
+ </dt>
+<dd>
+
+<b>Shortcoming:</b> The Docs make no sense.<br>
+<b>Remedy:</b> Please clarify your documentation.<br>
+<!--<b>Defined in:</b> Module::CPANTS::Kwalitee::Files<br>-->
+<a href="/dist/shortcoming?metric=extractable">Show failing dists</a>
+</dd>
+
+
+<dt>correct_speling 
+ </dt>
+<dd>
+
+<b>Shortcoming:</b> You have speling errors in your documentation/comments. Note that this metric is implemented using PPI::Tiny to extract the comments, which might not work 100% correctly.<br>
+<b>Remedy:</b> Remove the speling errors, maybe using a spell checker.<br>
+<!--<b>Defined in:</b> Module::CPANTS::Kwalitee::Files<br>-->
+<a href="/dist/shortcoming?metric=extracts_nicely">Show failing dists</a>
+
+</dd>
+
+
+<dt>mentions_kwalitee 
+ </dt>
+<dd>
+
+<b>Shortcoming:</b> The term 'kwalitee' does not appear in your Changelog. This means you probably do not care about CPANTS, which is bad.<br>
+<b>Remedy:</b> Write a short piece of prose describing how CPANTS helped you raise the kwalitee of your code.<br>
+<!--<b>Defined in:</b> Module::CPANTS::Kwalitee::Files<br>-->
+<a href="/dist/shortcoming?metric=has_readme">Show failing dists</a>
+
+</dd>
+
+
+<dt>uses_version_control 
+ </dt>
+<dd>
+
+<b>Shortcoming:</b> You do not have '.svn' or '.CVS' directories in your distribution, which indicates that you're not using a version control system.<br>
+<b>Remedy:</b> Use a version control system.<br>
+<!--<b>Defined in:</b> Module::CPANTS::Kwalitee::Files<br>-->
+<a href="/dist/shortcoming?metric=has_manifest">Show failing dists</a>
+
+</dd>
+
+
+<dt>reuses_code 
+ </dt>
+<dd>
+
+<b>Shortcoming:</b> Your code does not depend on at least 5 other CPAN distributions. Reinventing wheels is bad.<br>
+<b>Remedy:</b> Remove all parts of your distribution that have already been implemented on CPAN, and use the CPAN implementation instead.<br>
+<!--<b>Defined in:</b> Module::CPANTS::Kwalitee::Files<br>-->
+<a href="/dist/shortcoming?metric=has_meta_yml">Show failing dists</a>
+
+</dd>
+
+
+<dt>uses_recursion 
+ </dt>
+<dd>
+
+<b>Shortcoming:</b> Your code does not include at least on recursive function.<br>
+<b>Remedy:</b> Convert your plain old boring functions to recursive functions and don't forget to curry your iterators.<br>
+<!--<b>Defined in:</b> Module::CPANTS::Kwalitee::Files<br>-->
+<a href="/dist/shortcoming?metric=has_buildtool">Show failing dists</a>
+
+</dd>
+
+
+<dt>nice_code_layout 
+ </dt>
+<dd>
+
+<b>Shortcoming:</b> You're not using the CPANTS-recommended way of coding, which looks like<pre>
+;my $foo
+;if ($foo){
+ ;$bar=$foo
+ ;$bar**2
+}else{
+ ;$bar=42}
+</pre><br>
+<b>Remedy:</b> Do not listen to crazy Australians!<br>
+
+<!--<b>Defined in:</b> Module::CPANTS::Kwalitee::Files<br>-->
+<a href="/dist/shortcoming?metric=has_changelog">Show failing dists</a>
+</dd>
+
+</dl>

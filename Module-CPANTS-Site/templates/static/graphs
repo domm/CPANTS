@@ -1,0 +1,27 @@
+<h1>Graphs</h1>
+
+<h3>Kwalitee Distribution</h3>
+
+<p><img src="/static/kwalitee_distribution.png"></p>
+
+
+<h3>Active PAUSE IDs</h3>
+
+<p>Of all people with PAUSE accounts, how many actually uploaded a dist to CPAN.</p>
+
+<p><img src="/static/active_pause_ids.png"></p>
+
+
+<h3>Dists per Author</h3>
+
+<p><img src="/static/dists_per_author.png"></p>
+
+
+<h3>Dists released per year</h3>
+
+<p>The number of dists released each year. This is not the year of first release, but the year of the current release on CPAN.</p>
+
+<p><img src="/static/dists_released_per_year.png"></p>
+
+
+

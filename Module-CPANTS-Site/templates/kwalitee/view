@@ -1,0 +1,46 @@
+[% IF dist %]
+[% author = dist.author %]
+[% item = dist.kwalitee %]
+
+<h1>Kwalitee for <a href="/dist/[% dist.dist_without_version %]">[% dist.dist %]</a></h1>
+
+<table>
+<tr>
+    <td><b>Kwalitee</b></td>
+    <td>[% item.kwalitee %]</td>
+</tr>
+<tr>
+    <td><b>Author</td>
+    <td colspan=2><a href="/author/[% author.pauseid %]">[% author.name %]</a> ([% author.pauseid%])</td>
+</tr>
+
+[% FOREACH c IN mck.core_indicator_names %]
+<tr>
+    <td><b><a href="/kwalitee/shortcoming?name=[% c %]">[% c %]</a></b></td>
+    <td class="[% item.$c ? 'ok' : 'not_ok' %]" align="center">[% IF item.$c %]ok[% ELSE %]not&nbsp;ok[% END %]</td>
+    <td>[% UNLESS item.$c %]
+    [% kwalitee_hash.$c.remedy %]
+    [% END %]</td>
+    </tr>
+[% END %]
+
+[% FOREACH c IN mck.optional_indicator_names %]
+<tr>
+    <td><b><a href="/kwalitee/shortcoming?name=[% c %]">[% c %]</a></b></td>
+    <td class="[% item.$c ? 'ok' : 'opt_not_ok' %]" align="center">[% IF item.$c %]ok[% ELSE %]not&nbsp;ok&nbsp;(optional)[% END %]</td>
+    <td>[% UNLESS item.$c %]
+    [% kwalitee_hash.$c.remedy %]
+    [% END %]</td>
+    </tr>
+[% END %]
+
+</table>
+[% ELSE %]
+<p>Invalid distname specified.</p>
+[% END %]
+
+<p>
+<img src="/static/graphs/[% dist.dist %].png" alt="Stats for [%
+dist.dist %]">
+</p>
+
