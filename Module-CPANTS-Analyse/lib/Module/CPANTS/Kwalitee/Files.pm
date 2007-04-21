@@ -2,7 +2,7 @@ package Module::CPANTS::Kwalitee::Files;
 use warnings;
 use strict;
 use File::Find;
-use File::Spec::Functions qw(catdir catfile abs2rel);
+use File::Spec::Functions qw(catdir catfile abs2rel splitdir);
 use File::stat;
 
 sub order { 10 }
@@ -107,10 +107,11 @@ sub analyse {
 #-----------------------------------------------------------------
 sub get_files {
     return if /^\.+$/;
+    my $unixy=join('/',splitdir($File::Find::name));
     if (-d $_) {
-        push (@dirs,$File::Find::name);
+        push (@dirs,$unixy);
     } elsif (-f $_) {
-        push (@files,$File::Find::name);
+        push (@files,$unixy);
         $size+=-s _ || 0;
     }
 }

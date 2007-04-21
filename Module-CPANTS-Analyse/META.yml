@@ -1,6 +1,6 @@
 ---
 name: Module-CPANTS-Analyse
-version: 0.69
+version: 0.71
 author:
   - 'Thomas Klausner, <domm@cpan.org>, http://domm.zsi.at'
   - |-
@@ -13,6 +13,7 @@ resources:
 requires:
   Archive::Any: 0.06
   Archive::Tar: 1.30
+  Array::Diff: 0.04
   CPAN::DistnameInfo: 0.06
   Class::Accessor: 0.19
   IO::Capture: 0.05
@@ -23,7 +24,7 @@ requires:
 provides:
   Module::CPANTS::Analyse:
     file: lib/Module/CPANTS/Analyse.pm
-    version: 0.69
+    version: 0.71
   Module::CPANTS::Kwalitee:
     file: lib/Module/CPANTS/Kwalitee.pm
   Module::CPANTS::Kwalitee::BrokenInstaller:
