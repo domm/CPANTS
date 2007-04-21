@@ -17,7 +17,7 @@ sub analyse {
     my $distdir=$me->distdir;
     my $modules=$me->d->{modules};
     my $files=$me->d->{files_array};
-    my @tests=grep {m|^t/|} @$files;
+    my @tests=grep {m|^t/.*\.t|} @$files;
     
     my %skip=map {$_->{module}=>1 } @$modules;
     my %uses;
@@ -40,6 +40,8 @@ sub analyse {
     # used in tests
     my $pt=Module::ExtractUse->new;
     foreach my $tf (@tests) {
+        next if -s catfile($distdir,$tf) > 1_000_000; # skip very large test files
+        print "$tf\n";
         $pt->extract_use(catfile($distdir,$tf));
     }
     while (my ($mod,$cnt)=each%{$pt->used}) {
