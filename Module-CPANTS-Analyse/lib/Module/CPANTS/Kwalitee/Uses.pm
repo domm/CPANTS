@@ -41,7 +41,6 @@ sub analyse {
     my $pt=Module::ExtractUse->new;
     foreach my $tf (@tests) {
         next if -s catfile($distdir,$tf) > 1_000_000; # skip very large test files
-        print "$tf\n";
         $pt->extract_use(catfile($distdir,$tf));
     }
     while (my ($mod,$cnt)=each%{$pt->used}) {
