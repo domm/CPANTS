@@ -17,7 +17,7 @@ $VERSION=0.71;
 
 use Module::Pluggable search_path=>['Module::CPANTS::Kwalitee'];
 
-__PACKAGE__->mk_accessors(qw(dist tarball distdir d mck capture_stdout capture_stderr));
+__PACKAGE__->mk_accessors(qw(dist opts tarball distdir d mck capture_stdout capture_stderr));
 __PACKAGE__->mk_accessors(qw(_testdir _dont_cleanup _tarball));
 
 
@@ -28,12 +28,15 @@ sub new {
     my $me=bless $opts,$class;
 
     $me->mck(Module::CPANTS::Kwalitee->new);
-    my $cserr=IO::Capture::Stderr->new;
-    my $csout=IO::Capture::Stdout->new;
-    $cserr->start;
-    $csout->start;
-    $me->capture_stderr($cserr);
-    $me->capture_stdout($csout);
+    
+    unless ($me->opts->{no_capture}) {
+        my $cserr=IO::Capture::Stderr->new;
+        my $csout=IO::Capture::Stdout->new;
+        $cserr->start;
+        $csout->start;
+        $me->capture_stderr($cserr);
+        $me->capture_stdout($csout);
+    }
     return $me; 
 }
 
@@ -82,6 +85,7 @@ sub analyse {
     my $me=shift;
 
     foreach my $mod (@{$me->mck->generators}) {
+        print "$mod\n" if $me->opts->{verbose};
         $mod->analyse($me);
     }
 }

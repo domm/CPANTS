@@ -2,33 +2,37 @@
 use strict;
 
 use Module::CPANTS::Analyse;
-use Getopt::Std;
+use Getopt::Long;
 use IO::Capture::Stdout;
 use Data::Dumper;
 
 my %opts;
-getopts('d',\%opts);
+GetOptions(\%opts,qw(dump! no_capture! verbose!));
 
 my $dist=shift(@ARGV);
 
 die "usage: cpants_lint.pl path/to/Foo-Dist-1.42.tgz\n" unless $dist;
 die "Cannot find $dist\n" unless -e $dist;
 
-my $mca=Module::CPANTS::Analyse->new({dist=>$dist});
+my $mca=Module::CPANTS::Analyse->new({
+    dist=>$dist,
+    opts=>\%opts,
+});
 my $cannot_unpack=$mca->unpack;
 if ($cannot_unpack) {
-    if ($opts{d}) {
+    if ($opts{dump}) {
         print Dumper($mca->d);
     } else {
         print "Cannot unpack \t\t".$mca->tarball,"\n";
     }
     exit;
 }
+
 $mca->analyse;
 $mca->calc_kwalitee;
 
 
-if ($opts{d}) {
+if ($opts{dump}) {
     $Data::Dumper::Sortkeys=1;
     print Dumper($mca->d);
 } else {

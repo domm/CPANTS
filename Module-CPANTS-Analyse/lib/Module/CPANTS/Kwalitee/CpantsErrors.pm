@@ -11,6 +11,9 @@ sub order { 1000 }
 sub analyse {
     my $class=shift;
     my $me=shift;
+
+    return if $me->opts->{no_capture};
+
     my $sout=$me->capture_stdout;
     my $serr=$me->capture_stderr;
     $sout->stop;
