@@ -62,7 +62,7 @@ sub kwalitee_indicators {
             remedy=>q{Remove all letters from the version number. If you want to mark a release as a developer release, use the scheme 'Module-1.00_01'},
             code=>sub { my $v=shift->{version};
                  return 0 unless $v;
-                 return 1 if ($v=~/^v?[\d\.]+$/i);
+                 return 1 if ($v=~ /\A v? \d+ (?:\.\d+)* (?:_\d+)? \z/xi );
                  return 0;
             }
         },
