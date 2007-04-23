@@ -4,6 +4,13 @@
 # $Date$ 
 #-----------------------------------------------------------------
 
+0.64    2007-04-23
+    - added DBD::Pg to depencies, reported by MSTEVENS as RT #26377
+    - first create a dist object, add the data later in another eval. This
+      way more dists should end up in the DB. (eg Lingua-DE-ASCII, which 
+      includes latin1 filenames that cause problems in the (utf8) db)
+
+
 0.63    2006-09-13
     - added new metrics to DB Classes (has_license, has_example,
       buildtool_not_executable, manifest_matches_dist
