@@ -25,9 +25,9 @@ sub analyse {
     }
     my $files=$me->d->{files_array};
 
-    # check if there's a LICENSE file
-    if (grep {/^LICENSE$/} @$files) {
-        $me->d->{license}="defined in ./LICENSE";
+    # check if there's a LICEN[CS]E file
+    if (grep {/^LICEN[CS]E$/} @$files) {
+        $me->d->{license}="defined in ./LICEN[CS]E";
         return;
     }
 
@@ -37,7 +37,7 @@ sub analyse {
         my $out;
         $parser->output_string($out);
         $parser->parse_file( catfile($me->distdir,$file) );
-        if ($out=~/LICENSE/) {
+        if ($out=~/LICEN[CS]E/) {
             $me->d->{license}="defined in POD ($file)";
             return;
         }
