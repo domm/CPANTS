@@ -123,15 +123,16 @@ sub process_cpan {
             $db_dist=$db_author->add_to_dists({ 
                 dist=>$dist->dist,
                 run=>$run->id,
-                %$data
             })
         };
         $db->txn_commit;
-        print "DB ERROR: dist: $@" and next if $@; 
+        print "DB ERROR: cannot create dist: $@" and next if $@; 
 
-        # add stuff to other tables
+        # add data and add stuff to other tables
         $db->txn_begin;
         eval {
+            $db_dist->update($data);
+            
             foreach my $m (@$modules) {
                 $db_dist->add_to_modules($m);
             }
