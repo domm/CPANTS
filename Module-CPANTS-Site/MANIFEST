@@ -13,12 +13,8 @@ MANIFEST			This list of files
 META.yml
 module_cpants_site.yml
 README
-root/static/active_pause_ids.png
 root/static/cpants.css
-root/static/dists_per_author.png
-root/static/dists_released_per_year.png
 root/static/down.png
-root/static/kwalitee_distribution.png
 root/static/new.png
 root/static/same.png
 root/static/up.png
