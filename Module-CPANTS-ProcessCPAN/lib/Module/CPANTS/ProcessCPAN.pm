@@ -12,7 +12,7 @@ use File::Spec::Functions qw(catdir catfile rel2abs);
 use Parse::CPAN::Packages;
 
 use vars qw($VERSION);
-$VERSION=0.63;
+$VERSION=0.64;
 
 __PACKAGE__->mk_accessors(qw(cpan lint force run prev_run _db));
 
