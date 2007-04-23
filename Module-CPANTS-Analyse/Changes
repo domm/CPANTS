@@ -5,6 +5,7 @@
 #-----------------------------------------------------------------
 
 0.71    2007-04-23
+    - moved svn repo to http://code.google.com/p/cpants/
     - has_license now also checks for LICENCE (as suggested by David
       Cantrell)
     - fixed RT #26535 reported by MTHURN
