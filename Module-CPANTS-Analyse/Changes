@@ -4,6 +4,30 @@
 # $Date: 2006-11-04 09:02:03 +0100 (Sat, 04 Nov 2006) $ 
 #-----------------------------------------------------------------
 
+0.71    2007-04-23
+    - has_license now also checks for LICENCE (as suggested by David
+      Cantrell)
+    - fixed RT #26535 reported by MTHURN
+    - has_examples now also checks for p(m|od) file (as suggested by
+      JUERD)
+    - fixed RT #24228 reported by THALJEF - t/99_critic.t now only runs
+      if $ENV{AUTHOR_TEST} is set
+    - resolved RT #25198 reported by bdfoy using his patch
+    - FindModules: do not check META.yml for provides because META.yml
+      might list semi-garbage (eg according to META.yml, Siesta provides
+      Apache::Constants, which it does not.)
+    - skip very large test-files and only check *.t files (not everything
+      in t/) as suggested by CASIANO
+    - cpants_lint.pl:
+        switched from Getopt::Std to Getopt::Long
+        added --no_capture option for easier debugging
+        added --verbose options
+    - hopefully fixed RT #25207 (test failures on Win32) reported (and
+      patched..) by HEMINGWAY. This should also solve RT #26535 reported
+      by Martin Thurn
+    - applied doc patch submitted by MSTEVENS as RT #26379
+
+
 0.69    2006-11-04
     - splited up metayml_conforms_spec to metayml_conforms_spec_1_0
       and metayml_conforms_spec_1_2 (which is optional)

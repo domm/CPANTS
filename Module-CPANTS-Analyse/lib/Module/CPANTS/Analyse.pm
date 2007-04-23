@@ -24,7 +24,8 @@ __PACKAGE__->mk_accessors(qw(_testdir _dont_cleanup _tarball));
 sub new {
     my $class=shift;
     my $opts=shift || {};
-    $opts->{d}={}; 
+    $opts->{d}={};
+    $opts->{opts} ||= {};
     my $me=bless $opts,$class;
 
     $me->mck(Module::CPANTS::Kwalitee->new);

@@ -25,7 +25,7 @@ is($d->{uses}{'Test::More'}{in_tests},6,'uses');
 ok($d->{file_meta_yml},'has_yaml');
 ok(!$d->{metayml_is_parsable},'metayml_is_parsable is false');
 ok($d->{metayml_parse_error},'metayml_parse_error was set');
-is($d->{license},'defined in ./LICENSE','LICENSE defined in file');
+is($d->{license},'defined in ./LICEN[CS]E','LICENSE defined in file');
 ok(!defined($d->{metayml_has_license}),'no license in META.yml');
 
 #use Data::Dumper;
