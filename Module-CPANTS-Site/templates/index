@@ -5,19 +5,23 @@
 <h3>Why don't you...</h3>
 
 <ul>
-<li>Search for <a href="/author/search">authors</a> and <a href="/dist/search">distributions</a>.
+<li>Search for <a href="/author/search">authors</a> or <a href="/dist/search">distributions</a>.
 <li>Take a look at the various <a href="graphs.html">reports</a> generated at this site.
 <li>Admire the top gamers of the <a href="highscores">CPANTS game</a>. 
-<li>Download the latest CPANTS data as a SQLite DB form here
+<li>Download the latest CPANTS data as a SQLite DB from here
 <blockquote><a href='/static/sqlite/cpants_all.db.gz'>cpants_all.db.gz</a>
 </blockquote>
 </ul>
 
 <h3>News</h3>
 
+<dt>2007-04-23: New releases<dt>
+<dd>
+I've fixed lots of bugs reported via RT and email. Thanks for the hints and patches! Quality of CPANTS data should be a bit better now...
+</dd>
+
 <dt>2007-04-02: Old metrics<dt>
 <dd>Now that April 1sth is over, we're back to the regular metrics...</dd>
-
 
 <dt>2007-04-01: New metrics</dt>
 <dd>Thanks to Catalyst & DBIx::Class I finished my <a
@@ -37,25 +41,6 @@ used this time to implement a few long-pending metrics:
 You can find a more detailed description <a
 href="/kwalitee_april_1st_2007.html">here</a><br><br>
 Happy gaming!</dd>
-
-<dt>2007-03-10: New server! SQLite Dump!</dt>
-<dd>CPANTS now lives on a <b>new server provided by <a
-href="http://hexten.net">hexten.net</a></b>. Thanks!!<br>
-Starting tomorrow, there will again be daily updates, so you can now continue
-playing the CPANTS game and raising your kwalitee (and hopefully making CPAN a
-nicer place in the process...)<br><br>
-
-Thanks to the nice <a
-href="http://search.cpan.org/dist/DBD-PgLite/">DBD::PgLite::MirrorPgToSQLite</a>
-there is now a <b>daily SQLite dump of the CPANTS database</b> available. I hope you
-won't get blind from looking at the schema...<br>
-You can get the latest dump from this URL: <a
-href="http://cpants.perl.org/static/sqlite/cpants_all.db.gz">http://cpants.perl.org/static/sqlite/cpants_all.db.gz</a>.<br>
-Have fun playing with the data!</dd>
-<dl>
-<dt>2006-11-04: metayml_conforms_spec_1_0 and _current</dt>
-<dd>After some discussions on perl-qa I split metayml_conforms_spec into metayml_conforms_spec_1_0 and
-metayml_conforms_spec_current (which is an optional metric).</dd>
 
 </dl>
 

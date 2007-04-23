@@ -4,8 +4,12 @@
 # $Date$ 
 #-----------------------------------------------------------------
 
-0.XX    2007-XX-XX
+0.64    2007-04-23
+    - moved svn repo to http://code.google.com/p/cpants/
+    - added depencies on DBD::Pg and Catalyst::Plugin::ConfigLoader
+      reported by Nicholas Clark
     - order distros alphabetically on author page
+
 
 0.63    2006-09-29
     all of this was done by Brian Cassidy (BIRCAS)

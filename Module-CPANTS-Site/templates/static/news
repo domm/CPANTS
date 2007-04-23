@@ -2,9 +2,13 @@
 
 <dl>
 
+<dt>2007-04-23: New releases<dt>
+<dd>
+I've fixed lots of bugs reported via RT and email. Thanks for the hints and patches! Quality of CPANTS data should be a bit better now...
+</dd>
+
 <dt>2007-04-02: Old metrics<dt>
 <dd>Now that April 1sth is over, we're back to the regular metrics...</dd>
-
 
 <dt>2007-04-01: New metrics</dt>
 <dd>Thanks to Catalyst & DBIx::Class I finished my <a
