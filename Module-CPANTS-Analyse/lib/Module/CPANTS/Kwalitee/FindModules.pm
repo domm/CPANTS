@@ -124,7 +124,7 @@ sub kwalitee_indicators {
                 my $modules=$d->{modules};
                 return 0 unless $modules;
 
-                my @in_basedir=grep { $_->{file} !~ m|/| } @$modules;
+                my @in_basedir=grep { $_->{in_basedir} } @$modules;
                 return 1 if $d->{dir_lib} && @in_basedir == 0;
                 return 1 if @in_basedir == 1;
                 return 0;

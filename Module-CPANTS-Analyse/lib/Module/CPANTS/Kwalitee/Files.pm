@@ -194,7 +194,7 @@ sub kwalitee_indicators {
         name=>'has_example',
         is_extra=>1,
         error=>'This distribution does not include examples.',
-        remedy=>q{Add a directory matching the regex (ex|eg|examples?|samples?|demos?) or a file matching the regex \/(examples?|samples?|demos?)\.p(m|od)$/i to your distribution that includes some scripts showing one or more use-cases of the distribution. },
+        remedy=>q{Add a directory matching the regex (ex|eg|examples?|samples?|demos?) or a file matching the regex /\/(examples?|samples?|demos?)\.p(m|od)$/i to your distribution that includes some scripts showing one or more use-cases of the distribution. },
         code=>sub {
             my $d=shift;
             return 1 if grep {/^(ex|eg|examples?|samples?|demos?)\/\w/i} @{ $d->{files_array} };
