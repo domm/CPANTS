@@ -10,6 +10,7 @@ lib/Module/CPANTS/Kwalitee/Files.pm
 lib/Module/CPANTS/Kwalitee/FindModules.pm
 lib/Module/CPANTS/Kwalitee/License.pm
 lib/Module/CPANTS/Kwalitee/Manifest.pm
+lib/Module/CPANTS/Kwalitee/NeedsCompiler.pm
 lib/Module/CPANTS/Kwalitee/MetaYML.pm
 lib/Module/CPANTS/Kwalitee/Pod.pm
 lib/Module/CPANTS/Kwalitee/Prereq.pm
@@ -26,11 +27,13 @@ t/analyse.t
 t/analyse_afs.t
 t/analyse_axkit_xsp_l10n.t
 t/analyse_devel_timer.t
+t/analyse_eg_c.t
 t/calc.t
 t/eg/Acme-DonMartin-0.06.tar.gz
 t/eg/AFS-2.4.0.tar.gz
 t/eg/AxKit-XSP-L10N-0.03.tar.gz
 t/eg/Devel-Timer-0.02.tar.gz
+t/eg/Eg-C-0.01.tar.gz
 t/eg/not_extractable.gz
 t/kwalitee.t
 t/plugins.t

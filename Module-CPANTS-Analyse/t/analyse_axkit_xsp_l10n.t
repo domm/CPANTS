@@ -1,4 +1,4 @@
-use Test::More tests => 14;
+use Test::More tests => 15;
 
 use Module::CPANTS::Analyse;
 use File::Spec::Functions;
@@ -27,6 +27,7 @@ ok(!$d->{metayml_is_parsable},'metayml_is_parsable is false');
 ok($d->{metayml_parse_error},'metayml_parse_error was set');
 is($d->{license},'defined in ./LICEN[CS]E','LICENSE defined in file');
 ok(!defined($d->{metayml_has_license}),'no license in META.yml');
+ok(!$d->{needs_compiler}, 'does not need compiler');
 
 #use Data::Dumper;
 #diag(Dumper $d);

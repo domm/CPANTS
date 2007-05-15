@@ -7,7 +7,7 @@ my $a=Module::CPANTS::Analyse->new({});
 
 {
 	my @plugins=$a->plugins;
-	is(@plugins,11,'number of plugins');
+	is(@plugins,12,'number of plugins');
 }
 
 
@@ -19,6 +19,13 @@ is(shift(@$plugins),'Module::CPANTS::Kwalitee::MetaYML','plugin order 3 MetaYML'
 is(shift(@$plugins),'Module::CPANTS::Kwalitee::FindModules','plugin order 4 FindModules');
 is(pop(@$plugins),'Module::CPANTS::Kwalitee::CpantsErrors','plugin order last CpantsErrors');
 
-cmp_deeply($plugins,bag(qw(Module::CPANTS::Kwalitee::Pod Module::CPANTS::Kwalitee::Prereq Module::CPANTS::Kwalitee::Uses Module::CPANTS::Kwalitee::BrokenInstaller Module::CPANTS::Kwalitee::Manifest Module::CPANTS::Kwalitee::License)),'plugin the rest');
+cmp_deeply($plugins,bag(
+        qw( Module::CPANTS::Kwalitee::Pod 
+            Module::CPANTS::Kwalitee::Prereq 
+            Module::CPANTS::Kwalitee::Uses 
+            Module::CPANTS::Kwalitee::BrokenInstaller
+            Module::CPANTS::Kwalitee::Manifest
+            Module::CPANTS::Kwalitee::License
+            Module::CPANTS::Kwalitee::NeedsCompiler)),'plugin the rest');
 
 

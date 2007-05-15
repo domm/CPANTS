@@ -1,9 +1,9 @@
-use Test::More tests => 13;
+use Test::More tests => 12;
 
 use Module::CPANTS::Analyse;
 use File::Spec::Functions;
 my $a=Module::CPANTS::Analyse->new({
-    dist=>'t/eg/Devel-Timer-0.02.tar.gz',
+    dist=>'t/eg/Eg-C-0.01.tar.gz',
     _dont_cleanup=>$ENV{DONT_CLEANUP},
 });
 
@@ -14,20 +14,15 @@ $a->analyse;
 
 my $d=$a->d;
 
-is($d->{files},12,'files');
-is($d->{size_packed},10646,'size_packed');
+is($d->{files}, 8,'files');
+is($d->{size_packed},2223,'size_packed');
 is(ref($d->{modules}),'ARRAY','modules is ARRAY');
-my $modcount=grep {$_->{module} eq 'Devel::Timer'} @{$d->{modules}};
-is($modcount,1,'module');
-is(ref($d->{prereq}),'','prereq is empty');
+is($d->{modules}[0]->{module},'Eg::C','module');
+is(ref($d->{prereq}),'ARRAY','prereq is ARRAY');
 is(ref($d->{uses}),'HASH','uses is HASH');
-is($d->{uses}{'Test::More'}{in_tests},3,'uses');
 ok($d->{file_meta_yml},'has_yaml');
 ok($d->{metayml_is_parsable},'metayml_is_parsable');
 ok(!$d->{metayml_parse_error},'metayml_parse_error was not set');
-ok(!$d->{license},'no license');
-ok(!$d->{needs_compiler}, 'does not need compiler');
-
-#use Data::Dumper;
-#diag(Dumper $d);
+ok(!defined($d->{license}),'has no license');
+ok($d->{needs_compiler}, 'need compiler');
 

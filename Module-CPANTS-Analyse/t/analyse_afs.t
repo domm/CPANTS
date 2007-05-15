@@ -1,4 +1,4 @@
-use Test::More tests => 11;
+use Test::More tests => 12;
 
 use Module::CPANTS::Analyse;
 use File::Spec::Functions;
@@ -27,4 +27,5 @@ ok($d->{file_meta_yml},'has_yaml');
 ok($d->{metayml_is_parsable},'metayml_is_parsable');
 ok(!$d->{metayml_parse_error},'metayml_parse_error was not set');
 is($d->{license},'perl','has license');
+ok($d->{needs_compiler}, 'needs compiler');
 
