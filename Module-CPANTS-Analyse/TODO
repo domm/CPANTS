@@ -44,4 +44,5 @@ http://rt.cpan.org/Ticket/Display.html?id=21370
 
 - include more dists in test (for better test coverage)
 
+improve NeedsCompiler (see its TODO)
 

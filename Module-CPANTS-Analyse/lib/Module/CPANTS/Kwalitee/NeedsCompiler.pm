@@ -18,7 +18,17 @@ sub analyse {
             open my $out, ">>/tmp/out";
             print $out "$f\n";
             $me->d->{needs_compiler}=1;
-            last;
+            return;
+        }
+    }
+    if (defined ref($me->d->{prereq}) and ref($me->d->{prereq} eq 'ARRAY')) {
+        for my $m (@{ $me->d->{prereq} }) {
+            if ($m->{requires} =~ /^Inline::/
+               or $m->{requires} eq 'ExtUtils::CBuilder'
+               or $m->{requires} eq 'ExtUtils::ParseXS') {
+                $me->d->{needs_compiler}=1;
+                return;
+            }
         }
     }
     return;
@@ -61,7 +71,16 @@ Returns C<200>.
 
 =head3 analyse
 
+Checks for file with .c, .h or .xs extensions.
+Check is the module depends on any of the Inline:: modules or
+on ExtUtils::CBuilder or ExtUtils::ParseXS.
 
+=head3 TODO:
+
+How to recognize cases such as http://search.cpan.org/dist/Perl-API/ 
+and http://search.cpan.org/dist/Term-Size-Perl
+that generate the .c files during installation
+ 
 =head3 kwalitee_indicators
 
 No Kwalitee Indicator.
