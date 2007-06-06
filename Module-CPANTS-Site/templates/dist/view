@@ -86,7 +86,7 @@
 </tr>
 [% IF requiring %]
 [% WHILE (od = requiring.next) %]
-<tr><td><a href="/dist/[% od.dist.dist %]">[% od.dist.dist %]</a> ( [% od.dist.kwalitee.kwalitee %]%)</td><td><a href="/author/[% od.dist.author.pauseid %]">[% od.dist.author.pauseid %]</a></td></tr>
+<tr><td><a href="/dist/[% od.dist.dist %]">[% od.dist.dist %]</a> (&nbsp;[% od.dist.kwalitee.kwalitee %]%&nbsp;)</td><td><a href="/author/[% od.dist.author.pauseid %]">[% od.dist.author.pauseid %]</a></td></tr>
 [% END %]
 [% ELSE %]
 <tr><td>none found.</td></tr>
