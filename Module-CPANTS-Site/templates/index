@@ -15,6 +15,12 @@
 
 <h3>News</h3>
 
+<dt>2007-06-15: CPANTS down</dt>
+<dd>Due to some problems that CPANTS caused on the server (taking to much
+memory..) currently no new data is beeing calculated. And the data shown might
+be wrong... I do hope to find some time to fix this, but it't not going to
+happen today.</dd>
+
 <dt>2007-04-23: New releases<dt>
 <dd>
 I've fixed lots of bugs reported via RT and email. Thanks for the hints and patches! Quality of CPANTS data should be a bit better now...
