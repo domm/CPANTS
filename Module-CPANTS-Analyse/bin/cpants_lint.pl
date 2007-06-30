@@ -6,6 +6,7 @@ use Getopt::Long;
 use IO::Capture::Stdout;
 use Data::Dumper;
 use YAML;
+use File::Spec::Functions;
 
 my %opts;
 GetOptions(\%opts,qw(dump no_capture! verbose! yaml to_file dir=s ));
@@ -23,6 +24,9 @@ my $mca=Module::CPANTS::Analyse->new({
 my $output;
 
 my $cannot_unpack=$mca->unpack;
+
+print $mca->dist,"\n";;
+exit;
 if ($cannot_unpack) {
     if ($opts{dump}) {
         $output=Dumper($mca->d);
@@ -91,6 +95,8 @@ else {
 }
 
 if ($opts{to_file}) {
+    my $dir=$opts{dir} || '.';
+    my $outfile=catfile($dir,$
 
 } else {
     print $output;
