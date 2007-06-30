@@ -7,9 +7,11 @@ use IO::Capture::Stdout;
 use Data::Dumper;
 use YAML;
 use File::Spec::Functions;
+use Cwd;
 
 my %opts;
 GetOptions(\%opts,qw(dump no_capture! verbose! yaml to_file dir=s ));
+my $cwd=getcwd();
 
 my $dist=shift(@ARGV);
 
@@ -95,8 +97,11 @@ else {
 }
 
 if ($opts{to_file}) {
-    my $dir=$opts{dir} || '.';
-    my $outfile=catfile($dir,$
+    my $dir=$opts{dir} || $cwd ;
+    my $outfile=catfile($dir,$mca->d->{dist}.'.'.($opts{yaml} ? 'yaml' : 'dump' ));
+    open (my $fh,'>',$outfile) || die "Cannot write to $outfile: $!";
+    print $fh $output;
+    close $fh;
 
 } else {
     print $output;
