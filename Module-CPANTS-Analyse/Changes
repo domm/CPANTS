@@ -4,6 +4,12 @@
 # $Date: 2006-11-04 09:02:03 +0100 (Sat, 04 Nov 2006) $ 
 #-----------------------------------------------------------------
 
+0.72-tobe
+    - added MCK::NeedsCompiler (submitted by Gabor Szabo)
+      MCK::NeedsCompiler does not contain any kwalitee_indicator, but
+      adds much needed metadata.
+
+
 0.71    2007-04-23
     - moved svn repo to http://code.google.com/p/cpants/
     - has_license now also checks for LICENCE (as suggested by David

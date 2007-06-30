@@ -15,8 +15,6 @@ sub analyse {
     my $files=$me->d->{files_array};
     foreach my $f (@$files) {
         if ($f =~ /\.[hc]$/i or $f =~ /\.xs$/i) {
-            open my $out, ">>/tmp/out";
-            print $out "$f\n";
             $me->d->{needs_compiler}=1;
             return;
         }
