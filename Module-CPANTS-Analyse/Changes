@@ -5,6 +5,9 @@
 #-----------------------------------------------------------------
 
 0.72-tobe
+    - added docs to cpants_lint.pl 
+    - cpants_lint.pl can now dump metadata to a file
+    - added YAML output to cpants_lint.pl 
     Gabor Szabo:
     - added MCK::NeedsCompiler
       MCK::NeedsCompiler does not contain any kwalitee_indicator, but

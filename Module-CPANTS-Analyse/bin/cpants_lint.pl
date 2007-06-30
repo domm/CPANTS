@@ -8,14 +8,17 @@ use Data::Dumper;
 use YAML;
 use File::Spec::Functions;
 use Cwd;
+use Pod::Usage;
 
 my %opts;
-GetOptions(\%opts,qw(dump no_capture! verbose! yaml to_file dir=s ));
+GetOptions(\%opts,qw(help|? man dump no_capture! verbose! yaml to_file dir=s ));
+pod2usage(1) if $opts{help};
+pod2usage(-exitstatus => 0, -verbose => 2) if $opts{man};
+
 my $cwd=getcwd();
 
 my $dist=shift(@ARGV);
-
-die "usage: cpants_lint.pl path/to/Foo-Dist-1.42.tgz\n" unless $dist;
+pod2usage(-exitstatus => 0, -verbose => 0) unless $dist;
 die "Cannot find $dist\n" unless -e $dist;
 
 my $mca=Module::CPANTS::Analyse->new({
@@ -27,8 +30,6 @@ my $output;
 
 my $cannot_unpack=$mca->unpack;
 
-print $mca->dist,"\n";;
-exit;
 if ($cannot_unpack) {
     if ($opts{dump}) {
         $output=Dumper($mca->d);
@@ -98,7 +99,10 @@ else {
 
 if ($opts{to_file}) {
     my $dir=$opts{dir} || $cwd ;
-    my $outfile=catfile($dir,$mca->d->{dist}.'.'.($opts{yaml} ? 'yaml' : 'dump' ));
+    my $extension='.txt';
+    $extension='.dump' if $opts{dump};
+    $extension='.yaml' if $opts{yaml};
+    my $outfile=catfile($dir,$mca->d->{dist}.$extension);
     open (my $fh,'>',$outfile) || die "Cannot write to $outfile: $!";
     print $fh $output;
     close $fh;
@@ -116,11 +120,71 @@ cpants_lint.pl - commandline frontend to Module::CPANTS::Analyse
 
 =head1 SYNOPSIS
 
-  cpants_lint.pl path/to/Foo-Dist-1.42.tgz
+    cpants_lint.pl path/to/Foo-Dist-1.42.tgz
+
+    Options:
+        --help              brief help message
+        --man               full documentation
+        --verbose           print more info during run
+        --no_capture        don't turn on capturing of STDERR and STDOUT
+        
+        --dump              dump result using Data::Dumper
+        --yaml              dump result as YAML
+        
+        --to_file           dump result to a file
+        --dir               directory to dump files to
+
 
 =head1 DESCRIPTION
 
-See C<Module::CPANTS::Analyse>
+C<cpants_lint.pl> checks the B<Kwalitee> of CPAN distributions. More exact, it checks how a given tarball will be ratend on C<http://cpants.perl.org>, without needing to upload it first.
+
+C<cpants_lint.pl> is also used by C<cpants.perl.org> itself to check all dists on CPAN.
+
+For more information on Kwalitee, and the whole of CPANTS, see C<http://cpants.perl.org> and / or C<Module::CPANTS::Analyse>.
+
+=head1 OPTIONS
+
+If neither C<--dump> nor C<--yaml> are used, a short text describing the 
+Kwalitee of the distribution and hints on how to raise Kwalitee will be 
+displayed. The format of this text can change anytime, so don't use it for any 
+automated processing!
+
+=head3 --help 
+
+Print a brief help message.
+
+=head3 --man
+
+Print manpage.
+
+=head3 --verbose
+
+Print some informative messages during testing of dists.
+
+=head3 --no_capture
+
+Turn off capturing of STDOUT and STDERR. Mostly usefull during debugging / development of new features. 
+
+If C<--no_capture> is used, the value of C<cpants_error> might be wrong.
+
+=head3 --dump
+
+Dump the result using Data::Dumper
+
+=head3 --yaml
+
+Dump the result as YAML.
+
+=head3 --to_file
+
+Output the result into a file instead of STDOUT.
+
+The name of the file will be F<Foo-Dist.yaml> (well, the extension depends on the dump format and can be C<.yaml>, C<.dump> or C<.txt>)
+
+=head3 --dir
+
+Directory to dump files to. Defaults to the current working directory.
 
 =head1 AUTHOR
 
