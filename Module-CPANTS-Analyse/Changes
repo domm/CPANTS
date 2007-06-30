@@ -5,9 +5,17 @@
 #-----------------------------------------------------------------
 
 0.72-tobe
-    - added MCK::NeedsCompiler (submitted by Gabor Szabo)
+    Gabor Szabo:
+    - added MCK::NeedsCompiler
       MCK::NeedsCompiler does not contain any kwalitee_indicator, but
       adds much needed metadata.
+    Barbie:
+    - MCA assumes Unix paths after munging with File::Spec, thus breaking 
+      portability at every turn in a non-Unix-like environment
+      ... bad Thomas no biscuit!
+    Barbie:
+    - Refined META.yml metrics using Test::YAML::Meta and brought 'current
+      spec' up to date with version 1.3 :)
 
 
 0.71    2007-04-23

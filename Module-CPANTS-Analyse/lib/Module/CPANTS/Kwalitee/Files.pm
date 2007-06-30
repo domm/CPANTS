@@ -4,6 +4,7 @@ use strict;
 use File::Find;
 use File::Spec::Functions qw(catdir catfile abs2rel splitdir);
 use File::stat;
+use File::Basename;
 
 sub order { 10 }
 
@@ -27,8 +28,9 @@ sub analyse {
     $me->d->{size_unpacked}=$size;
 
     # munge filelist
-    @files=map {abs2rel($_,$distdir)} @files;
-    @dirs=map {abs2rel($_,$distdir)} @dirs;
+    my $moddir = basename($distdir);
+    @files = map {s!^.*?$moddir/!!;$_} @files;
+    @dirs  = map {s!^.*?$moddir/!!;$_} @dirs;
 
     $me->d->{files}=\@files;
     $me->d->{dirs}=\@dirs;

@@ -17,8 +17,8 @@ sub analyse {
     my $distdir=$me->distdir;
     my $modules=$me->d->{modules};
     my $files=$me->d->{files_array};
-    my @tests=grep {m|^t/.*\.t|} @$files;
-    
+    my @tests=grep {m|^t\b.*\.t|} @$files;
+
     my %skip=map {$_->{module}=>1 } @$modules;
     my %uses;
     

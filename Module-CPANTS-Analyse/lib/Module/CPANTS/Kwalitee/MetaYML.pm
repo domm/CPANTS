@@ -3,8 +3,11 @@ use warnings;
 use strict;
 use File::Spec::Functions qw(catfile);
 use YAML qw(LoadFile);
+use Test::YAML::Meta::Version;
 
 sub order { 20 }
+
+my $CURRENT_SPEC = '1.3';
 
 ##################################################################
 # Analyse
@@ -54,40 +57,49 @@ sub kwalitee_indicators{
             remedy=>q{Take a look at the META.yml Spec at http://module-build.sourceforge.net/META-spec-current.html and change your META.yml accordingly},
             code=>sub {
                 my $d=shift;
-                return check_spec_conformance($d,'1.0',[qw(name version license generated_by)]);
+                return check_spec_conformance($d,'1.0');
             },
         },
         {
-            name=>'metayml_conforms_spec_current',
-            is_extra=>1,
-            error=>q{META.yml does not conform to the Current META.yml Spec (1.2). See 'metayml_error' in the dist view for more info.},
+            name=>'metayml_conforms_to_known_spec',
+            error=>q{META.yml does not conform to any recognised META.yml Spec. See 'metayml_error' in the dist view for more info.},
             remedy=>q{Take a look at the META.yml Spec at http://module-build.sourceforge.net/META-spec-current.html and change your META.yml accordingly},
             code=>sub {
                 my $d=shift;
-                return check_spec_conformance($d,'current',[qw(meta-spec name version abstract author license generated_by)]);
+                return check_spec_conformance($d);
+            },
+        },
+    {
+            name=>'metayml_conforms_spec_current',
+            is_extra=>1,
+            error=>qq{META.yml does not conform to the Current META.yml Spec ($CURRENT_SPEC). See 'metayml_error' in the dist view for more info.},
+            remedy=>q{Take a look at the META.yml Spec at http://module-build.sourceforge.net/META-spec-current.html and change your META.yml accordingly},
+            code=>sub {
+                my $d=shift;
+                return check_spec_conformance($d,$CURRENT_SPEC);
             },
         },
     ];
 }
 
 sub check_spec_conformance {
-    my ($d,$version,$fields)=@_;
+    my ($d,$version)=@_;
     my $yaml=$d->{meta_yml};
-    my %fields=map {$_=>1} @$fields;
-    foreach my $field (keys %fields) {
-        delete $fields{$field} if exists $yaml->{$field};
-    }
-    if (scalar keys %fields == 0) {
-        return 1;
-    } else {
-        $d->{metayml_error}.=join("",map {"'$_' missing (META.yml spec $version)\n"} keys %fields);
+    my %hash;
+    $hash{spec} = $version if($version);
+    $hash{yaml} = $yaml;
+
+    my $spec = Test::YAML::Meta::Version->new(%hash);
+    if ($spec->parse()) {
+        $d->{metayml_error}.=join("",$spec->errors());
         return 0;
     }
+
+    return 1;
 }
 
-
-q{Favourite record of the moment:
-  Fat Freddys Drop: Based on a true story};
+q{Barbies Favourite record of the moment:
+  Nine Inch Nails: Year Zero};
 
 __END__
 
@@ -127,15 +139,17 @@ Returns the Kwalitee Indicators datastructure.
 
 =item * metayml_conforms_spec_1_0
 
-=item * metayml_conforms_spec_1_2
+=item * metayml_conforms_known_spec
+=
+item * metayml_conforms_spec_current
 
 =back
 
 =head3 check_spec_conformance
 
-  check_spec_conformance($d,$version,$fields);
+    check_spec_conformance($d,$version);
 
-Checks if META.yml contains the neccessary keys
+Validates META.yml using Test::YAML::Meta.
 
 =head1 SEE ALSO
 

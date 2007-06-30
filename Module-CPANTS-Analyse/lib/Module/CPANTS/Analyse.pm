@@ -13,7 +13,7 @@ use IO::Capture::Stderr;
 use YAML qw(LoadFile);
 
 use vars qw($VERSION);
-$VERSION=0.71;
+$VERSION=0.71_01;
 
 use Module::Pluggable search_path=>['Module::CPANTS::Kwalitee'];
 
