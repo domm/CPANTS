@@ -61,6 +61,10 @@ sub unpack {
         $me->d->{extractable}=0;
         $me->d->{cpants_errors}=$error;
         $me->d->{kwalitee}{extractable}=0;
+        my ($vol,$dir,$name)=splitpath($me->dist);
+        $name=~s/\..*$//;
+        $name=~s/\-[\d\.]+$//;
+        $me->d->{dist}=$name;
         return $error;
     }
     
