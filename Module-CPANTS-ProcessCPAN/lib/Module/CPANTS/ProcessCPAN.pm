@@ -10,11 +10,12 @@ use base qw(Class::Accessor);
 use Carp;
 use File::Spec::Functions qw(catdir catfile rel2abs);
 use Parse::CPAN::Packages;
+use YAML;
 
 use vars qw($VERSION);
 $VERSION=0.64;
 
-__PACKAGE__->mk_accessors(qw(cpan lint force run prev_run _db));
+__PACKAGE__->mk_accessors(qw(cpan lint force run prev_run _db process_dir out_dir));
 
 sub new {
     my ($class,$cpan,$lint)=@_;
@@ -59,10 +60,16 @@ sub process_cpan {
     my $db=$me->db;
     my $lint=$me->lint;
     my $run=$me->run;
-     
+    my $process_dir=$me->process_dir;
+
     foreach my $dist (sort {$a->dist cmp $b->dist} $p->latest_distributions) {
         my $vname=$dist->distvname;
-       
+        next if $vname=~/^perl[-\d]/;
+        next if $vname=~/^ponie-/;
+        next if $vname=~/^Perl6-Pugs/;
+        next if $vname=~/^parrot-/;
+        next if $vname=~/^Bundle-/;
+
         my $exists=$db->resultset('Dist')->find({dist=>$dist->dist});
         if ($exists) {
             # check version
@@ -81,28 +88,26 @@ sub process_cpan {
             }
         }
         
-        next if $vname=~/^perl[-\d]/;
-        next if $vname=~/^ponie-/;
-        next if $vname=~/^Perl6-Pugs/;
-        next if $vname=~/^parrot-/;
-        next if $vname=~/^Bundle-/;
-        
         print "analyse $vname\n";
-       
-        # todo: store immediatly in DB so we can catch "bad" dists that fail
-        # completely
-        
         my $file=$me->cpan_path_to_dist($dist->prefix);
         
-        # call cpants_lint.pl (fork because I think it's easier)
-        my $lintresult=`$^X $lint -d $file`;
-        my $data;
-        eval {
-            my $VAR1;
-            eval $lintresult;
-            $data=$VAR1;
-        };
-        
+        # call cpants_lint.pl
+        system("$^X $lint --yaml --to_file --dir $process_dir $file") == 0 or die "aborted with SIG $?\n";
+    }
+}
+
+
+sub process_cpan_old {
+    my $me=shift;
+    
+    my $p=Parse::CPAN::Packages->new($me->cpan_02packages);
+    my $db=$me->db;
+    my $lint=$me->lint;
+    my $run=$me->run;
+     
+    foreach my $file ($me->process_dir)
+        my $data=LoadFile($file);
+
         # remove data that references other tables;
         my $kwalitee=$data->{kwalitee};
         my $modules=$data->{modules};

@@ -4,6 +4,10 @@
 # $Date$ 
 #-----------------------------------------------------------------
 
+0.65-tobe
+    - analyse_cpan.pl now only writes yaml files to --dir
+
+
 0.64    2007-04-23
     - moved svn repo to http://code.google.com/p/cpants/
     - added DBD::Pg to depencies, reported by MSTEVENS as RT #26377

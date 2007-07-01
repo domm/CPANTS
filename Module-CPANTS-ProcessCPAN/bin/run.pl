@@ -6,7 +6,7 @@ use Sys::Hostname;
 use FindBin;
 
 my $force='';
-$force=' --force' if $ARGV[0] && $ARGV[0] eq 'force';
+$force=' --force' if $ARGV[0] && $ARGV[0] =~/force/;
 
 my $perl=$^X;
 my $hostname=hostname();
@@ -34,7 +34,8 @@ if ($hostname =~/hexten/) {
     $site='/home/domm/perl/Module-CPANTS-Site/';
 }
 
-system("$perl -I$lib $path/analyse_cpan.pl --cpan $cpan --lint $lint $force");
+#system("$perl -I$lib $path/analyse_cpan.pl --cpan $cpan --lint $lint 
+#$force");
 system($perl,"-I$lib", $path."/run_complex_db_stuff.pl",$cpan);
 system($perl,"-I$lib", $path."/update_authors.pl",$cpan);
 system($perl,"-I$lib", $path."/make_graphs.pl",$site."root/static/");
