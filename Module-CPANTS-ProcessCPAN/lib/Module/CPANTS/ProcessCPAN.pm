@@ -57,9 +57,7 @@ sub process_cpan {
     my $me=shift;
     
     my $p=Parse::CPAN::Packages->new($me->cpan_02packages);
-    my $db=$me->db;
     my $lint=$me->lint;
-    my $run=$me->run;
     my $process_dir=$me->process_dir;
 
     foreach my $dist (sort {$a->dist cmp $b->dist} $p->latest_distributions) {
@@ -70,24 +68,19 @@ sub process_cpan {
         next if $vname=~/^parrot-/;
         next if $vname=~/^Bundle-/;
 
-        my $exists=$db->resultset('Dist')->find({dist=>$dist->dist});
-        if ($exists) {
-            # check version
-            if ($exists->vname && $vname eq $exists->vname) {
-                if ($me->force) {
-                    print "forced reindex of ".$dist->dist." (".$dist->version." )\n";
-                    $me->make_dist_history($exists); 
-                    $exists->delete;
-                } else {
-                    next;
-                }
-            } else {
-                print "new version of ".($dist->dist || '?')." (".($exists->version || '?')." -> ".($dist->version || '?')." )\n";
-                $me->make_dist_history($exists); 
-                $exists->delete;
+        if (-e catfile($process_dir,$vname.'.yml')) {
+            if ($me->force) {
+                print "forced reindex of ".$dist->dist." (".$dist->version." )\n";
+            }
+            else {
+                print "skipping ".$dist->dist." (".$dist->version." )\n";
+                next;
             }
         }
-        
+        else {
+            print "new version of ".$dist->dist." (".$dist->version." )\n";
+        }
+    
         print "analyse $vname\n";
         my $file=$me->cpan_path_to_dist($dist->prefix);
         
@@ -96,6 +89,7 @@ sub process_cpan {
     }
 }
 
+=pod
 
 sub process_cpan_old {
     my $me=shift;
@@ -184,6 +178,9 @@ sub process_cpan_old {
         }
     }
 }
+
+=cut
+
 
 sub make_author_history {
     my $me=shift;
