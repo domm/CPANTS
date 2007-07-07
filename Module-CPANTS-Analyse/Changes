@@ -4,6 +4,10 @@
 # $Date: 2006-11-04 09:02:03 +0100 (Sat, 04 Nov 2006) $ 
 #-----------------------------------------------------------------
 
+0.73-tobe
+    - added version of dist to dump file name
+
+
 0.72    2007-06-30
     - added docs to cpants_lint.pl 
     - cpants_lint.pl can now dump metadata to a file
