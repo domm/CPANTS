@@ -19,7 +19,7 @@ sub analyse {
             return;
         }
     }
-    if (defined ref($me->d->{prereq}) and ref($me->d->{prereq} eq 'ARRAY')) {
+    if (defined ref($me->d->{prereq}) and ref($me->d->{prereq}) eq 'ARRAY') {
         for my $m (@{ $me->d->{prereq} }) {
             if ($m->{requires} =~ /^Inline::/
                or $m->{requires} eq 'ExtUtils::CBuilder'
