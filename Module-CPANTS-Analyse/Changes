@@ -4,8 +4,10 @@
 # $Date: 2006-11-04 09:02:03 +0100 (Sat, 04 Nov 2006) $ 
 #-----------------------------------------------------------------
 
-0.73-tobe
+0.73    2007-09012
     - added version of dist to dump file name
+    - fixed bug in MCK::NeedsCompiler (RT #28134 plus all reported merged
+      into that one)
 
 
 0.72    2007-06-30
