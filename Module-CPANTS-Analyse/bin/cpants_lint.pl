@@ -25,7 +25,6 @@ my $mca=Module::CPANTS::Analyse->new({
     dist=>$dist,
     opts=>\%opts,
 });
-
 my $output;
 
 my $cannot_unpack=$mca->unpack;

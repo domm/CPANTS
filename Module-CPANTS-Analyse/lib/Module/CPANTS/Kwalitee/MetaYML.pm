@@ -66,7 +66,7 @@ sub kwalitee_indicators{
             remedy=>q{Take a look at the META.yml Spec at http://module-build.sourceforge.net/META-spec-current.html and change your META.yml accordingly},
             code=>sub {
                 my $d=shift;
-                return check_spec_conformance($d);
+		return check_spec_conformance($d);
             },
         },
     {
