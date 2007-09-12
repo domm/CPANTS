@@ -10,10 +10,12 @@ use base qw(Class::Accessor);
 use Carp;
 use File::Spec::Functions qw(catdir catfile rel2abs);
 use Parse::CPAN::Packages;
-use YAML;
+use YAML qw(LoadFile);
+use FindBin;
+use File::Copy;
 
 use vars qw($VERSION);
-$VERSION=0.64;
+$VERSION=0.69_01;
 
 __PACKAGE__->mk_accessors(qw(cpan lint force run prev_run _db process_dir out_dir));
 
@@ -48,7 +50,6 @@ sub start_run {
         available_kwalitee=>$total_kwalitee,
     });
     $me->run($run);
-
     
     return $me;
 }
@@ -89,18 +90,36 @@ sub process_cpan {
     }
 }
 
-=pod
-
-sub process_cpan_old {
+sub process_yaml {
     my $me=shift;
     
     my $p=Parse::CPAN::Packages->new($me->cpan_02packages);
     my $db=$me->db;
-    my $lint=$me->lint;
     my $run=$me->run;
-     
-    foreach my $file ($me->process_dir)
-        my $data=LoadFile($file);
+    
+    my $in_dir=catdir($me->process_dir,'in');
+    my $out_dir=catdir($me->process_dir,'out');
+
+    opendir(my $INDIR,$in_dir) || die "Cannot open YAML dir $in_dir: $!";
+    while (my $file=readdir $INDIR) {
+        next unless $file=~/\.yml$/;
+        my $absfile=catfile($in_dir,$file);
+        copy($absfile,catfile($out_dir,$file));
+        my $data;
+        eval { $data=LoadFile($absfile) };
+        if ($@) {
+            print "Cannot parse YAML $absfile: $@";
+            next;
+        }
+
+        print $data->{dist}."\n";
+
+        # remove old data from this dist
+        my $exists=$db->resultset('Dist')->find({dist=>$data->{dist}});
+        if ($exists) {
+            $me->make_dist_history($exists); 
+            $exists->delete;
+        }
 
         # remove data that references other tables;
         my $kwalitee=$data->{kwalitee};
@@ -120,7 +139,7 @@ sub process_cpan_old {
             $me->make_author_history($db_author);
             
             $db_dist=$db_author->add_to_dists({ 
-                dist=>$dist->dist,
+                dist=>$data->{dist},
                 run=>$run->id,
             })
         };
@@ -135,15 +154,19 @@ sub process_cpan_old {
             foreach my $m (@$modules) {
                 $db_dist->add_to_modules($m);
             }
-            foreach my $p (@$prereq) {
-                $db_dist->add_to_prereq($p);
+            foreach my $pq (@$prereq) {
+                $db_dist->add_to_prereq($pq);
             }
             foreach my $u (values %$uses) {
                 $db_dist->add_to_uses($u);
             }
         };
         if ($@) {
-            $db_dist->cpants_errors($db_dist->cpants_errors."\nDB:\n$@");
+            my $from_cpants='';
+            if (my $old=$db_dist->cpants_errors) {
+                $from_cpants="$old\n";
+            }
+            $db_dist->cpants_errors(join('',$from_cpants,"DB: $@"));
             $db->txn_rollback;
             $kwalitee->{no_cpants_errors}=0;
         } else {
@@ -160,15 +183,16 @@ sub process_cpan_old {
         if ($@) {
             my $e=$@;
             $db->txn_rollback;
-            croak $dist->dist." DB kwalitee error: $e";
+            croak $data->{dist}." DB kwalitee error: $e";
         } else {
             $db->txn_commit;
         }
+        unlink($absfile);
     }
 
     # dump old dists
     my @distributions=$p->distributions;
-    my %dists=map {$_->dist => 1}  @distributions;
+    my %dists=map {$_->dist => 1} grep { $_->dist }   @distributions;
 
     my $rs=$db->resultset('Dist')->search;
     while (my $in_db=$rs->next) {
@@ -178,8 +202,6 @@ sub process_cpan_old {
         }
     }
 }
-
-=cut
 
 
 sub make_author_history {

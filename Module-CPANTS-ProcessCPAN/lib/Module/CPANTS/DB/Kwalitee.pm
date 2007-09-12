@@ -37,6 +37,7 @@ extracts_nicely
  metayml_conforms_spec_1_0
  metayml_conforms_spec_current
  metayml_has_license
+ metayml_conforms_to_known_spec
  ));
 
 __PACKAGE__->set_primary_key('id');

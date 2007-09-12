@@ -15,6 +15,6 @@ my $p=Module::CPANTS::ProcessCPAN->new($opts{cpan},$opts{lint});
 $p->process_dir(rel2abs($opts{dir} || '.')); 
 $p->force(1) if $opts{force};
 
-$p->start_run->process_cpan;
+$p->process_cpan;
 
 
