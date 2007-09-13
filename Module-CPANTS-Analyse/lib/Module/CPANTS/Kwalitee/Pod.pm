@@ -35,7 +35,10 @@ sub analyse {
         }
     }
     $me->d->{pod_errors}=$pod_errors;
-    $me->d->{pod_errors_msg}=join("\n",@msgs);
+    # work around Pod::Simple::Checker returning strange data
+    my $errors=join("\n",@msgs);
+    $errors=~s/[^\w\d\s]+/ /g;
+    $me->d->{pod_errors_msg}=$errors;
 }
 
 
