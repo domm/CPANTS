@@ -10,7 +10,7 @@ use base qw(Class::Accessor);
 use Carp;
 use File::Spec::Functions qw(catdir catfile rel2abs);
 use Parse::CPAN::Packages;
-use YAML qw(LoadFile);
+use YAML::Syck qw(LoadFile);
 use FindBin;
 use File::Copy;
 
