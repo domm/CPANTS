@@ -5,7 +5,7 @@ use Module::CPANTS::Analyse;
 use Getopt::Long;
 use IO::Capture::Stdout;
 use Data::Dumper;
-use YAML;
+use YAML::Syck;
 use File::Spec::Functions;
 use Cwd;
 use Pod::Usage;
