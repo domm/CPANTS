@@ -39,8 +39,7 @@ if ($hostname =~/hexten/) {
 my $yaml_in=$yaml.'in/';
 my $yaml_out=$yaml.'out/';
 system("$perl -I$lib $path/analyse_cpan.pl --cpan $cpan --lint $lint --dir $yaml_in $force");
-# TODO
-# take each yaml file, stuff it in DB, move it to $yaml_out
+system("$perl -I$Lib $path/process_yaml.pl --cpan $cpan --dir $yaml");
 system($perl,"-I$lib", $path."/run_complex_db_stuff.pl",$cpan);
 system($perl,"-I$lib", $path."/update_authors.pl",$cpan);
 system($perl,"-I$lib", $path."/make_graphs.pl",$site."root/static/");
