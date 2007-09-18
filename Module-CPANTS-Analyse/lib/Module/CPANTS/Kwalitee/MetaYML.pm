@@ -51,22 +51,25 @@ sub kwalitee_indicators{
                 my $yaml=$d->{meta_yml};
                 ($yaml->{license} and $yaml->{license} ne 'unknown') ? 1 : 0 }
         },
-        {
-            name=>'metayml_conforms_spec_1_0',
-            error=>q{META.yml does not conform to the META.yml Spec 1.0. See 'metayml_error' in the dist view for more info.},
-            remedy=>q{Take a look at the META.yml Spec at http://module-build.sourceforge.net/META-spec-current.html and change your META.yml accordingly},
-            code=>sub {
-                my $d=shift;
-                return check_spec_conformance($d,'1.0');
-            },
-        },
+#        {
+#            name=>'metayml_conforms_spec_1_0',
+#            error=>q{META.yml does not conform to the META.yml Spec 1.0. See 
+#            'metayml_error' in the dist view for more info.},
+#            remedy=>q{Take a look at the META.yml Spec at 
+#            http://module-build.sourceforge.net/META-spec-current.html and 
+#            change your META.yml accordingly},
+#            code=>sub {
+#                my $d=shift;
+#                return check_spec_conformance($d,'1.0');
+#            },
+#        },
         {
             name=>'metayml_conforms_to_known_spec',
             error=>q{META.yml does not conform to any recognised META.yml Spec. See 'metayml_error' in the dist view for more info.},
             remedy=>q{Take a look at the META.yml Spec at http://module-build.sourceforge.net/META-spec-current.html and change your META.yml accordingly},
             code=>sub {
                 my $d=shift;
-		return check_spec_conformance($d);
+                return check_spec_conformance($d);
             },
         },
     {
@@ -86,15 +89,16 @@ sub check_spec_conformance {
     my ($d,$version)=@_;
     my $yaml=$d->{meta_yml};
     my %hash;
-    $hash{spec} = $version if($version);
+    $hash{spec} = $version if ($version);
     $hash{yaml} = $yaml;
 
     my $spec = Test::YAML::Meta::Version->new(%hash);
     if ($spec->parse()) {
-        $d->{metayml_error}.=join("",$spec->errors());
-        return 1;
+        my $report_version= $version || 'known';
+        $d->{metayml_error}.=$report_version.": ".join(" ",$spec->errors())." ";
+        return 0;
     }
-    return 0;
+    return 1;
 }
 
 q{Barbies Favourite record of the moment:
