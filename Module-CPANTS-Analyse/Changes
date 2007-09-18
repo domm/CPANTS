@@ -6,6 +6,8 @@
 
 
 0.74-tobe
+    - fixed bug in MCK::MetaYML::check_spec_conformance, which caused 
+      wrong results in metayml_conforms_spec*
     - work around Pod::Simple::Checker returning strange data
 
 0.73    2007-09012

@@ -92,10 +92,9 @@ sub check_spec_conformance {
     my $spec = Test::YAML::Meta::Version->new(%hash);
     if ($spec->parse()) {
         $d->{metayml_error}.=join("",$spec->errors());
-        return 0;
+        return 1;
     }
-
-    return 1;
+    return 0;
 }
 
 q{Barbies Favourite record of the moment:

@@ -10,7 +10,7 @@ use Carp;
 use Module::CPANTS::Kwalitee;
 use IO::Capture::Stdout;
 use IO::Capture::Stderr;
-use YAML qw(LoadFile);
+use YAML::Syck qw(LoadFile);
 
 use vars qw($VERSION);
 $VERSION=0.73_01;
