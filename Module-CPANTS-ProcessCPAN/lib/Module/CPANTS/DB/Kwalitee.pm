@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use base qw(DBIx::Class);
 
-__PACKAGE__->load_components(qw(PK::Auto::Pg Core));
+__PACKAGE__->load_components(qw(PK::Auto Core));
 __PACKAGE__->table('kwalitee');
 __PACKAGE__->add_columns(qw(
 id
@@ -38,6 +38,7 @@ extracts_nicely
  metayml_conforms_spec_current
  metayml_has_license
  metayml_conforms_to_known_spec
+ has_license
  ));
 
 __PACKAGE__->set_primary_key('id');

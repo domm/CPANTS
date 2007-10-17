@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use base qw(DBIx::Class);
 
-__PACKAGE__->load_components(qw(PK::Auto::Pg Core));
+__PACKAGE__->load_components(qw(PK::Auto Core));
 __PACKAGE__->table('uses');
 __PACKAGE__->add_columns(qw(id dist module in_dist in_code in_tests));
 

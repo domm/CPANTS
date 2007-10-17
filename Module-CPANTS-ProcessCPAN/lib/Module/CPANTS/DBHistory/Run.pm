@@ -1,4 +1,4 @@
-package Module::CPANTS::DB::Run;
+package Module::CPANTS::DBHistory::Run;
 use strict;
 use warnings;
 use base qw(DBIx::Class);

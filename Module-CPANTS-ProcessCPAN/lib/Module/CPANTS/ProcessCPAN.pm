@@ -4,7 +4,9 @@ use warnings;
 
 use Module::CPANTS::Analyse;
 use Module::CPANTS::DB;
+use Module::CPANTS::DBHistory;
 use Module::CPANTS::Kwalitee;
+use Module::CPANTS::ProcessCPAN::ConfigData;
 use Data::Dumper;
 use base qw(Class::Accessor);
 use Carp;
@@ -14,17 +16,16 @@ use YAML::Syck qw(LoadFile);
 use FindBin;
 use File::Copy;
 
-use vars qw($VERSION);
-$VERSION=0.69_01;
+use version; our $VERSION=qv(0.69_02);
 
-__PACKAGE__->mk_accessors(qw(cpan lint force run prev_run _db process_dir out_dir));
+__PACKAGE__->mk_accessors(qw(cpan lint force run prev_run _db _db_hist process_dir out_dir));
 
 sub new {
     my ($class,$cpan,$lint)=@_;
 
     my $me=bless {},$class;
-    $me->cpan(rel2abs($cpan));
-    $me->lint(rel2abs($lint));
+    $me->cpan(rel2abs($cpan)) if $cpan;
+    $me->lint(rel2abs($lint)) if $lint;
     return $me;
 }
 
@@ -32,7 +33,7 @@ sub start_run {
     my $me=shift;
 
     my $mck=Module::CPANTS::Kwalitee->new;
-    my $total_kwalitee=scalar @{$mck->get_indicators};
+    my $total_kwalitee=$mck->total_kwalitee;
     
     # prev run
     my @prev=$me->db->resultset('Run')->search(
@@ -45,12 +46,19 @@ sub start_run {
     $me->prev_run($prev[0]);
         
     my $run=$me->db->resultset('Run')->create({
-        version=>$Module::CPANTS::Analyse::VERSION,
+        mcanalyse_version=>$Module::CPANTS::Analyse::VERSION,
+        mcprocess_version=>$Module::CPANTS::ProcessCPAN::VERSION,
+        available_kwalitee=>$mck->available_kwalitee,
+        total_kwalitee=>$mck->total_kwalitee,
         date=>scalar localtime,
-        available_kwalitee=>$total_kwalitee,
     });
     $me->run($run);
     
+    my %for_history=map {$_=>$run->$_} qw(id mcanalyse_version mcprocess_version available_kwalitee total_kwalitee date);
+    $me->db_hist->resultset('Run')->create(
+        \%for_history    
+    );
+
     return $me;
 }
 
@@ -59,7 +67,7 @@ sub process_cpan {
     
     my $p=Parse::CPAN::Packages->new($me->cpan_02packages);
     my $lint=$me->lint;
-    my $process_dir=$me->process_dir;
+    my $analysed=$me->yaml_analysed;
 
     foreach my $dist (sort {$a->dist cmp $b->dist} $p->latest_distributions) {
         my $vname=$dist->distvname;
@@ -69,7 +77,7 @@ sub process_cpan {
         next if $vname=~/^parrot-/;
         next if $vname=~/^Bundle-/;
 
-        if (-e catfile($process_dir,$vname.'.yml')) {
+        if (-e catfile($analysed,$vname.'.yml')) {
             if ($me->force) {
                 print "forced reindex of ".$dist->dist." (".$dist->version." )\n";
             }
@@ -86,7 +94,7 @@ sub process_cpan {
         my $file=$me->cpan_path_to_dist($dist->prefix);
         
         # call cpants_lint.pl
-        system("$^X $lint --yaml --to_file --dir $process_dir $file") == 0 or die "aborted with SIG $?\n";
+        system("$^X $lint --yaml --to_file --dir $analysed $file");
     }
 }
 
@@ -97,11 +105,11 @@ sub process_yaml {
     my $db=$me->db;
     my $run=$me->run;
     
-    my $in_dir=catdir($me->process_dir,'in');
-    my $out_dir=catdir($me->process_dir,'out');
-
-    opendir(my $INDIR,$in_dir) || die "Cannot open YAML dir $in_dir: $!";
-    while (my $file=readdir $INDIR) {
+    my $in_dir=$me->yaml_analysed;
+    my $out_dir=$me->yaml_processed;
+    
+    opendir(my $IN,$in_dir) || die "Cannot open YAML dir $in_dir: $!";
+    while (my $file=readdir $IN) {
         next unless $file=~/\.yml$/;
         my $absfile=catfile($in_dir,$file);
         copy($absfile,catfile($out_dir,$file));
@@ -203,22 +211,19 @@ sub process_yaml {
     }
 }
 
-
 sub make_author_history {
     my $me=shift;
     my $author=shift;
     
-    my $db=$me->db;
+    my $dbhist=$me->db_hist;
 
-    $db->txn_begin;
-    $db->resultset('AuthHist')->create({
+    $dbhist->resultset('Author')->create({
         run=>$me->run->id,
         author=>$author->id,
         average_kwalitee=>$author->average_kwalitee || 0,
         num_dists=>$author->num_dists || 0,
         rank=>$author->rank || 0,
     });
-    $db->txn_commit;
     
     # set conveniece fields in current author
     $author->prev_av_kw($author->average_kwalitee || 0);
@@ -231,7 +236,7 @@ sub make_dist_history {
     
     my $old_kw=$dist->kwalitee ? $dist->kwalitee->kwalitee : 0;
     
-    $me->db->resultset('DistHist')->find_or_create({
+    $me->db_hist->resultset('Dist')->find_or_create({
         run=>$me->run->id,
         distname=>$dist->dist,
         version=>$dist->version,
@@ -244,9 +249,19 @@ sub db {
     my $me=shift;
     return $me->_db if $me->_db;
    
-    my $name = $INC{'Test/More.pm'} ? 'test_cpants' : 'cpants';
-    return $me->_db(Module::CPANTS::DB->connect('dbi:Pg:dbname='.$name,$ENV{CPANTS_USER},$ENV{CPANTS_PWD}));
+    my $name = catfile($me->root,qw(sqlite cpants.db));
+    return $me->_db(Module::CPANTS::DB->connect('dbi:SQLite:dbname='.$name));
 }
+
+sub db_hist {
+    my $me=shift;
+    return $me->_db_hist if $me->_db_hist;
+   
+    my $name = catfile($me->root,qw(sqlite cpants_history.db));
+    return $me->_db_hist(Module::CPANTS::DBHistory->connect("dbi:SQLite:dbname=$name"));
+}
+
+
 
 sub cpan_01mailrc {
     my $me=shift;
@@ -263,6 +278,18 @@ sub cpan_path_to_dist {
     my $prefix=shift;
     return catfile($me->cpan,'authors','id',$prefix);
 }
+
+=head2 Accessors to various directories
+
+=cut
+
+sub root {
+    my $me=shift;
+    return Module::CPANTS::ProcessCPAN::ConfigData->config('root');
+}
+
+sub yaml_analysed { return catdir(shift->root,qw(yaml analysed)) }
+sub yaml_processed { return catdir(shift->root,qw(yaml processed)) }
 
 1;
 

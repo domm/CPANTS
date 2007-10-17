@@ -1,0 +1,154 @@
+
+CREATE TABLE run (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  mcanalyse_version text,
+  mcprocess_version text,
+  available_kwalitee integer not null default 0,
+  total_kwalitee integer not null default 0,
+  date timestamp
+);
+
+CREATE TABLE author (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  pauseid text,
+  name text,
+  email text,
+  average_kwalitee numeric,
+  num_dists integer not null default 0,
+  rank integer not null default 0,
+  prev_av_kw numeric,
+  prev_rank integer not null default 0
+);
+CREATE TABLE dist (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  dist text,
+  package text,
+  vname text,
+  author integer not null default 0,
+  version text,
+  version_major text,
+  version_minor text,
+  extension text,
+  extractable integer not null default 0,
+  extracts_nicely integer not null default 0,
+  size_packed integer not null default 0,
+  size_unpacked integer not null default 0,
+  released timestamp without time zone,
+  cpants_errors text,
+  files integer not null default 0,
+  files_list text,
+  dirs integer not null default 0,
+  dirs_list text,
+  symlinks integer not null default 0,
+  symlinks_list text,
+  bad_permissions integer not null default 0,
+  bad_permissions_list text,
+  file_makefile_pl integer not null default 0,
+  file_build_pl integer not null default 0,
+  file_readme text not null default 0,
+  file_manifest integer not null default 0,
+  file_meta_yml integer not null default 0,
+  file_signature integer not null default 0,
+  file_ninja integer not null default 0,
+  file_test_pl integer not null default 0,
+  file_changelog text,
+  dir_lib integer not null default 0,
+  dir_t integer not null default 0,
+  pod_errors integer not null default 0,
+  run integer not null default 0,
+  broken_module_install text not null default 0,
+  manifest_matches_dist integer not null default 0,
+  buildfile_executable integer not null default 0,
+  pod_errors_msg text,
+  license text,
+  metayml_parse_error text,
+  metayml_is_parsable integer not null default 0,
+  file_license integer not null default 0,
+  metayml_error text,
+  error_manifest_matches_dist text
+);
+CREATE TABLE kwalitee (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  dist integer not null default 0,
+  run integer not null default 0,
+  abs_kw integer not null default 0,
+  extractable integer not null default 0,
+  extracts_nicely integer not null default 0,
+  has_version integer not null default 0,
+  has_proper_version integer not null default 0,
+  no_cpants_errors integer not null default 0,
+  has_readme integer not null default 0,
+  has_manifest integer not null default 0,
+  has_meta_yml integer not null default 0,
+  has_buildtool integer not null default 0,
+  has_changelog integer not null default 0,
+  no_symlinks integer not null default 0,
+  has_tests integer not null default 0,
+  proper_libs integer not null default 0,
+  is_prereq integer not null default 0,
+  use_strict integer not null default 0,
+  has_test_pod integer not null default 0,
+  has_test_pod_coverage integer not null default 0,
+  no_pod_errors integer not null default 0,
+  kwalitee numeric not null default 0,
+  abs_core_kw integer not null default 0,
+  rel_core_kw numeric not null default 0,
+  has_working_buildtool integer not null default 0,
+  manifest_matches_dist integer not null default 0,
+  has_example integer not null default 0,
+  buildtool_not_executable integer not null default 0,
+  has_humanreadable_license integer not null default 0,
+  metayml_is_parsable integer not null default 0,
+  metayml_conforms_spec_current integer not null default 0,
+  metayml_has_license integer not null default 0,
+  metayml_conforms_to_known_spec integer not null default 0,
+  has_license integer not null default 0
+);
+CREATE TABLE modules (
+  id  INTEGER PRIMARY KEY AUTOINCREMENT,
+  dist integer not null default 0,
+  module text,
+  file text,
+  in_lib integer not null default 0,
+  in_basedir integer not null default 0
+);
+CREATE TABLE prereq (
+  id  INTEGER PRIMARY KEY AUTOINCREMENT,
+  dist integer not null default 0,
+  requires text,
+  version text,
+  in_dist integer not null default 0
+);
+CREATE TABLE uses (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  dist integer not null default 0,
+  module text,
+  in_dist integer not null default 0,
+  in_code integer not null default 0,
+  in_tests integer not null default 0
+);
+CREATE INDEX auth_av ON author (average_kwalitee);
+CREATE INDEX auth_num ON author (num_dists);
+CREATE INDEX auth_pav ON author (prev_av_kw);
+CREATE INDEX auth_prank ON author (prev_rank);
+CREATE INDEX auth_rank ON author (rank);
+CREATE UNIQUE INDEX author_pauseid_key ON author (pauseid);
+CREATE INDEX dist_auth ON dist (author);
+CREATE UNIQUE INDEX dist_dist_key ON dist (dist);
+CREATE UNIQUE INDEX dist_package_key ON dist (package);
+CREATE UNIQUE INDEX dist_vname_key ON dist (vname);
+CREATE INDEX modules_basedir ON modules (in_basedir);
+CREATE INDEX modules_dist ON modules (dist);
+CREATE INDEX modules_lib ON modules (in_lib);
+CREATE INDEX prereq_dist ON prereq (dist);
+CREATE INDEX prereq_in_dist ON prereq (in_dist);
+CREATE INDEX prereq_requires ON prereq (requires);
+CREATE INDEX uses_dist ON uses (dist);
+CREATE INDEX uses_in_code ON uses (in_code);
+CREATE INDEX uses_in_dist ON uses (in_dist);
+CREATE INDEX uses_in_tests ON uses (in_tests);
+CREATE INDEX uses_module ON uses (module);
+
+
+
+

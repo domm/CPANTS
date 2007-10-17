@@ -6,9 +6,9 @@ use Getopt::Long;
 use File::Spec::Functions qw(rel2abs);
 
 my %opts;
-GetOptions(\%opts,qw(cpan=s lint=s dir=s force));
+GetOptions(\%opts,qw(cpan=s lint=s force));
 
-die "Usage: analyse_cpan.pl --cpan path/to/minicpan --lint path/to/cpants_lint.pl --dir path/to/output/dir" unless $opts{cpan} && $opts{lint};
+die "Usage: analyse_cpan.pl --cpan path/to/minicpan --lint path/to/cpants_lint.pl" unless $opts{cpan} && $opts{lint};
 die "Cannot find cpants_lint.pl (in ".$opts{lint}.")" unless -e $opts{lint};
 
 my $p=Module::CPANTS::ProcessCPAN->new($opts{cpan},$opts{lint});
