@@ -19,7 +19,7 @@ sub search : Local {
     $c->stash->{ term } = $term;
     $c->stash->{ list } = $c->model( 'DBIC::Dist' )->search(
         {
-            dist => { ILIKE => $term . '%' },
+            dist => { LIKE => $term . '%' },
         },
         {
             order_by => 'dist ASC',

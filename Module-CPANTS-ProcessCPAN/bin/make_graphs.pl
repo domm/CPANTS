@@ -47,7 +47,7 @@ foreach (
     },
     {
         title=>'Dists released per year',
-        sql=>'select substr(released,0,5) as year,count(substr(released,0,5)) from dist group by year order by year',
+        sql=>'select substr(released,-4,4) as year,count(substr(released,-4,4)) from dist group by year order by year',
         lablex=>'Year',
         labley=>'Dists',
     },
@@ -64,7 +64,7 @@ sub make_graph {
     $filename=~s/ /_/g;
     $filename=~s/\W//g;
     $filename.=".png";
-
+    
     my (@x,@y);
     my $maxy=0;
 
@@ -73,7 +73,8 @@ sub make_graph {
             my $sth=$DBH->prepare($sql);
             $sth->execute;
             while (my @r=$sth->fetchrow_array) {
-                push(@x,shift(@r));
+                my $x=shift(@r) || '';
+                push(@x,$x);
                 my $y=shift(@r);
                 push(@y,$y);
                 $maxy=$y if $y>$maxy;
@@ -85,7 +86,8 @@ sub make_graph {
         $sth->execute;
 
         while (my @r=$sth->fetchrow_array) {
-            push(@x,shift(@r));
+            my $x=shift(@r) || '';
+            push(@x,$x);
             my $y=shift(@r);
             push(@y,$y);
             $maxy=$y if $y>$maxy;

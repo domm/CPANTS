@@ -203,10 +203,12 @@ sub process_yaml {
     my %dists=map {$_->dist => 1} grep { $_->dist }   @distributions;
 
     my $rs=$db->resultset('Dist')->search;
-    while (my $in_db=$rs->next) {
-        unless ($dists{$in_db->dist}) {
-            print $in_db->dist." not on CPAN anymore, deleted from DB\n";
-            $in_db->delete;
+    if ($rs) {
+        while (my $in_db=$rs->next) {
+            unless ($dists{$in_db->dist}) {
+                print $in_db->dist." not on CPAN anymore, deleted from DB\n";
+                $in_db->delete;
+            }
         }
     }
 }

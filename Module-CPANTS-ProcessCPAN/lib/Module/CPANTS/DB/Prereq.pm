@@ -6,6 +6,7 @@ use base qw(DBIx::Class);
 __PACKAGE__->load_components(qw(PK::Auto Core));
 __PACKAGE__->table('prereq');
 __PACKAGE__->add_columns(qw(id dist requires version in_dist));
+__PACKAGE__->set_primary_key('id');
 __PACKAGE__->belongs_to('dist'=>'Module::CPANTS::DB::Dist');
 __PACKAGE__->belongs_to('in_dist'=>'Module::CPANTS::DB::Dist');
 

@@ -6,6 +6,6 @@ View::TT:
 Model::DBIC:
   schema_class: Module::CPANTS::DB
   connect_info:
-    - dbi:Pg:dbname=cpants
+    - dbi:SQLite:dbname=/usr/local/cpants/sqlite/cpants.db
     - username
     - password
