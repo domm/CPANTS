@@ -12,8 +12,7 @@ use IO::Capture::Stdout;
 use IO::Capture::Stderr;
 use YAML::Syck qw(LoadFile);
 
-use vars qw($VERSION);
-$VERSION=0.73_01;
+use version; our $VERSION=qv('0.74');
 
 use Module::Pluggable search_path=>['Module::CPANTS::Kwalitee'];
 

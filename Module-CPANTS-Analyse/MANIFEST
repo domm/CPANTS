@@ -10,8 +10,8 @@ lib/Module/CPANTS/Kwalitee/Files.pm
 lib/Module/CPANTS/Kwalitee/FindModules.pm
 lib/Module/CPANTS/Kwalitee/License.pm
 lib/Module/CPANTS/Kwalitee/Manifest.pm
-lib/Module/CPANTS/Kwalitee/NeedsCompiler.pm
 lib/Module/CPANTS/Kwalitee/MetaYML.pm
+lib/Module/CPANTS/Kwalitee/NeedsCompiler.pm
 lib/Module/CPANTS/Kwalitee/Pod.pm
 lib/Module/CPANTS/Kwalitee/Prereq.pm
 lib/Module/CPANTS/Kwalitee/Uses.pm
@@ -27,8 +27,8 @@ t/analyse.t
 t/analyse_afs.t
 t/analyse_axkit_xsp_l10n.t
 t/analyse_devel_timer.t
-t/analyse_test_yaml_meta.t
 t/analyse_eg_c.t
+t/analyse_test_yaml_meta.t
 t/calc.t
 t/calc_test_yaml_meta.t
 t/eg/Acme-DonMartin-0.06.tar.gz

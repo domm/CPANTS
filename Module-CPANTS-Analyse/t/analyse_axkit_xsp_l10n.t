@@ -1,4 +1,4 @@
-use Test::More tests => 15;
+use Test::More tests => 13;
 
 use Module::CPANTS::Analyse;
 use File::Spec::Functions;
@@ -23,12 +23,8 @@ is($d->{prereq}[0]->{requires},'mod_perl','prereq');
 is(ref($d->{uses}),'HASH','uses is HASH');
 is($d->{uses}{'Test::More'}{in_tests},6,'uses');
 ok($d->{file_meta_yml},'has_yaml');
-ok(!$d->{metayml_is_parsable},'metayml_is_parsable is false');
-ok($d->{metayml_parse_error},'metayml_parse_error was set');
-is($d->{license},'defined in ./LICEN[CS]E','LICENSE defined in file');
-ok(!defined($d->{metayml_has_license}),'no license in META.yml');
+ok($d->{metayml_is_parsable},'metayml_is_parsable');
+is($d->{license},'perl','LICENSE');
 ok(!$d->{needs_compiler}, 'does not need compiler');
 
-#use Data::Dumper;
-#diag(Dumper $d);
 

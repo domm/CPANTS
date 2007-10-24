@@ -1,16 +1,17 @@
 #-----------------------------------------------------------------
 # Changes for Module::CPANTS::Analyse
-# $Rev: 433 $
-# $Date: 2006-11-04 09:02:03 +0100 (Sat, 04 Nov 2006) $ 
 #-----------------------------------------------------------------
 
 
-0.74-tobe
+0.74    2007-10-24
+    - removed metric metayml_conforms_spec_1_0
     - fixed bug in MCK::MetaYML::check_spec_conformance, which caused 
       wrong results in metayml_conforms_spec*
+    - switched to YAML::Syck
     - work around Pod::Simple::Checker returning strange data
 
-0.73    2007-09012
+
+0.73    2007-09-12
     - added version of dist to dump file name
     - fixed bug in MCK::NeedsCompiler (RT #28134 plus all reported merged
       into that one)
