@@ -2,6 +2,10 @@
 # Changes for Module::CPANTS::ProcessCPAN
 #-----------------------------------------------------------------
 
+
+0.71-tobe
+    - added Module::CPANTS::MyBuild to properly install cpants
+
 0.70    2007-10-24
     - install cpants properly
     - moved to SQLite instead of postgres

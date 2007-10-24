@@ -1,4 +1,4 @@
-package MyBuild;
+package Module::CPANTS::MyBuild;
 use strict;
 use warnings;
 use base qw(Module::Build);

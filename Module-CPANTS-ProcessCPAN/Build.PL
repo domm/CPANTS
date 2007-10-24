@@ -1,11 +1,11 @@
 use strict;
 use warnings;
-use lib qw(mybuilder);
-use MyBuild;
+use lib qw(lib);
+use Module::CPANTS::MyBuild;
 use File::Spec::Functions qw(catdir);
 use File::HomeDir;
 
-my $build = MyBuild->new(
+my $build = Module::CPANTS::MyBuild->new(
     module_name => 'Module::CPANTS::ProcessCPAN',
     license     => 'perl',
     build_requires => {
@@ -33,17 +33,13 @@ my $build = MyBuild->new(
 
     create_makefile_pl=>'passthrough',
 );
-#$build->add_build_element('root');
 
 my $root=$build->prompt(
     "Please specify the CPANTS root directory:",
     catdir(File::HomeDir->my_home,'cpants')
 );
-
 $build->config_data('root'=>$root);
-#$build->install_path->{'yaml'}=catdir($root,'yaml');
-#$build->install_path->{'sqlite'}=catdir($root,'sqlite');
-#$build->install_path->{'script'}=catdir($root,'bin');
+$build->notes('uid',$<);
 
 $build->create_build_script;
 
