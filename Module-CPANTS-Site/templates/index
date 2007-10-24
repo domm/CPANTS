@@ -15,44 +15,20 @@
 
 <h3>News</h3>
 
-<dt>2007-07-13: CPANTS up again</dt>
-<dd>The server now has more memory (Thanks, Andy!), so CPANTS is back to a regular update interval of once a day. I had to revert some of the recent changes, though, so various patches sent in by Barbie and Gabor are not live at the moment.
-<br>
-Additionally, I'm now off for one month of trecking in Mongolia, with no net access. So if CPANTS has a problem again, I won't be able to tend to it until end of August (where I won't have much time either, thanks to <a href="http://vienna.yapceurope.org">YAPC::Europe</a>).
-</dd>
-
-<dt>2007-06-15: CPANTS down</dt>
-<dd>Due to some problems that CPANTS caused on the server (taking to much
-memory..) currently no new data is beeing calculated. And the data shown might
-be wrong... I do hope to find some time to fix this, but it't not going to
-happen today.</dd>
-
-<dt>2007-04-23: New releases<dt>
+<dt>2007-10-24: CPANTS <b>really</b> up again</dt>
 <dd>
-I've fixed lots of bugs reported via RT and email. Thanks for the hints and patches! Quality of CPANTS data should be a bit better now...
+Long time since the last update, I blame YAPC::Europe & real live.<br>
+<br>
+Anyway, CPANTS is now running again, but still with a few hickups. I had to
+move the actual analysis from this machine to a private machine at home,
+because the analysis uses a lot of CPU - to much for the box provided by <a
+href="http://hexten.net">hexten.net</a>.
+<br><br>
+I also fixed some bugs in the handling of Meta.YML, but there are still a few
+problems left. So please take the CPANTS game even less serious than ever :-)
+<br><br>
+But now that the basic setup is working again, I'll fix those problems soon.
 </dd>
-
-<dt>2007-04-02: Old metrics<dt>
-<dd>Now that April 1sth is over, we're back to the regular metrics...</dd>
-
-<dt>2007-04-01: New metrics</dt>
-<dd>Thanks to Catalyst & DBIx::Class I finished my <a
-href="http://oe1.orf.at">$big_project</a> a bit early. I
-used this time to implement a few long-pending metrics:
-
-<ul>
-<li>docs_make_sense
-<li>mentions_kwalitee
-<li>uses_version_control
-<li>reuses_code
-<li>uses_recursion
-<li>correct_speling
-<li>nice_code_layout
-</ul>
-
-You can find a more detailed description <a
-href="/kwalitee_april_1st_2007.html">here</a><br><br>
-Happy gaming!</dd>
 
 </dl>
 

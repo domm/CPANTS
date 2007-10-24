@@ -1,7 +1,17 @@
 <h2>News</h2>
 
 <dl>
+<dt>2007-07-13: CPANTS up again</dt>
+<dd>The server now has more memory (Thanks, Andy!), so CPANTS is back to a regular update interval of once a day. I had to revert some of the recent changes, though, so various patches sent in by Barbie and Gabor are not live at the moment.
+<br>
+Additionally, I'm now off for one month of trecking in Mongolia, with no net access. So if CPANTS has a problem again, I won't be able to tend to it until end of August (where I won't have much time either, thanks to <a href="http://vienna.yapceurope.org">YAPC::Europe</a>).
+</dd>
 
+<dt>2007-06-15: CPANTS down</dt>
+<dd>Due to some problems that CPANTS caused on the server (taking to much
+memory..) currently no new data is beeing calculated. And the data shown might
+be wrong... I do hope to find some time to fix this, but it't not going to
+happen today.</dd>
 <dt>2007-04-23: New releases<dt>
 <dd>
 I've fixed lots of bugs reported via RT and email. Thanks for the hints and patches! Quality of CPANTS data should be a bit better now...
