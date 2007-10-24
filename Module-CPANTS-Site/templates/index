@@ -15,13 +15,13 @@
 
 <h3>News</h3>
 
-<dt>2007-10-24: CPANTS <b>really</b> up again</dt>
+<dt>2007-10-24: CPANTS <u>really</u> up again</dt>
 <dd>
 Long time since the last update, I blame YAPC::Europe & real live.<br>
 <br>
 Anyway, CPANTS is now running again, but still with a few hickups. I had to
 move the actual analysis from this machine to a private machine at home,
-because the analysis uses a lot of CPU - to much for the box provided by <a
+because the analysis uses a lot of CPU - too much for the box provided by <a
 href="http://hexten.net">hexten.net</a>.
 <br><br>
 I also fixed some bugs in the handling of Meta.YML, but there are still a few
