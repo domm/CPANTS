@@ -14,13 +14,6 @@ MANIFEST			This list of files
 META.yml
 module_cpants_site.yml
 README
-root/static/cpants.css
-root/static/down.png
-root/static/hexten.gif
-root/static/new.png
-root/static/same.png
-root/static/up.png
-root/static/yi.gif
 script/module_cpants_site_cgi.pl
 script/module_cpants_site_create.pl
 script/module_cpants_site_fastcgi.pl
