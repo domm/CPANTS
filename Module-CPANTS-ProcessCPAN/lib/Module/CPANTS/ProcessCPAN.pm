@@ -16,7 +16,7 @@ use YAML::Syck qw(LoadFile);
 use FindBin;
 use File::Copy;
 
-use version; our $VERSION=qv(0.69_02);
+use version; our $VERSION=qv('0.70');
 
 __PACKAGE__->mk_accessors(qw(cpan lint force run prev_run _db _db_hist process_dir out_dir));
 
@@ -262,8 +262,6 @@ sub db_hist {
     my $name = catfile($me->root,qw(sqlite cpants_history.db));
     return $me->_db_hist(Module::CPANTS::DBHistory->connect("dbi:SQLite:dbname=$name"));
 }
-
-
 
 sub cpan_01mailrc {
     my $me=shift;

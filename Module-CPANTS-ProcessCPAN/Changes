@@ -1,11 +1,14 @@
 #-----------------------------------------------------------------
 # Changes for Module::CPANTS::ProcessCPAN
-# $Rev$
-# $Date$ 
 #-----------------------------------------------------------------
 
-0.65-tobe
-    - analyse_cpan.pl now only writes yaml files to --dir
+0.70    2007-10-24
+    - install cpants properly
+    - moved to SQLite instead of postgres
+    - switched to YAML::Syck
+    - added process_yaml.pl
+    - dont use DB for analyse_cpan.pl
+    - synced DBIx::Class with DB schema
 
 
 0.64    2007-04-23
