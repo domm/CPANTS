@@ -16,6 +16,7 @@ my $build = Module::Build->new(
         'Catalyst::View::TT'               => '0.23',
         'Catalyst::Plugin::ConfigLoader'   => '0.11', 
         'Catalyst::Plugin::Static::Simple' => '0.14',
+        'version'                          => '0.73', 
 
     },
     create_makefile_pl => 'traditional',
