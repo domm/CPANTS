@@ -1,6 +1,6 @@
 ---
 name: Module-CPANTS-Analyse
-version: 0.73
+version: v0.74
 author:
   - 'Thomas Klausner, <domm@cpan.org>, http://domm.zsi.at'
   - |-
@@ -21,11 +21,11 @@ requires:
   Module::Pluggable: 2.96
   Pod::Simple::Checker: 2.02
   Test::YAML::Meta::Version: 0.04
-  YAML: 0.58
+  YAML::Syck: 0.95
 provides:
   Module::CPANTS::Analyse:
     file: lib/Module/CPANTS/Analyse.pm
-    version: 0.73
+    version: v0.74
   Module::CPANTS::Kwalitee:
     file: lib/Module/CPANTS/Kwalitee.pm
   Module::CPANTS::Kwalitee::BrokenInstaller:
@@ -52,7 +52,7 @@ provides:
     file: lib/Module/CPANTS/Kwalitee/Prereq.pm
   Module::CPANTS::Kwalitee::Uses:
     file: lib/Module/CPANTS/Kwalitee/Uses.pm
-generated_by: Module::Build version 0.2805
+generated_by: Module::Build version 0.280801
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html
   version: 1.2
