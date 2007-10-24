@@ -1,8 +1,12 @@
 #-----------------------------------------------------------------
 # Changes for Module::CPANTS::Site
-# $Rev$
-# $Date$ 
 #-----------------------------------------------------------------
+
+
+0.70    2007-10-24
+    - moved to sqlite backend instead of postgres
+    - add kwalitee of prereqs as suggested by Ian Malpass
+
 
 0.64    2007-04-23
     - moved svn repo to http://code.google.com/p/cpants/

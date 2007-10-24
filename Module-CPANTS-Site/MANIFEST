@@ -5,6 +5,7 @@ lib/Module/CPANTS/Site/Controller/Author.pm
 lib/Module/CPANTS/Site/Controller/Dist.pm
 lib/Module/CPANTS/Site/Controller/Highscores.pm
 lib/Module/CPANTS/Site/Controller/Kwalitee.pm
+lib/Module/CPANTS/Site/Controller/Root.pm
 lib/Module/CPANTS/Site/Model/DBIC.pm
 lib/Module/CPANTS/Site/Model/Kwalitee.pm
 lib/Module/CPANTS/Site/View/TT.pm
@@ -15,6 +16,7 @@ module_cpants_site.yml
 README
 root/static/cpants.css
 root/static/down.png
+root/static/hexten.gif
 root/static/new.png
 root/static/same.png
 root/static/up.png
@@ -24,13 +26,8 @@ script/module_cpants_site_create.pl
 script/module_cpants_site_fastcgi.pl
 script/module_cpants_site_server.pl
 script/module_cpants_site_test.pl
-t/01app.t
 t/02pod.t
 t/03podcoverage.t
-t/controller_Dist.t
-t/controller_Highscores.t
-t/controller_Kwalitee.t
-t/view_TT.t
 templates/author/search
 templates/author/view
 templates/dist/search
@@ -46,6 +43,7 @@ templates/kwalitee/shortcoming
 templates/kwalitee/view
 templates/static/graphs
 templates/static/kwalitee
+templates/static/kwalitee_april_1st_2007
 templates/static/news
 templates/widgets/distlinks
 templates/widgets/pager

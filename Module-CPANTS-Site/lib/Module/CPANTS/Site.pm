@@ -5,7 +5,7 @@ use warnings;
 
 use Catalyst qw( ConfigLoader Static::Simple );
 
-our $VERSION = '0.64';
+our $VERSION = '0.70';
 
 __PACKAGE__->setup;
 
