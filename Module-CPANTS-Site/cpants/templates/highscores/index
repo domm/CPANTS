@@ -6,8 +6,7 @@
 
 <p>Also note that <b>optional metrics</b> (like <code>is_prereq</code>) are <b>not</b> considered in this statistics.</p>
 
-<!--<p>Currently data is created in the night from Saturday to Sunday (CET). You should upload your improved distributions on Friday at the latests, as it may take the CPAN-mirror I'm using some time to catch up.</p>
--->
+<p>Currently data is created in irregular intervals (when I have some CPU to burn on my home laptop).</p>
 
 <ul>
 <li><a href="/highscores/many">Authors with 5 or more dists</a>
