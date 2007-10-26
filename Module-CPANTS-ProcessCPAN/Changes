@@ -4,6 +4,7 @@
 
 
 0.71-tobe
+    - cleaned up analyse_cpan.pl
     - added Module::CPANTS::MyBuild to properly install cpants
 
 

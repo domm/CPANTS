@@ -18,7 +18,7 @@ use File::Copy;
 
 use version; our $VERSION=qv('0.70');
 
-__PACKAGE__->mk_accessors(qw(cpan lint force run prev_run _db _db_hist process_dir out_dir));
+__PACKAGE__->mk_accessors(qw(cpan lint force run prev_run _db _db_hist));
 
 sub new {
     my ($class,$cpan,$lint)=@_;
