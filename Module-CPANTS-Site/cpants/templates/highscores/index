@@ -10,10 +10,10 @@
 -->
 
 <ul>
-<li><a href="many">Authors with 5 or more dists</a>
-<li><a href="few">Authors with less than 5 dists</a>
-<li><a href="hall_of_fame">Hall of Fame - Best Distributions</a>
-<li><a href="hall_of_shame">Hall of Shame - Worst Distributions</a>
+<li><a href="/highscores/many">Authors with 5 or more dists</a>
+<li><a href="/highscores/few">Authors with less than 5 dists</a>
+<li><a href="/highscores/hall_of_fame">Hall of Fame - Best Distributions</a>
+<li><a href="/highscores/hall_of_shame">Hall of Shame - Worst Distributions</a>
 </ul>
 
 
