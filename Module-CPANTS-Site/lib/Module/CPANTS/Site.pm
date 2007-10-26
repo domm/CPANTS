@@ -2,12 +2,30 @@ package Module::CPANTS::Site;
 
 use strict;
 use warnings;
+use Module::CPANTS::ProcessCPAN::ConfigData;
+use File::Spec::Functions;
+use Catalyst qw(Static::Simple );
 
-use Catalyst qw( ConfigLoader Static::Simple );
+my $home=Module::CPANTS::ProcessCPAN::ConfigData->config('root');
 
 use version; our $VERSION = qv('0.70');
 
+__PACKAGE__->config(
+    name    => 'Module::CPANTS::Site',
+    home    => $home,
+    root    => catdir($home,'root'),
+    'View::TT' => {
+        WRAPPER=>'wrapper',
+        INCLUDE_PATH=>catdir($home,'templates'),
+    },
+    'Model::DBIC'=>{
+        schema_class=>'Module::CPANTS::DB',
+        connect_info=>['dbi:SQLite:dbname='.catfile($home,'sqlite','cpants.db')],
+    },
+);
+
 __PACKAGE__->setup;
+    
 
 sub end : Private {
     my ( $self, $c ) = @_;

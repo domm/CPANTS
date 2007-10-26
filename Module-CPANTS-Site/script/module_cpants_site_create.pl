@@ -39,6 +39,7 @@ module_cpants_site_create.pl [options] model|view|controller name [helper] [opti
 
  Examples:
    module_cpants_site_create.pl controller My::Controller
+   module_cpants_site_create.pl controller My::Controller BindLex
    module_cpants_site_create.pl -mechanize controller My::Controller
    module_cpants_site_create.pl view My::View
    module_cpants_site_create.pl view MyView TT

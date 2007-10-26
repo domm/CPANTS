@@ -2,7 +2,7 @@
 
 BEGIN { 
     $ENV{CATALYST_ENGINE} ||= 'HTTP';
-    $ENV{CATALYST_SCRIPT_GEN} = 29;
+    $ENV{CATALYST_SCRIPT_GEN} = 30;
     require Catalyst::Engine::HTTP;
 }  
 
@@ -17,9 +17,9 @@ my $debug             = 0;
 my $fork              = 0;
 my $help              = 0;
 my $host              = undef;
-my $port              = 3000;
+my $port              = $ENV{MODULE_CPANTS_SITE_PORT} || $ENV{CATALYST_PORT} || 3000;
 my $keepalive         = 0;
-my $restart           = 0;
+my $restart           = $ENV{MODULE_CPANTS_SITE_RELOAD} || $ENV{CATALYST_RELOAD} || 0;
 my $restart_delay     = 1;
 my $restart_regex     = '\.yml$|\.yaml$|\.pm$';
 my $restart_directory = undef;
@@ -41,7 +41,7 @@ GetOptions(
 
 pod2usage(1) if $help;
 
-if ( $restart ) {
+if ( $restart && $ENV{CATALYST_ENGINE} eq 'HTTP' ) {
     $ENV{CATALYST_ENGINE} = 'HTTP::Restarter';
 }
 if ( $debug ) {
