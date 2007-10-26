@@ -6,7 +6,7 @@ use Module::CPANTS::ProcessCPAN::ConfigData;
 use File::Spec::Functions;
 use Catalyst qw(Static::Simple );
 
-my $home=Module::CPANTS::ProcessCPAN::ConfigData->config('root');
+my $home=Module::CPANTS::ProcessCPAN::ConfigData->config('home');
 
 use version; our $VERSION = qv('0.70');
 
