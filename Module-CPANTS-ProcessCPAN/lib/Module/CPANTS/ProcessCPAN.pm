@@ -251,7 +251,7 @@ sub db {
     my $me=shift;
     return $me->_db if $me->_db;
    
-    my $name = catfile($me->root,qw(sqlite cpants.db));
+    my $name = catfile($me->home_dir,qw(sqlite cpants.db));
     return $me->_db(Module::CPANTS::DB->connect('dbi:SQLite:dbname='.$name));
 }
 
@@ -259,7 +259,7 @@ sub db_hist {
     my $me=shift;
     return $me->_db_hist if $me->_db_hist;
    
-    my $name = catfile($me->root,qw(sqlite cpants_history.db));
+    my $name = catfile($me->home_dir,qw(sqlite cpants_history.db));
     return $me->_db_hist(Module::CPANTS::DBHistory->connect("dbi:SQLite:dbname=$name"));
 }
 
@@ -283,13 +283,13 @@ sub cpan_path_to_dist {
 
 =cut
 
-sub root {
+sub home_dir {
     my $me=shift;
-    return Module::CPANTS::ProcessCPAN::ConfigData->config('root');
+    return Module::CPANTS::ProcessCPAN::ConfigData->config('home');
 }
 
-sub yaml_analysed { return catdir(shift->root,qw(yaml analysed)) }
-sub yaml_processed { return catdir(shift->root,qw(yaml processed)) }
+sub yaml_analysed { return catdir(shift->home_dir,qw(yaml analysed)) }
+sub yaml_processed { return catdir(shift->home_dir,qw(yaml processed)) }
 
 1;
 

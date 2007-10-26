@@ -10,15 +10,15 @@ use File::Find;
 sub ACTION_install_cpants {
     my $self = shift;
     
-    my $root;
+    my $home;
     eval { require Module::CPANTS::ProcessCPAN::ConfigData };
     if ($@) {
-        $root=$self->prompt("Cannot find CPANTS root dir from Module::CPANTS::ProcessCPAN::ConfigData.\nPlease specify the CPANTS root directory:", catdir(File::HomeDir->my_home,'cpants'));
+        $home=$self->prompt("Cannot find CPANTS home dir from Module::CPANTS::ProcessCPAN::ConfigData.\nPlease specify the CPANTS home directory:", catdir(File::HomeDir->my_home,'cpants'));
     }
     else {
-        $root=Module::CPANTS::ProcessCPAN::ConfigData->config('root');
+        $home=Module::CPANTS::ProcessCPAN::ConfigData->config('home');
     }
-  
+ 
     local $> = $self->notes('uid');
 
     @MyBuild::dirs_to_copy=('');
@@ -26,7 +26,7 @@ sub ACTION_install_cpants {
 
     # make directories
     foreach my $dir (@MyBuild::dirs_to_copy) {
-        my $realdir=catdir($root,$dir);
+        my $realdir=catdir($home,$dir);
         if (-d $realdir) {
             print "Skipping $realdir\n";
             next;
@@ -38,7 +38,7 @@ sub ACTION_install_cpants {
     # copy files
     foreach  my $file (@MyBuild::files_to_copy) {
         my $source=catdir('cpants',$file);
-        my $target=catdir($root,$file);
+        my $target=catdir($home,$file);
         print "Copying $source -> $target\n";
         copy($source,$target) || die "Cannot copy $source -> $target: $!";
     }

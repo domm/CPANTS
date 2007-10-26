@@ -21,15 +21,6 @@ if ($hostname =~/hexten/) {
     $site='/home/domm/Module-CPANTS-Site/';
     $yaml='/home/domm/Module-CPANTS-ProcessCPAN/yaml/';
 
-    $ENV{CPANTS_USER}='cpants';
-    unless ($ENV{CPANTS_PWD}) {
-        open(my $fh,'/home/domm/cpants_pwd') || die "Cannot read cpants pwd from /home/domm/cpants_pwd: $!";
-        my $pwd=<$fh>;
-        close $fh;
-        chomp($pwd);
-        $ENV{CPANTS_PWD}=$pwd;
-    }
-    
 } else {
     $cpan='/home/minicpan';
     $lint='/home/domm/perl/cpants/Module-CPANTS-Analyse/bin/cpants_lint.pl';

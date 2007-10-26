@@ -1,7 +1,7 @@
 # Do not add fakepan to dist
 t/fakepan
-root/yaml_analysed/*.yml
-root/yaml_processed/*.yml
+cpants/yaml_analysed/*.yml
+cpants/yaml_processed/*.yml
 
 # Avoid version control files.
 \bRCS\b
