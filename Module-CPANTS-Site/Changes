@@ -3,6 +3,14 @@
 #-----------------------------------------------------------------
 
 
+0.71-tobe
+    - rearranged dist to work with Module::CPANTS::ProcessCPAN::MyBuild
+    - moved config from yaml to app class, so we can use
+      Module::CPANTS::ProcessCPAN::ConfigData->config(home)
+    - fixed broken links (reported by hossman 
+      http://use.perl.org/comments.pl?sid=37332&cid=58593)
+
+
 0.70    2007-10-24
     - moved to sqlite backend instead of postgres
     - add kwalitee of prereqs as suggested by Ian Malpass
