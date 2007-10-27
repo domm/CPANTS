@@ -7,7 +7,7 @@ use File::Spec::Functions;
 use Catalyst qw(Static::Simple );
 
 my $home=Module::CPANTS::ProcessCPAN::ConfigData->config('home');
-
+$Template::Directive::WHILE_MAX=3000;
 use version; our $VERSION = qv('0.70');
 
 __PACKAGE__->config(
