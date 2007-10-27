@@ -10,7 +10,7 @@ CREATE TABLE run (
 
 CREATE TABLE author (
   id INTEGER PRIMARY KEY,
-  run integer references run (id),
+  run integer,
   author integer,
   average_kwalitee numeric,
   num_dists integer,
@@ -28,7 +28,7 @@ CREATE TABLE dist (
 
 CREATE INDEX auth_author ON author (author);
 CREATE INDEX auth_run ON author (run);
-CREATE INDEX dist_dist ON dist (dist);
+CREATE INDEX dist_distname ON dist (distname);
 CREATE INDEX dist_run ON dist (run);
 
 

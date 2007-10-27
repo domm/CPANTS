@@ -65,7 +65,8 @@ CREATE TABLE dist (
   metayml_is_parsable integer not null default 0,
   file_license integer not null default 0,
   metayml_error text,
-  error_manifest_matches_dist text
+  error_manifest_matches_dist text,
+  needs_compiler integer not null default 0
 );
 CREATE TABLE kwalitee (
   id INTEGER PRIMARY KEY AUTOINCREMENT,

@@ -140,7 +140,7 @@ sub process_yaml {
         }
         
         my ($db_author,$db_dist);
-        $db->txn_begin;
+        
         # save author 
         eval { 
             $db_author=$db->resultset('Author')->find_or_create({pauseid=>$author});
@@ -151,11 +151,9 @@ sub process_yaml {
                 run=>$run->id,
             })
         };
-        $db->txn_commit;
         print "DB ERROR: cannot create dist: $@" and next if $@; 
 
         # add data and add stuff to other tables
-        $db->txn_begin;
         eval {
             $db_dist->update($data);
             
@@ -174,14 +172,12 @@ sub process_yaml {
             if (my $old=$db_dist->cpants_errors) {
                 $from_cpants="$old\n";
             }
+            print "$@\n";
             $db_dist->cpants_errors(join('',$from_cpants,"DB: $@"));
-            $db->txn_rollback;
+            $db_dist->update;
             $kwalitee->{no_cpants_errors}=0;
-        } else {
-            $db->txn_commit;
         }
 
-        $db->txn_begin;
         eval {
             $kwalitee->{dist}=$db_dist->id;
             $kwalitee->{run}=$run->id;
@@ -190,13 +186,12 @@ sub process_yaml {
         };
         if ($@) {
             my $e=$@;
-            $db->txn_rollback;
             croak $data->{dist}." DB kwalitee error: $e";
-        } else {
-            $db->txn_commit;
         }
         unlink($absfile);
     }
+
+    return;
 
     # dump old dists
     my @distributions=$p->distributions;

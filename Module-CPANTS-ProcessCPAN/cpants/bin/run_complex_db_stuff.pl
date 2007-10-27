@@ -5,42 +5,52 @@ use Module::CPANTS::ProcessCPAN;
 use Module::CPANTS::DB;
 use Module::CoreList;
 use Parse::CPAN::Authors;
+use Getopt::Long;
 
-my $path_cpan=shift(@ARGV);
-die "Usage: $0 path/to/local/cpan/mirror" unless -d $path_cpan;
+my %opts;
+GetOptions(\%opts,qw(cpan=s));
 
-my $p=Module::CPANTS::ProcessCPAN->new($path_cpan);
+die "Usage: run_complex_db_stuff.pl --cpan path/to/local/cpan/mirror" unless  $opts{cpan};
+
+my $p=Module::CPANTS::ProcessCPAN->new($opts{cpan});
 my $k=Module::CPANTS::Kwalitee->new;
 my $available_kw=$k->available_kwalitee;
 my @ind=$k->get_indicators;
 
 my $dbh=$p->db->storage->dbh;
 
-# fill dist references in prereq & uses
+# build list of module->dist
+my %modules;
+{
+    my $sth=$dbh->prepare("select module,dist from modules");
+    $sth->execute;
+    while (my ($module,$dist)=$sth->fetchrow_array) {
+        $modules{$module}=$dist;
+    }
+}
+
+# fill dist references in prereq
 # todo: handle modules provided by core
 {
     print "fill prereq with dist_ids\n";
-    my $sth=$dbh->prepare("select distinct requires from prereq where in_dist is null order by requires");
+    my $sth=$dbh->prepare("select distinct requires from prereq where in_dist = 0 order by requires");
     $sth->execute();
     while (my ($module)=$sth->fetchrow_array) {
-        my $in_dist=$dbh->selectrow_array("select dist.id from dist,modules where dist.id=modules.dist AND modules.module=?",undef,$module);
-        next unless $in_dist;
-        $dbh->do("update prereq set in_dist=? where requires=?",undef,$in_dist,$module);
-        $dbh->do("update uses set in_dist=? where module=?",undef,$in_dist,$module);
+        next unless $modules{$module};
+        $dbh->do("update prereq set in_dist=? where requires=?",undef,$modules{$module},$module);
     }
 }
 
 {
-    print "fill still missing uses with dist_ids\n";
-    my $sth=$dbh->prepare("select distinct module from uses where in_dist is null order by module");
+    print "fill uses with dist_ids\n";
+    my $sth=$dbh->prepare("select distinct module from uses where in_dist = 0 order by module");
     $sth->execute();
-    while (my ($uses)=$sth->fetchrow_array) {
-        my $in_dist=$dbh->selectrow_array("select dist.id from dist,modules where dist.id=modules.dist AND modules.module=?",undef,$uses);
-        next unless $in_dist;
-        $dbh->do("update uses set in_dist=? where module=?",undef,$in_dist,$uses);
+    while (my ($module)=$sth->fetchrow_array) {
+        next unless $modules{$module};
+        $dbh->do("update uses set in_dist=? where module=?",undef,$modules{$module},$module);
+
     }
 }
-
 
 # is_prereq
 {
