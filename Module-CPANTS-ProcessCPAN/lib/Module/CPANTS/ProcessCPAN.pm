@@ -16,7 +16,7 @@ use YAML::Syck qw(LoadFile);
 use FindBin;
 use File::Copy;
 
-use version; our $VERSION=qv('0.70');
+use version; our $VERSION=version->new('0.71');
 
 __PACKAGE__->mk_accessors(qw(cpan lint force run prev_run _db _db_hist));
 
@@ -68,6 +68,7 @@ sub process_cpan {
     my $p=Parse::CPAN::Packages->new($me->cpan_02packages);
     my $lint=$me->lint;
     my $analysed=$me->yaml_analysed;
+    my $processed=$me->yaml_processed;
 
     foreach my $dist (sort {$a->dist cmp $b->dist} $p->latest_distributions) {
         my $vname=$dist->distvname;
@@ -76,18 +77,18 @@ sub process_cpan {
         next if $vname=~/^Perl6-Pugs/;
         next if $vname=~/^parrot-/;
         next if $vname=~/^Bundle-/;
-
-        if (-e catfile($analysed,$vname.'.yml')) {
+        
+        if (-e catfile($processed,$vname.'.yml')) {
             if ($me->force) {
-                print "forced reindex of ".$dist->dist." (".$dist->version." )\n";
+                print "forced reindex of $vname\n";
             }
             else {
-                print "skipping ".$dist->dist." (".$dist->version." )\n";
+                print "skipping $vname\n";
                 next;
             }
         }
         else {
-            print "new version of ".$dist->dist." (".$dist->version." )\n";
+            print "new version of $vname\n";
         }
     
         print "analyse $vname\n";

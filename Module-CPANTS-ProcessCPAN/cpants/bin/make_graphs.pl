@@ -2,13 +2,15 @@
 use strict;
 use warnings;
  
-use lib('../lib/','lib/');
+use File::Spec::Functions;
 use GD::Graph;
 use GD::Graph::bars;
 use Module::CPANTS::ProcessCPAN;
 use Module::CPANTS::DB;
+use Module::CPANTS::ProcessCPAN::ConfigData;
+my $home=Module::CPANTS::ProcessCPAN::ConfigData->config('home');
 
-my $outpath=shift(@ARGV) || './';
+my $outpath=shift(@ARGV) || catdir($home,'root','static');
 
 my $mcp=bless {},'Module::CPANTS::ProcessCPAN';
 my $DBH=$mcp->db->storage->dbh;
@@ -106,7 +108,8 @@ sub make_graph {
 
     my $gd=$graph->plot([\@x,\@y]);
     return unless $gd;
-    open(IMG, ">".$outpath.$filename) or die $!;
+    my $outfile=catfile($outpath,$filename);
+    open(IMG, ">",$outfile) or die "$outfile: $!";
     binmode IMG;
     print IMG $gd->png;
     return;

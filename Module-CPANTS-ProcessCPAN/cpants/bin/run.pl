@@ -1,41 +1,32 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-
-use Sys::Hostname;
+use Module::CPANTS::ProcessCPAN::ConfigData;
+use File::Spec::Functions;
+use Getopt::Long;
 use FindBin;
+my ($cpan,$lint,$force);
+GetOptions(
+    'cpan=s' => \$cpan,
+    'lint=s' => \$lint,
+    'force'  => \$force,
+);
 
-my $force='';
-$force=' --force' if $ARGV[0] && $ARGV[0] =~/force/;
+die "Usage: analyse_cpan.pl --cpan path/to/minicpan --lint path/to/cpants_lint.pl" unless $cpan && $lint;
+die "Cannot find cpants_lint.pl (in $lint)" unless -e $lint;
 
 my $perl=$^X;
-my $hostname=hostname();
-my $path=$FindBin::Bin;
-my $lib=$path."/../lib";
-my ($cpan,$lint,$site,$yaml);
+my $home=Module::CPANTS::ProcessCPAN::ConfigData->config('home');
+my $bin=catdir($home,'bin');
+$force='--force' if $force;
 
-
-if ($hostname =~/hexten/) {
-    $cpan='/home2/no-backup/CPAN/cpan.hexten.net/htdocs/';
-    $lint='/home/domm/Module-CPANTS-Analyse/bin/cpants_lint.pl';
-    $site='/home/domm/Module-CPANTS-Site/';
-    $yaml='/home/domm/Module-CPANTS-ProcessCPAN/yaml/';
-
-} else {
-    $cpan='/home/minicpan';
-    $lint='/home/domm/perl/cpants/Module-CPANTS-Analyse/bin/cpants_lint.pl';
-    $site='/home/domm/perl/cpants/Module-CPANTS-Site/';
-    $yaml='/home/domm/perl/cpants/Module-CPANTS-ProcessCPAN/yaml/';
-}
-
-my $yaml_in=$yaml.'in/';
-my $yaml_out=$yaml.'out/';
-system("$perl -I$lib $path/analyse_cpan.pl --cpan $cpan --lint $lint --dir $yaml_in $force");
-system("$perl -I$lib $path/process_yaml.pl --cpan $cpan --dir $yaml");
-system($perl,"-I$lib", $path."/run_complex_db_stuff.pl",$cpan);
-system($perl,"-I$lib", $path."/update_authors.pl",$cpan);
-system($perl,"-I$lib", $path."/make_graphs.pl",$site."root/static/");
-system($perl,"-I$lib", $path."/make_distgraph.pl",$site."root/static/graphs");
-system($perl,"-I$lib", $path."/dump_sqlite.pl",$site."root/static/sqlite");
+system("$perl $bin/analyse_cpan.pl --cpan $cpan --lint $lint $force");
+system("$perl $bin/process_yaml.pl --cpan $cpan");
+system("$perl $bin/run_complex_db_stuff.pl --cpan $cpan");
+system("$perl $bin/update_authors.pl --cpan $cpan");
+system("$perl $bin/make_graphs.pl");
+#system($perl,"-I$lib", 
+#$path."/make_distgraph.pl",$site."root/static/graphs");
+#system($perl,"-I$lib", $path."/dump_sqlite.pl",$site."root/static/sqlite");
 
 

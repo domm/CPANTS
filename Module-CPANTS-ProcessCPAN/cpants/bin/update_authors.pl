@@ -3,14 +3,16 @@ use strict;
 use warnings;
 use Parse::CPAN::Authors;
 use Module::CPANTS::ProcessCPAN;
+use Getopt::Long;
+my %opts;
+GetOptions(\%opts,qw(cpan=s));
 
-die "Usage: update_authors.pl path/to/minicpan" unless @ARGV ==1;
-my $path_cpan=shift(@ARGV);
-my $mcp=Module::CPANTS::ProcessCPAN->new($path_cpan);
+
+die "Usage: update_authors.pl --cpan path/to/minicpan" unless $opts{cpan};
+my $mcp=Module::CPANTS::ProcessCPAN->new($opts{cpan});
 my $db=$mcp->db;
 
 my $p = Parse::CPAN::Authors->new($mcp->cpan_01mailrc);
-
 
 foreach my $auth ($p->authors) {
     my $pauseid=$auth->pauseid;

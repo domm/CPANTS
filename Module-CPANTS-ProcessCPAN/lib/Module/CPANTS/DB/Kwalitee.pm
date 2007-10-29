@@ -25,6 +25,7 @@ extracts_nicely
  proper_libs
  is_prereq
  use_strict
+ use_warnings
  has_test_pod
  has_test_pod_coverage
  no_pod_errors    

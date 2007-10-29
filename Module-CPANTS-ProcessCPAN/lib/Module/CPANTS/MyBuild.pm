@@ -63,6 +63,7 @@ EOMSG
 
 sub to_copy {
     return if /^\.+$/;
+    return if $File::Find::name=~/\.svn/;
     my @dir=splitdir($File::Find::dir);
     shift @dir;       # remove 'cpants/'
     if (-d) {

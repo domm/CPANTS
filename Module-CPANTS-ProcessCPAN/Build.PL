@@ -13,7 +13,7 @@ my $build = Module::CPANTS::MyBuild->new(
     },
     requires    => {
         'Class::Accessor'               => '0.19',
-        'Module::CPANTS::Analyse'       => '0.72',
+        'Module::CPANTS::Analyse'       => '0.75',
         'Module::CoreList'              => '1.98',
         'Parse::CPAN::Authors'          => '2.24',
         'Parse::CPAN::Packages'         => '2.25',
