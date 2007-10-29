@@ -5,7 +5,8 @@
 0.75-tobe
     - added optional metric use_warnings
     - added directory 'xt' as a potential location for test files:w
-
+    - finally applied patch provided by Adriano Ferreira to fix some
+      issues in MCK::Manifest. See RT #28982
 
 
 0.74    2007-10-24

@@ -24,8 +24,10 @@ sub analyse {
         my @manifest;
         while (<$fh>) {
             chomp;
-            s/\s.*$//;
-            next unless /\w/;
+            next if /^\s*#/; # discard pure comments
+
+            s/\s.*$//; # strip file comments
+            next unless $_; # discard blank lines
             push(@manifest,$_);
         }
         close $fh;

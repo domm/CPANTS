@@ -45,13 +45,12 @@ sub unpack {
     return 'cant find dist' unless $me->dist;
 
     copy($me->dist,$me->testfile);
-    chdir($me->testdir); 
     $me->d->{size_packed}=-s $me->testfile;
     
     my $archive;
     eval {
         $archive=Archive::Any->new($me->testfile);
-        $archive->extract();
+        $archive->extract($me->testdir);
     };
 
     if (my $error=$@) {
