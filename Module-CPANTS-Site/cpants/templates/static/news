@@ -1,6 +1,18 @@
 <h2>News</h2>
 
 <dl>
+<dt>2007-10-29: new optional metric: <i>use_warnings</i></dt>
+<dd>
+I've added a new metric: <code>use_warnings</code>. This metric checks if all of your modules include a line like 'use warnings;'. As this does not work for old Perls, I've made it an optional metric (for now..). 
+<br><br>
+A patch submitted by Adriano Ferreira enhances MANIFEST-checking (and removes a bug caused by chdir). See RT #28982 for details.
+<br><br>
+Andy Armstrong suggested to also look in <code>xt/</code> for tests, because this is becoming the new place for optional author tests (like pod-coverage). Which I implemented...
+<br><br>
+I've also re-analysed all of CPAN. The only thing left to do now (besides adding more metrics) is to make the various graphs work again...
+</dd>
+
+
 <dt>2007-07-13: CPANTS up again</dt>
 <dd>The server now has more memory (Thanks, Andy!), so CPANTS is back to a regular update interval of once a day. I had to revert some of the recent changes, though, so various patches sent in by Barbie and Gabor are not live at the moment.
 <br>

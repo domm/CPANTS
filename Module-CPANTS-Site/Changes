@@ -3,11 +3,16 @@
 #-----------------------------------------------------------------
 
 
-0.71-tobe
+0.71    2007-10-29
+    - enhanced kwalitee/view
+    - set WHILE_MAX to 3000 (until I find some time to redo the dist/view
+      page) so that 'Other dists requiring' works for Test::More and 
+      libwww-perl
+    - some fixes to templates (dist name, run)
     - rearranged dist to work with Module::CPANTS::ProcessCPAN::MyBuild
     - moved config from yaml to app class, so we can use
       Module::CPANTS::ProcessCPAN::ConfigData->config(home)
-    - fixed broken links (reported by hossman 
+    - fixed broken links (reported by hossman
       http://use.perl.org/comments.pl?sid=37332&cid=58593)
 
 

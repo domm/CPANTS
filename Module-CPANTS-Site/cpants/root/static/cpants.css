@@ -97,4 +97,6 @@ color: #fff;
 .grey { background-color:#ddd }
 .ok { background-color:#0f0 }
 .not_ok { background-color:#f00 }
+.not_ok_light { background-color:#f99 }
 .opt_not_ok { background-color:#f80 }
+.opt_not_ok_light { background-color:#fd8 }

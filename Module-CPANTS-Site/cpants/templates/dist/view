@@ -1,4 +1,6 @@
 
+<h1>[% dist.vname %]</h1>
+
 <table>
 <tr><td valign="top">
 <table>
@@ -31,7 +33,7 @@
 <td colspan="2" class="grey"><b>Metadata</b></td>
 </tr>
 [% FOREACH c IN dist.columns.sort %]
-[% NEXT IF c == 'author' || c == 'kwalitee' || c == 'id' %]
+[% NEXT IF c == 'author' || c == 'kwalitee' || c == 'id' || c == 'run' %]
 <tr>
     <td valign="top"><b>[% c %]</b></td>
     <td valign="top">
@@ -43,6 +45,8 @@
     </td>
 </tr>
 [% END %]
+<tr><td valign="top"><b>run</b></td>
+<td valign="top">[% dist.run.date %]</td>
 </table>
 </td>
 <td valign=top>

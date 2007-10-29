@@ -1,8 +1,10 @@
 [% IF dist %]
 [% author = dist.author %]
 [% item = dist.kwalitee %]
+[% indicators = mck.get_indicators_hash %]
 
-<h1>Kwalitee for <a href="/dist/[% dist.dist_without_version %]">[% dist.dist %]</a></h1>
+
+<h1>Kwalitee for <a href="/dist/[% dist.dist %]">[% dist.vname %]</a></h1>
 
 <table>
 <tr>
@@ -11,27 +13,41 @@
 </tr>
 <tr>
     <td><b>Author</td>
-    <td colspan=2><a href="/author/[% author.pauseid %]">[% author.name %]</a> ([% author.pauseid%])</td>
+    <td><a href="/author/[% author.pauseid %]">[% author.name %]</a> ([% author.pauseid%])</td>
 </tr>
+</table>
+<br><br>
 
+<table cellpadding=3>
+<tr><td width="5%">Metric</td><td width="5%">Status</td><td width="90%">&nbsp;</td></tr>
 [% FOREACH c IN mck.core_indicator_names %]
+[% class = item.$c ? 'ok' : 'not_ok' %]
 <tr>
-    <td><b><a href="/kwalitee/shortcoming?name=[% c %]">[% c %]</a></b></td>
-    <td class="[% item.$c ? 'ok' : 'not_ok' %]" align="center">[% IF item.$c %]ok[% ELSE %]not&nbsp;ok[% END %]</td>
-    <td>[% UNLESS item.$c %]
-    [% kwalitee_hash.$c.remedy %]
-    [% END %]</td>
-    </tr>
+    <td class="[% class %]"><b>[% c %]</b></td>
+     <td class="[% class %]" align="center">
+[% IF item.$c %]
+    ok</td></tr>
+[% ELSE %]
+    not&nbsp;ok</td></tr>
+    <tr><td class="[% class %]_light" valign="top" align="right">Error:</td><td colspan=2>[% indicators.$c.error %]</td></tr>
+    <tr><td class="[% class %]_light" valign="top" align="right">Remedy:</td><td colspan=2>[% indicators.$c.remedy %]</td></tr>
+[% END %]
 [% END %]
 
+<tr><td colspan=3><br><b>Optional Metrics</b></td></tr>
+
 [% FOREACH c IN mck.optional_indicator_names %]
+[% class = item.$c ? 'ok' : 'opt_not_ok' %]
 <tr>
-    <td><b><a href="/kwalitee/shortcoming?name=[% c %]">[% c %]</a></b></td>
-    <td class="[% item.$c ? 'ok' : 'opt_not_ok' %]" align="center">[% IF item.$c %]ok[% ELSE %]not&nbsp;ok&nbsp;(optional)[% END %]</td>
-    <td>[% UNLESS item.$c %]
-    [% kwalitee_hash.$c.remedy %]
-    [% END %]</td>
-    </tr>
+    <td class="[% class %]"><b>[% c %]</b></td>
+     <td class="[% class %]" align="center">
+[% IF item.$c %]
+   ok</td></tr>
+[% ELSE %]
+    not&nbsp;ok</td></tr>
+    <tr><td class="[% class %]_light" valign="top" align="right">Error:</td><td colspan=2>[% indicators.$c.error %]</td></tr>
+    <tr><td class="[% class %]_light" valign="top" align="right">Remedy:</td><td colspan=2>[% indicators.$c.remedy %]</td></tr>
+[% END %]
 [% END %]
 
 </table>
