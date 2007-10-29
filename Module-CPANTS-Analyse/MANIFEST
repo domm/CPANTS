@@ -28,6 +28,7 @@ t/analyse_afs.t
 t/analyse_axkit_xsp_l10n.t
 t/analyse_devel_timer.t
 t/analyse_eg_c.t
+t/analyse_html_tiny.t
 t/analyse_test_yaml_meta.t
 t/calc.t
 t/calc_test_yaml_meta.t
@@ -36,9 +37,14 @@ t/eg/AFS-2.4.0.tar.gz
 t/eg/AxKit-XSP-L10N-0.03.tar.gz
 t/eg/Devel-Timer-0.02.tar.gz
 t/eg/Eg-C-0.01.tar.gz
+t/eg/HTML-Tiny-0.904.tar.gz
+t/eg/manifest/bad-manifest-0.01.tar.gz
+t/eg/manifest/Good-Dist-0.01.tar.gz
+t/eg/manifest/no-manifest-0.01.tar.gz
 t/eg/not_extractable.gz
 t/eg/Test-YAML-Meta-0.04.tar.gz
 t/kwalitee.t
+t/plugin_manifest.t
 t/plugins.t
 t/testdir.t
 t/testfile.t
