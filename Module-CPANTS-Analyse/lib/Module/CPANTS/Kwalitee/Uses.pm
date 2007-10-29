@@ -17,7 +17,7 @@ sub analyse {
     my $distdir=$me->distdir;
     my $modules=$me->d->{modules};
     my $files=$me->d->{files_array};
-    my @tests=grep {m|^t\b.*\.t|} @$files;
+    my @tests=grep {m|^x?t\b.*\.t|} @$files;
 
     my %skip=map {$_->{module}=>1 } @$modules;
     my %uses;
@@ -68,9 +68,8 @@ sub kwalitee_indicators {
     return [
         {
             name=>'use_strict',
-            error=>q{This distribution does not use 'strict' in all of its modules.},
+            error=>q{This distribution does not 'use strict;' in all of its modules.},
             remedy=>q{Add 'use strict' to all modules.},
-            # TODO report errors
             code=>sub {
                 my $d=shift;
                 my $modules=$d->{modules};
@@ -83,6 +82,24 @@ sub kwalitee_indicators {
                 return 0;
             },
         },
+        {
+            name=>'use_warnings',
+            error=>q{This distribution does not 'use warnings;' in all of its modules.},
+            is_extra=>1,
+            remedy=>q{Add 'use warnings' to all modules.},
+            code=>sub {
+                my $d=shift;
+                my $modules=$d->{modules};
+                my $uses=$d->{uses};
+                return 0 unless $modules && $uses;
+                
+                my ($warnings)=$uses->{'warnings'};
+                return 0 unless $warnings;
+                return 1 if $warnings->{in_code} >= @$modules;
+                return 0;
+            },
+        },
+        
         {
             name=>'has_test_pod',
             error=>q{Doesn't include a test for pod correctness (Test::Pod)},

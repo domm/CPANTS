@@ -73,7 +73,7 @@ sub analyse {
     }
     
     # find special dirs
-    my @special_dirs=(qw(lib t));
+    my @special_dirs=(qw(lib t xt));
     foreach my $dir (@special_dirs){
         my $db_dir="dir_".$dir;
         $me->d->{$db_dir}=((grep {$_ eq "$dir"} @dirs)?1:0);

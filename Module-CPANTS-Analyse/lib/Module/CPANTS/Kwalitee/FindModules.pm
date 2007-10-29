@@ -86,7 +86,7 @@ sub analyse {
         my @modules_path;
         foreach my $file (@$files) {
             next unless $file=~/\.pm$/;
-            next if $file=~m{/t/};
+            next if $file=~m{/x?t/};
             next if $file=~m{/test/};
             next if $file=~m{/inc/};   # skip Module::Install stuff
             $file=~m|(.*)\.pm$|;

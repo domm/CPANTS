@@ -22,6 +22,7 @@ requires:
   Pod::Simple::Checker: 2.02
   Test::YAML::Meta::Version: 0.04
   YAML::Syck: 0.95
+  version: 0.73
 provides:
   Module::CPANTS::Analyse:
     file: lib/Module/CPANTS/Analyse.pm

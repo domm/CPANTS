@@ -35,6 +35,6 @@ is($kw->{metayml_has_license},1,'has license in META.yml');
 is($kw->{metayml_conforms_to_known_spec},1,'META.yml conforms to a known version of the spec.');
 is($kw->{metayml_conforms_spec_current},1,'META.yml conforms to v1.3 of the spec.');
 
-is($kw->{kwalitee},26,'some kwalitee points');
+is($kw->{kwalitee},27,'some kwalitee points');
 
 
