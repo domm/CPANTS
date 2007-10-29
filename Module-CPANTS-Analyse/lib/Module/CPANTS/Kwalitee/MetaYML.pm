@@ -39,7 +39,7 @@ sub kwalitee_indicators{
         {
             name=>'metayml_is_parsable',
             error=>q{The META.yml file of this distributioncould not be parsed by the version of YAML.pm CPANTS is using. See 'metayml_parse_error' in the dist view for more info.},
-            remedy=>q{Upgrade your YAML.pm or convince the maintainer of CPANTS that he has to upgrade.},
+            remedy=>q{If you don't have one, add a META.yml file. Else, upgrade your YAML generator so it produces valid YAML.},
             code=>sub { shift->{metayml_is_parsable} ? 1 : 0 }
         },
         {
