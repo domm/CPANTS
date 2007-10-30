@@ -34,7 +34,7 @@ sub end : Private {
     my $rs = $c->model( 'DBIC::Run' )->search(
         {},
         {
-            order_by => 'date desc',
+            order_by => 'id desc',
             rows     => 1,
         }
     );
