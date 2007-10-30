@@ -45,6 +45,7 @@ script/module_cpants_site_create.pl
 script/module_cpants_site_fastcgi.pl
 script/module_cpants_site_server.pl
 script/module_cpants_site_test.pl
+t/01app.t
 t/02pod.t
 t/03podcoverage.t
 TODO

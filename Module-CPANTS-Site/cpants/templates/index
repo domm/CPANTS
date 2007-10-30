@@ -9,7 +9,7 @@
 <li>Take a look at the various <a href="graphs.html">reports</a> generated at this site.
 <li>Admire the top gamers of the <a href="highscores">CPANTS game</a>. 
 <li>Download the latest CPANTS data as a SQLite DB from here
-<blockquote><a href='/static/sqlite/cpants_all.db.gz'>cpants_all.db.gz</a>
+<blockquote><a href='/static/cpants_all.db.bz2'>cpants_all.db.bz2</a>
 </blockquote>
 </ul>
 

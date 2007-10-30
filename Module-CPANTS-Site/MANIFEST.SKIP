@@ -7,6 +7,16 @@ module_cpants_site_local.yml
 ,v$
 \B\.svn\b
 
+t/controller_Author.t
+t/controller_Dist.t
+t/controller_Highscores.t
+t/controller_Kwalitee.t
+t/controller_Root.t
+t/model_DBIC.t
+t/model_Kwalitee.t
+t/view_TT.t
+
+
 # Avoid Makemaker generated and utility files.
 \bMakefile$
 \bblib
@@ -19,6 +29,7 @@ module_cpants_site_local.yml
 \bBuild$
 \b_build
 \bcover_db
+Module-CPANTS-Site-
 
 # Avoid temp and backup files.
 ~$
