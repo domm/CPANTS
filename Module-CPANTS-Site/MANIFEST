@@ -19,7 +19,6 @@ cpants/templates/dist/provides
 cpants/templates/dist/search
 cpants/templates/dist/shortcoming
 cpants/templates/dist/used_by
-cpants/templates/dist/view
 cpants/templates/helper/in_dist2link
 cpants/templates/highscores/distlist
 cpants/templates/highscores/hall_of_fame
