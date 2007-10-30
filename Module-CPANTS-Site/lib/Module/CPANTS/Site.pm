@@ -8,7 +8,7 @@ use Catalyst qw(Static::Simple );
 
 my $home=Module::CPANTS::ProcessCPAN::ConfigData->config('home');
 $Template::Directive::WHILE_MAX=3000;
-use version; our $VERSION = version->new('0.71');
+use version; our $VERSION = version->new('0.72');
 
 __PACKAGE__->config(
     name    => 'Module::CPANTS::Site',
