@@ -29,12 +29,70 @@ sub search : Local {
     );
 }
 
+# for backward compat / google
 sub view : Path {
     my ( $self, $c, $distname ) = @_;
-    
+    $c->res->redirect('/dist/overview/'.$distname);
+}   
+
+sub overview : Local {
+    my ( $self, $c, $distname ) = @_;
+    $c->forward('get_dist',[ $distname ]);
+}
+
+sub kwalitee : Local {
+    my ( $self, $c, $distname ) = @_;
+    $c->forward('get_dist',[ $distname ]);
+    $c->stash->{ kwalitee_hash } = $c->model( 'Kwalitee' )->get_indicators_hash;
+}
+
+sub prereq : Local {
+    my ( $self, $c, $distname ) = @_;
+    my $dist = $c->forward('get_dist',[ $distname ]);
+    $c->stash->{ prereqs } = $dist->search_related(
+        'prereq',
+        { },
+        {
+            order_by => 'me.requires',
+            prefetch => [ qw( dist ) ],
+        }
+    );
+}
+
+sub used_by : Local {
+    my ( $self, $c, $distname ) = @_;
+    my $dist = $c->forward('get_dist',[ $distname ]);
+    $c->stash->{ used_by } = $dist->search_related(
+        'requiring',
+        { },
+        {
+            order_by => 'dist.dist',
+            prefetch => [ qw( dist ) ],
+        }
+    );
+}
+
+sub metadata : Local {
+    my ( $self, $c, $distname ) = @_;
+    $c->forward('get_dist',[ $distname ]);
+}
+
+sub provides : Local {
+    my ( $self, $c, $distname ) = @_;
+    $c->forward('get_dist',[ $distname ]);
+}
+
+sub errors : Local {
+    my ( $self, $c, $distname ) = @_;
+    $c->forward('get_dist',[ $distname ]);
+}
+
+sub get_dist : Private {
+    my ( $self, $c, $distname ) = @_;
+   
     unless( $distname ) {
         $c->stash->{ template } = 'dist/search';
-        return;
+        $c->detach( 'search' );
     }
 
     my $dist;
@@ -53,27 +111,15 @@ sub view : Path {
             $c->detach( 'search', [ $distname ] );
         }
     }
-
-    $c->stash->{ dist          } = $dist;
-    $c->stash->{ kwalitee_hash } = $c->model( 'Kwalitee' )->get_indicators_hash;
-    $c->stash->{ requiring     } = $dist->search_related(
-        'requiring',
-        { },
-        {
-            order_by => 'dist.dist',
-            prefetch => [ qw( dist ) ],
-        }
-    );
-    $c->stash->{ prereqs       } = $dist->search_related(
-        'prereq',
-        { },
-        {
-            order_by => 'me.requires',
-            prefetch => [ qw( dist ) ],
-        }
-    );
+    $c->stash->{dist} = $dist;
+    return $dist;
 }
 
+
+
+
+
+# TODO move to Kwalitee
 sub shortcoming : Local {
     my ( $self, $c ) = @_;
     my $sc = $c->req->param( 'metric' );

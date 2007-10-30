@@ -2,6 +2,10 @@
 # Changes for Module::CPANTS::Site
 #-----------------------------------------------------------------
 
+0.72    2007-10-30
+    - split up dist/view into several smaller and much nicer pages
+    - generally enhanced dist/view etc
+
 
 0.71    2007-10-29
     - enhanced kwalitee/view

@@ -1,0 +1,19 @@
+<h1>[% dist.vname %] (<a href="/author/[% dist.author.pauseid %]">[% dist.author.pauseid %]</a>)</h1>
+
+<div class="distsubnav">
+[% FOREACH navitem IN [
+    ['overview',    'Overview'],
+    ['kwalitee',    'Kwalitee'],
+    ['prereq',      'Prerequisites'],
+    ['used_by',     'Other dists requiring this'],
+    ['metadata',    'Metadata'],
+    ['provides',    'Modules provided'],
+    ['errors',      'Errors'],
+] %]
+[% "<b>" IF c.action.name == navitem.0 %]
+<a href="/dist/[% navitem.0 %]/[% dist.dist %]">[% navitem.1 %]</a>
+[% "</b>" IF c.action.name == navitem.0 %]
+[% '|' UNLESS loop.last %]
+[% END %]
+</div>
+

@@ -1,0 +1,39 @@
+[% INCLUDE 'dist/intro' %]
+
+[% item = dist.kwalitee %]
+[% indicators = mck.get_indicators_hash %]
+
+<table>
+<tr><td width="5%"><b>Metrics</b><td width="5%"><td width="90%">
+[% FOREACH c IN mck.core_indicator_names %]
+[% class = item.$c ? 'ok' : 'not_ok' %]
+<tr>
+    <td class="[% class %]"><b>[% c %]</b></td>
+     <td class="[% class %]"  align="center">
+[% IF item.$c %]
+    ok</td></tr>
+[% ELSE %]
+    not&nbsp;ok</td></tr>
+    <tr><td class="[% class %]_light" valign="top" align="right">Error:</td><td colspan=2>[% indicators.$c.error %]</td></tr>
+    <tr><td class="[% class %]_light" valign="top" align="right">Remedy:</td><td colspan=2>[% indicators.$c.remedy %]</td></tr>
+[% END %]
+[% END %]
+
+<tr><td colspan=3><br><b>Optional Metrics</b></td></tr>
+
+[% FOREACH c IN mck.optional_indicator_names %]
+[% class = item.$c ? 'ok' : 'opt_not_ok' %]
+<tr>
+    <td class="[% class %]"><b>[% c %]</b></td>
+     <td class="[% class %]" align="center">
+[% IF item.$c %]
+   ok</td></tr>
+[% ELSE %]
+    not&nbsp;ok</td></tr>
+    <tr><td class="[% class %]_light" valign="top" align="right">Error:</td><td colspan=2>[% indicators.$c.error %]</td></tr>
+    <tr><td class="[% class %]_light" valign="top" align="right">Remedy:</td><td colspan=2>[% indicators.$c.remedy %]</td></tr>
+[% END %]
+[% END %]
+
+</table>
+

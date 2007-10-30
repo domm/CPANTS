@@ -1,0 +1,22 @@
+[% INCLUDE 'dist/intro' %]
+
+<table>
+<tr>
+<td class="grey"><b><code>use</code>d by</b></td><td class='grey'>Kwalitee</td><td class='grey'>PauseID</td>
+</tr>
+[% IF used_by.count %]
+[% WHILE (od = used_by.next) %]
+<tr>
+<td><a href="/dist/[% od.dist.dist %]">[% od.dist.dist %]</a></td>
+<td>[% od.dist.kwalitee.kwalitee | format("%2.2f") %]%</td>
+<td><a href="/author/[% od.dist.author.pauseid %]">[% od.dist.author.pauseid %]</a></td>
+</tr>
+[% END %]
+[% ELSE %]
+<tr><td colspan=3>none found</td></tr>
+[% END %]
+</td></tr>
+</table>
+
+
+

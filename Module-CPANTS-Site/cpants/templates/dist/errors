@@ -1,0 +1,19 @@
+[% INCLUDE 'dist/intro' %]
+
+<table>
+[% FOREACH c IN dist.columns.sort %]
+[% NEXT UNLESS c.match('error') %]
+<tr>
+    <td valign="top"><b>[% c %]</b></td>
+    <td valign="top">
+[% IF c.match('_list$') %]
+    [% dist.$c.replace(';','<br>') %]
+[% ELSE %]
+    [% dist.$c %]
+[% END %]
+    </td>
+</tr>
+[% END %]
+</table>
+
+

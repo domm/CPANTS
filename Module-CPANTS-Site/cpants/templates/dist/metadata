@@ -1,0 +1,23 @@
+[% INCLUDE 'dist/intro' %]
+
+<table>
+[% FOREACH c IN dist.columns.sort %]
+[% NEXT IF c == 'author' || c == 'kwalitee' || c == 'id' || c == 'run' %]
+[% NEXT IF c.match('error') %]
+<tr>
+    <td valign="top"><b>[% c %]</b></td>
+    <td valign="top">
+[% IF c.match('_list$') %]
+    [% dist.$c.replace(';','<br>') %]
+[% ELSE %]
+    [% dist.$c %]
+[% END %]
+    </td>
+</tr>
+[% END %]
+<tr><td valign="top"><b>run</b></td>
+<td valign="top">[% dist.run.date %]</td>
+</tr>
+</table>
+
+

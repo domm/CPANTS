@@ -1,0 +1,5 @@
+[% IF in_dist.id %]
+<a href="/dist/[% in_dist.dist %]">[% in_dist.dist %]</a>
+[% ELSE %]
+?
+[% END %]

@@ -1,0 +1,46 @@
+[% INCLUDE 'dist/intro' %]
+
+<table>
+<tr>
+<td class="grey"><b>Listed Prerequisites</b></td><td class="grey">Version</td><td class="grey">Dist</td><td class="grey">Version</td><td class="grey">Kwalitee</td></tr>
+</tr>
+[% IF prereqs.count %]
+[% WHILE (prereq = prereqs.next) %]
+[% in_dist=prereq.in_dist%]
+<tr>
+<td>[% prereq.requires %]</td>
+<td>[% prereq.version %]</td>
+<td>[% INCLUDE 'helper/in_dist2link' in_dist=in_dist %]</td>
+<td>[% in_dist.version%]</td>
+<td>[% in_dist.kwalitee.kwalitee  | format("%2.2f") %]</td>
+<tr>
+[% END %]
+[% ELSE %]
+<tr><td colspan=4>none listed</td></tr>
+[% END %]
+
+<tr><td>&nbsp;</td></tr>
+
+<tr>
+<td class="grey"><b><code>use</code>d modules</b></td><td class="grey">cnt</td><td class="grey">Dist</td>
+</tr>
+<tr><td class="grey"><b>in code:</b></td></tr>
+[% FOREACH used IN dist.uses_in_code %]
+<tr>
+<td>[% used.module %]</td>
+<td>[% used.in_code %]</td>
+<td>[% INCLUDE 'helper/in_dist2link' in_dist=used.in_dist %]</td>
+</tr>
+[% END %]
+<tr><td class="grey"><b>in tests:</b></td></tr>
+[% FOREACH used IN dist.uses_in_tests %]
+<tr>
+<td>[% used.module %]</td>
+<td>[% used.in_tests %]</td>
+<td>[% INCLUDE 'helper/in_dist2link' in_dist=used.in_dist %]</td>
+</tr>
+[% END %]
+</table>
+
+
+

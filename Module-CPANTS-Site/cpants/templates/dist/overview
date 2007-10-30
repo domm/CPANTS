@@ -1,0 +1,46 @@
+[% INCLUDE 'dist/intro' %]
+
+
+<table>
+
+<tr>
+<td valign="top"><b>Name:</b></td>
+<td>[% dist.dist %]</td>
+</tr>
+
+<tr>
+<td valign="top"><b>Version:</b></td>
+<td>[% dist.version %]</td>
+</tr>
+
+<tr>
+<td valign="top"><b>Author:</b></td>
+<td><a href="/author/[% dist.author.pauseid %]">[% dist.author.name %]</a></td>
+</tr>
+
+<tr>
+<td valign="top"><b>Kwalitee:</b></td>
+<td>[% dist.kwalitee.kwalitee | format("%2.2f") %]%
+[% IF mck.total_kwalitee == dist.kwalitee.abs_kw %]
+<br>This distribution passes all CPANTS tests. Yay!
+[% END %]
+</td></tr>
+
+<tr>
+<td valign="top"><b>Release Date:</b></td>
+<td>[% dist.released %]</td>
+</tr>
+
+<tr>
+<td valign="top"><b>Last check:</b></td>
+<td>[% dist.run.date %]</td>
+</tr>
+
+</table>
+
+<p>
+<img src="/static/graphs/[% dist.dist %].png" alt="Stats for [%
+dist.dist %]">
+</p>
+
+

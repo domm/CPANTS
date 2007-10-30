@@ -1,0 +1,8 @@
+[% INCLUDE 'dist/intro' %]
+
+[% FOREACH module IN dist.modules %]
+[% module.module %]<br>
+[% END %]
+
+
+
