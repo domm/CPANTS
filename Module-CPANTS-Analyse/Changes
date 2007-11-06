@@ -4,6 +4,8 @@
 
 
 0.76-tobe
+    - removed workaround in MCK::MetaYML (Barbie fixed it the problem
+      in Test::YAML::Meta)
     - reworded metayml_is_parsable remedy
 
 0.75    2007-10-29

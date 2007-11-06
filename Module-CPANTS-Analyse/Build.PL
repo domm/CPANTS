@@ -15,7 +15,7 @@ my $build = Module::Build->new(
         'Module::Pluggable'         => '2.96',
         'IO::Capture'               => '0.05',
         'Array::Diff'               => '0.04',
-        'Test::YAML::Meta::Version' => '0.04',
+        'Test::YAML::Meta::Version' => '0.06',
         'version'                   => '0.73',
     },
     script_files=>[qw(bin/cpants_lint.pl)],

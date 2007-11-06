@@ -107,7 +107,6 @@ sub check_spec_conformance {
         my $report_version= $version || 'known';
         my @errors;
         foreach my $e ($spec->errors) {
-            next if $e=~/distribution_type/;
             next if $e=~/specification URL/ && $check_current;
             push @errors,$e;
         }
