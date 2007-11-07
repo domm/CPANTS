@@ -3,6 +3,10 @@
 #-----------------------------------------------------------------
 
 
+    - fixed a bug which caused old YAML files to be read. Reported by
+      Barbie: http://use.perl.org/comments.pl?sid=37394&cid=58683
+
+
 0.71    2007-10-29
     - re-added make_graph.pl and update_authors.pl to run.pl
     - fixed prereq/uses DB filling

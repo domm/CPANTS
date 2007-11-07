@@ -2,6 +2,10 @@
 t/fakepan
 cpants/yaml_analysed/*.yml
 cpants/yaml_processed/*.yml
+t/000_purge_testdb.t
+t/process.t
+t/start_run.t
+t/db_1.t
 
 # Avoid version control files.
 \bRCS\b

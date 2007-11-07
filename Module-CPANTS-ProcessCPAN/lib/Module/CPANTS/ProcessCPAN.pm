@@ -69,6 +69,7 @@ sub process_cpan {
     my $lint=$me->lint;
     my $analysed=$me->yaml_analysed;
     my $processed=$me->yaml_processed;
+    my %seen;
 
     foreach my $dist (sort {$a->dist cmp $b->dist} $p->latest_distributions) {
         my $vname=$dist->distvname;
@@ -77,7 +78,8 @@ sub process_cpan {
         next if $vname=~/^Perl6-Pugs/;
         next if $vname=~/^parrot-/;
         next if $vname=~/^Bundle-/;
-        
+        $seen{$vname.'.yml'}++;
+
         if (-e catfile($processed,$vname.'.yml')) {
             if ($me->force) {
                 print "forced reindex of $vname\n";
@@ -96,6 +98,16 @@ sub process_cpan {
         
         # call cpants_lint.pl
         system("$^X $lint --yaml --to_file --dir $analysed $file");
+    }
+
+    # dump old yaml files
+    opendir(DIR,$processed) || die "Cannot open dir $processed: $!";
+    while (my $file=readdir(DIR)) {
+        next unless $file=~/\.yml$/;
+        next if $seen{$file};
+        print "delete $file\n";
+        my $to_delete=catfile($processed,$file);
+        unlink $to_delete || die "Cannot unlink $file: $to_delete";
     }
 }
 
@@ -194,7 +206,7 @@ sub process_yaml {
 
     return;
 
-    # dump old dists
+    # dump old dists from DB
     my @distributions=$p->distributions;
     my %dists=map {$_->dist => 1} grep { $_->dist }   @distributions;
 
