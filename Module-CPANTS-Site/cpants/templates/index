@@ -16,6 +16,12 @@
 <h3>News</h3>
 
 <dl>
+
+<dt>2007-11-07: better data</dt>
+<dd>
+I fixed a few bugs and generated new data. But nothing fancy...
+</dd>
+
 <dt>2007-10-30: reworked dist view</dt>
 <dd>
 The view for a dist is now broken up into several subpages. This makes the data more easy to read. I've also fixed some minor problems in the list of prereqs etc (links are now going to the dist each module is in).
@@ -30,22 +36,6 @@ A patch submitted by Adriano Ferreira enhances MANIFEST-checking (and removes a 
 Andy Armstrong suggested to also look in <code>xt/</code> for tests, because this is becoming the new place for optional author tests (like pod-coverage). Which I implemented...
 <br><br>
 I've also re-analysed all of CPAN. The only thing left to do now (besides adding more metrics) is to make the various graphs work again...
-</dd>
-
-<dt>2007-10-24: CPANTS <u>really</u> up again</dt>
-<dd>
-Long time since the last update, I blame YAPC::Europe & real live.<br>
-<br>
-Anyway, CPANTS is now running again, but still with a few hickups. I had to
-move the actual analysis from this machine to a private machine at home,
-because the analysis uses a lot of CPU - too much for the box provided by <a
-href="http://hexten.net">hexten.net</a>.
-<br><br>
-I also fixed some bugs in the handling of Meta.YML, but there are still a few
-problems left. So please take the CPANTS game even less serious than ever :-)
-<br><br>
-But now that the basic setup is working again, I'll fix those problems soon.
-<br><br>
 </dd>
 
 </dl>

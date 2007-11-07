@@ -1,6 +1,12 @@
 <h2>News</h2>
 
 <dl>
+
+<dt>2007-11-07: better data</dt>
+<dd>
+I fixed a few bugs and generated new data. But nothing fancy...
+</dd>
+
 <dt>2007-10-30: reworked dist view</dt>
 <dd>
 The view for a dist is now broken up into several subpages. This makes the data more easy to read. I've also fixed some minor problems in the list of prereqs etc (links are now going to the dist each module is in).
