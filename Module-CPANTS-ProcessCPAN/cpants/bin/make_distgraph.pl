@@ -2,7 +2,6 @@
 use strict;
 use warnings;
  
-use lib('../lib/','lib/');
 use GD::Graph;
 use GD::Graph::linespoints;
 use Module::CPANTS::DB;
@@ -10,12 +9,14 @@ use Module::CPANTS::Kwalitee;
 use Module::CPANTS::ProcessCPAN;
 use File::Spec::Functions;
 
-my $outpath=shift(@ARGV) || './';
+my $home=Module::CPANTS::ProcessCPAN::ConfigData->config('home');
+my $outpath=shift(@ARGV) || catdir($home,'root','static','graphs');
+
 my $mck=Module::CPANTS::Kwalitee->new;
 my $max_y=int(($mck->total_kwalitee / $mck->available_kwalitee)*100);
 
 my $mcp=bless {},'Module::CPANTS::ProcessCPAN';
-my $db=$mcp->db;
+my $db=$mcp->db_hist;
 
 my @runs=$db->resultset('Run')->search({},
     {
@@ -24,30 +25,30 @@ my @runs=$db->resultset('Run')->search({},
     }
 );
 my $run=$runs[0];
-
-
-my $dists=$db->resultset('Module::CPANTS::DB::Dist')->search({run=>$run->id});
+my $dists=$db->resultset('Module::CPANTS::DBHistory::Dist')->search({run=>$run->id});
 my %authors;
+print "making distgraphs\n";
 while (my $dist=$dists->next) {
-    #make_distgraph($dist);
-    $authors{$dist->author->id}=$dist->author;
+    make_distgraph($dist);
+    #$authors{$dist->author->id}=$dist->author;
 }
-
+exit;
 foreach my $author (values %authors) {
     make_authorgraph($author);
 }
 
+exit;
 
 sub make_distgraph {
     my ($dist)=@_;   
     
-    my $results=$db->resultset('Module::CPANTS::DB::DistHist')->search(distname=>$dist->dist);;
+    my $results=$db->resultset('Module::CPANTS::DBHistory::Dist')->search(distname=>$dist->distname);;
     
     my $graph=GD::Graph::linespoints->new(800,300);
     $graph->set(
         x_label=>'CPANTS Run (Release of Dist)',
 		'y_label'=>'Kwalitee',
-		title=>"Kwalitee for ".$dist->dist,
+		title=>"Kwalitee History for ".$dist->distname,
 		'y_max_value'=>$max_y,
         y_min_value=>0,
         x_labels_vertical=>1,
@@ -60,19 +61,20 @@ sub make_distgraph {
     while (my $set=$results->next) {
         my $date=substr($set->run->date,0,10) || '?';
         push(@date,"$date (".($set->version || '?').")");
-        push(@kw,$set->kwalitee);
+        push(@kw,sprintf("%.2f",$set->kwalitee));
     }
 
     my $gd=$graph->plot([\@date,\@kw]) || die $graph->error;
-    open(IMG, ">",catfile($outpath,$dist->dist.".png")) or die $!;
+    open(IMG, ">",catfile($outpath,$dist->distname.".png")) or die $!;
     binmode IMG;
     print IMG $gd->png;
+    print $dist->distname,"\n";;
     return;
 }
 
 sub make_authorgraph {
     my $author=shift;
-    my $results=$db->resultset('Module::CPANTS::DB::AuthHist')->search(author=>$author->id);
+    my $results=$db->resultset('Module::CPANTS::DBHistory::Author')->search(author=>$author->id);
 
     my @date; my @kw; my @dists;
     my $max_dists=0;
@@ -90,6 +92,7 @@ sub make_authorgraph {
     print_graph('dists','Number of Dists',$author,\@date,\@dists,$max_dists+1+(int $max_dists*0.1));
     print_graph('kw','Average Kwalitte',$author,\@date,\@kw,$max_y);
 
+    exit;
     return;
 }
 
