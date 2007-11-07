@@ -42,7 +42,7 @@ exit;
 sub make_distgraph {
     my ($dist)=@_;   
     
-    my $results=$db->resultset('Module::CPANTS::DBHistory::Dist')->search(distname=>$dist->distname);;
+    my $results=$db->resultset('Module::CPANTS::DBHistory::Dist')->search(distname=>$dist->distname);
     
     my $graph=GD::Graph::linespoints->new(800,300);
     $graph->set(
@@ -63,12 +63,11 @@ sub make_distgraph {
         push(@date,"$date (".($set->version || '?').")");
         push(@kw,sprintf("%.2f",$set->kwalitee));
     }
-
     my $gd=$graph->plot([\@date,\@kw]) || die $graph->error;
     open(IMG, ">",catfile($outpath,$dist->distname.".png")) or die $!;
     binmode IMG;
     print IMG $gd->png;
-    print $dist->distname,"\n";;
+    print $dist->distname,"\n";
     return;
 }
 

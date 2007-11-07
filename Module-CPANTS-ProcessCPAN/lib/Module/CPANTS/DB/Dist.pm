@@ -19,7 +19,9 @@ __PACKAGE__->has_many('uses'=>'Module::CPANTS::DB::Uses');
 __PACKAGE__->has_many('requiring'=>'Module::CPANTS::DB::Prereq','in_dist');
 __PACKAGE__->belongs_to('run'=>'Module::CPANTS::DB::Run');
 __PACKAGE__->belongs_to('author'=>'Module::CPANTS::DB::Author');
-
+__PACKAGE__->add_unique_constraint(
+    dist => [ qw{dist} ]
+);
 use Data::Dumper;
 
 sub uses_in_code {

@@ -15,6 +15,7 @@ use Parse::CPAN::Packages;
 use YAML::Syck qw(LoadFile);
 use FindBin;
 use File::Copy;
+use DateTime;
 
 use version; our $VERSION=version->new('0.71');
 
@@ -45,12 +46,13 @@ sub start_run {
     );
     $me->prev_run($prev[0]);
         
+    my $now=DateTime->now;
     my $run=$me->db->resultset('Run')->create({
         mcanalyse_version=>$Module::CPANTS::Analyse::VERSION,
         mcprocess_version=>$Module::CPANTS::ProcessCPAN::VERSION,
         available_kwalitee=>$mck->available_kwalitee,
         total_kwalitee=>$mck->total_kwalitee,
-        date=>scalar localtime,
+        date=>$now,
     });
     $me->run($run);
     
