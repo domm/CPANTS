@@ -54,7 +54,11 @@ else {
         my ($core_kw,$opt_kw)=(0,0);
         my $kwl=$mca->d->{kwalitee};
         
+        my @need_db;
         foreach my $ind (@{$mca->mck->get_indicators}) {
+            if ($ind->{needs_db}) {
+                push(@need_db,$ind);
+            }
             if ($ind->{is_extra}) {
                 next if $ind->{name} eq 'is_prereq';
                 if ($kwl->{$ind->{name}}) {
@@ -79,9 +83,11 @@ else {
         my $total_kw=$core_kw+$opt_kw;
 
         $output.="Kwalitee rating\t\t".sprintf("%.2f",100*$total_kw/$max_core_kw)."% ($total_kw/$max_core_kw)\n";
+        if (@need_db) {
+            $output.="Ignoring metrics\t".join(', ',map {$_->{name} } @need_db);
+        }
 
-
-        if ($total_kw == $max_kw -1) {  # -1 because of is_prereq
+        if ($total_kw == $max_kw - @need_db) {
             $output.="\nCongratulations for building a 'perfect' distribution!\n";
         } else {
             if (@core_failure) {

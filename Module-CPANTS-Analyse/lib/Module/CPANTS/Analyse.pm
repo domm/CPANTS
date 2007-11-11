@@ -99,8 +99,9 @@ sub calc_kwalitee {
     my $kwalitee=0;
     my %k;
     foreach my $mod (@{$me->mck->generators}) {
-	foreach my $i (@{$mod->kwalitee_indicators}) {
-	    my $rv=$i->{code}($me->d);
+        foreach my $i (@{$mod->kwalitee_indicators}) {
+            next if $i->{needs_db};
+            my $rv=$i->{code}($me->d);
             $k{$i->{name}}=$rv;
             $kwalitee+=$rv;
         }

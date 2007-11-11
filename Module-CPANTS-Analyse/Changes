@@ -4,6 +4,8 @@
 
 
 0.76-tobe
+    - added 'needs_db' to metrics and removed hardcoded workaround for
+      is_prereq
     - removed workaround in MCK::MetaYML (Barbie fixed it the problem
       in Test::YAML::Meta)
     - reworded metayml_is_parsable remedy

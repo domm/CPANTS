@@ -92,10 +92,7 @@ sub kwalitee_indicators {
                 my $modules=$d->{modules};
                 my $uses=$d->{uses};
                 use Data::Dumper;
-                print Dumper $modules;
-                print Dumper $uses;
                 return 0 unless $modules && $uses;
-                print "check\n";
                 my ($warnings)=$uses->{'warnings'};
                 return 0 unless $warnings;
                 return 1 if $warnings->{in_code} >= @$modules;

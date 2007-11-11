@@ -22,7 +22,8 @@ sub analyse {
         if ($yaml->{requires}) {
             $prereq=$yaml->{requires};
         }
-    } elsif (grep {/^Build\.PL$/} @$files) {
+    }
+    elsif (grep {/^Build\.PL$/} @$files) {
         open(my $in, '<', catfile($distdir,'Build.PL')) || return 1;
         my $m=join '', <$in>;
         close $in;
@@ -30,7 +31,8 @@ sub analyse {
         ## no critic (ProhibitStringyEval)
         eval "{ no strict; \$prereq = { $requires \n} }";
         
-    } else {
+    }
+    else {
         open(my $in, '<', catfile($distdir,'Makefile.PL')) || return 1;
         my $m=join '', <$in>;
         close $in;
@@ -72,8 +74,11 @@ sub kwalitee_indicators{
             error=>q{This distribution is not required by another distribution by another author.},
             remedy=>q{Convince / force / bribe another CPAN author to use this distribution.},
             code=>sub {
+                # this metric can only be run from within 
+                # Module::CPANTS::ProcessCPAN
                 return 0;               
             },
+            needs_db=>1,
             is_extra=>1,
         },
     ];
