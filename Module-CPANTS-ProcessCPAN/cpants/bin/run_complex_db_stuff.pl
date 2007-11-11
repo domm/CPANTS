@@ -63,6 +63,25 @@ my %modules;
     }
 }
 
+# prereq_matches_use
+if (1==2) {
+    print "prereq_matches_use\n";
+    my $sth=$dbh->prepare("select distinct dist.id from dist,uses where dist.id=uses.dist and uses.in_dist>0");
+    $sth->execute;
+    my $missing=0;
+    my $count=0;
+    while (my ($id)=$sth->fetchrow_array) {
+        $count++;
+        my $used_dists=$dbh->selectcol_arrayref("select distinct in_dist from uses where dist=? AND in_dist>0 and in_code=1",undef,$id);
+        my $prereqed_dists=$dbh->selectcol_arrayref("select distinct in_dist from prereq where dist=? AND in_dist>0",undef,$id);
+       
+        if (@$used_dists > @$prereqed_dists) {
+            $missing++;
+            print "SOMETHING MISSING ($missing / $count)\n";
+        }
+    }
+    print "Stats: Of $count dists, $missing have missing deps\n";
+}
 
 # calc final kwalitee 
 {

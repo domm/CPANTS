@@ -3,6 +3,7 @@
 #-----------------------------------------------------------------
 
 
+    - first prototype of prereq_matches_use
     - re-enabled distgraphs
     - fixed a bug which caused old YAML files to be read. Reported by
       Barbie: http://use.perl.org/comments.pl?sid=37394&cid=58683
