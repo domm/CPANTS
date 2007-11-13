@@ -22,7 +22,6 @@ __PACKAGE__->belongs_to('author'=>'Module::CPANTS::DB::Author');
 __PACKAGE__->add_unique_constraint(
     dist => [ qw{dist} ]
 );
-use Data::Dumper;
 
 sub uses_in_code {
     return shift->search_related('uses',{in_code=>{'>=',1}},{order_by=>'module'});
@@ -33,6 +32,3 @@ sub uses_in_tests {
 
 
 'Listening to: Attwenger - dog'
-
-
-

@@ -7,7 +7,6 @@ use Module::CPANTS::DB;
 use Module::CPANTS::DBHistory;
 use Module::CPANTS::Kwalitee;
 use Module::CPANTS::ProcessCPAN::ConfigData;
-use Data::Dumper;
 use base qw(Class::Accessor);
 use Carp;
 use File::Spec::Functions qw(catdir catfile rel2abs);
