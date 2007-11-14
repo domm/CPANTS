@@ -52,6 +52,8 @@ my %modules;
     }
 }
 
+my %kwalitee_updates;
+
 # is_prereq
 {
     print "is_prereq\n";
@@ -59,29 +61,74 @@ my %modules;
     $sth->execute;
     while (my ($distid,$authid)=$sth->fetchrow_array) {
         my $is_prereq=$dbh->selectrow_array("select count(prereq.id) from prereq,dist,author where prereq.dist=dist.id AND dist.author=author.id AND in_dist=? AND dist.author!=?",undef,$distid,$authid);
-        $dbh->do("update kwalitee set is_prereq=1 where dist=?",undef,$distid) if $is_prereq>0; 
+        push(@{$kwalitee_updates{$distid}},'is_prereq') if $is_prereq>0;
     }
 }
 
 # prereq_matches_use
-if (1==2) {
+{
     print "prereq_matches_use\n";
-    my $sth=$dbh->prepare("select distinct dist.id from dist,uses where dist.id=uses.dist and uses.in_dist>0");
-    $sth->execute;
+    my %uses;
+    my %prereq;
+    my $sth_uses=$dbh->prepare("select distinct dist,in_dist from uses where in_dist>0 AND in_code>0");
+    $sth_uses->execute;
+    while (my ($dist,$in)=$sth_uses->fetchrow_array) {
+        push(@{$uses{$dist}},$in);
+    }
+    my $sth_prereq=$dbh->prepare("select distinct dist,in_dist from prereq where in_dist>0 AND (is_prereq=1 OR is_optional_prereq=1)");
+    $sth_prereq->execute;
+    while (my ($dist,$in)=$sth_prereq->fetchrow_array) {
+        push(@{$prereq{$dist}},$in);
+    }
     my $missing=0;
-    my $count=0;
-    while (my ($id)=$sth->fetchrow_array) {
-        $count++;
-        my $used_dists=$dbh->selectcol_arrayref("select distinct in_dist from uses where dist=? AND in_dist>0 and in_code=1",undef,$id);
-        my $prereqed_dists=$dbh->selectcol_arrayref("select distinct in_dist from prereq where dist=? AND in_dist>0",undef,$id);
-       
-        if (@$used_dists > @$prereqed_dists) {
-            $missing++;
-            print "SOMETHING MISSING ($missing / $count)\n";
+    my $count=keys %uses;
+    foreach my $dist (keys %uses) {
+        my $used=$uses{$dist};
+        my $prereq=$prereq{$dist};
+        next unless $prereq && $used;
+        if (@$used > @$prereq) {
+            push(@{$kwalitee_updates{$dist}},'prereq_matches_use');
         }
     }
-    print "Stats: Of $count dists, $missing have missing deps\n";
 }
+
+#build_prereq_matches_use
+{
+    print "build_prereq_matches_use\n";
+    my %uses;
+    my %prereq;
+    my $sth_uses=$dbh->prepare("select distinct dist,in_dist from uses where in_dist>0 AND in_tests>0");
+    $sth_uses->execute;
+    while (my ($dist,$in)=$sth_uses->fetchrow_array) {
+        push(@{$uses{$dist}},$in);
+    }
+    my $sth_prereq=$dbh->prepare("select distinct dist,in_dist from prereq where in_dist>0 AND is_build_prereq=1");
+    $sth_prereq->execute;
+    while (my ($dist,$in)=$sth_prereq->fetchrow_array) {
+        push(@{$prereq{$dist}},$in);
+    }
+    my $missing=0;
+    my $count=keys %uses;
+    foreach my $dist (keys %uses) {
+        my $used=$uses{$dist};
+        my $prereq=$prereq{$dist};
+        next unless $prereq && $used;
+        if (@$used > @$prereq) {
+            push(@{$kwalitee_updates{$dist}},'build_prereq_matches_use');
+        }
+    }
+}
+
+# update kwalitee
+{
+    print "update kwalitee\n";
+    while ((my $dist,$rows)=each %kwalitee_updates) {
+        $sth->do("update kwalitee set ".(
+            join(', ',map { "$_='1'" } @$rows
+        )." where dist=?",undef,$dist);
+    }
+}
+
 
 # calc final kwalitee 
 {

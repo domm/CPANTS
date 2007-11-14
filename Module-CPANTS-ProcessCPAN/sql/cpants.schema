@@ -67,7 +67,8 @@ CREATE TABLE dist (
   file_license integer not null default 0,
   metayml_error text,
   error_manifest_matches_dist text,
-  needs_compiler integer not null default 0
+  needs_compiler integer not null default 0,
+  got_prereq_from text
 );
 CREATE TABLE kwalitee (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -105,7 +106,9 @@ CREATE TABLE kwalitee (
   metayml_conforms_spec_current integer not null default 0,
   metayml_has_license integer not null default 0,
   metayml_conforms_to_known_spec integer not null default 0,
-  has_license integer not null default 0
+  has_license integer not null default 0,
+  prereq_matches_use integer not null default 0,
+  build_prereq_matches_use integer not null default
 );
 CREATE TABLE modules (
   id  INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -120,7 +123,10 @@ CREATE TABLE prereq (
   dist integer not null default 0,
   requires text,
   version text,
-  in_dist integer not null default 0
+  in_dist integer not null default 0,
+  is_prereq integer not null default 0,
+  is_build_prereq integer not null default 0,
+  is_optional_prereq integer not null default 0
 );
 CREATE TABLE uses (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -146,6 +152,9 @@ CREATE INDEX modules_lib ON modules (in_lib);
 CREATE INDEX prereq_dist ON prereq (dist);
 CREATE INDEX prereq_in_dist ON prereq (in_dist);
 CREATE INDEX prereq_requires ON prereq (requires);
+CREATE INDEX prereq_is_req ON prereq (is_prereq);
+CREATE INDEX prereq_is_buildred ON prereq (is_build_prereq);
+CREATE INDEX prereq_is_optreq ON prereq (is_optional_prereq);
 CREATE INDEX uses_dist ON uses (dist);
 CREATE INDEX uses_in_code ON uses (in_code);
 CREATE INDEX uses_in_dist ON uses (in_dist);

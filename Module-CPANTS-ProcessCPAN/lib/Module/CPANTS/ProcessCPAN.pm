@@ -16,7 +16,7 @@ use FindBin;
 use File::Copy;
 use DateTime;
 
-use version; our $VERSION=version->new('0.71');
+use version; our $VERSION=version->new('0.72');
 
 __PACKAGE__->mk_accessors(qw(cpan lint force run prev_run _db _db_hist));
 
@@ -44,7 +44,7 @@ sub start_run {
         }
     );
     $me->prev_run($prev[0]);
-        
+     
     my $now=DateTime->now;
     my $run=$me->db->resultset('Run')->create({
         mcanalyse_version=>$Module::CPANTS::Analyse::VERSION,
@@ -54,7 +54,7 @@ sub start_run {
         date=>$now,
     });
     $me->run($run);
-    
+    print $run->id,"\n";
     my %for_history=map {$_=>$run->$_} qw(id mcanalyse_version mcprocess_version available_kwalitee total_kwalitee date);
     $me->db_hist->resultset('Run')->create(
         \%for_history    
