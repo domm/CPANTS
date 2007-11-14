@@ -17,47 +17,76 @@ sub analyse {
     my $distdir=$me->distdir;
 
     my $prereq;
+    my $build;
+    my $optional;
     my $yaml=$me->d->{meta_yml};
     if ($yaml) {
         if ($yaml->{requires}) {
             $prereq=$yaml->{requires};
         }
+        if ($yaml->{build_requires}) {
+            $build=$yaml->{requires};
+        }
+        if ($yaml->{recommends}) {
+            $optional=$yaml->{recommends};
+        }
+        $me->d->{got_prereq_from}='META.yml';
     }
     elsif (grep {/^Build\.PL$/} @$files) {
         open(my $in, '<', catfile($distdir,'Build.PL')) || return 1;
         my $m=join '', <$in>;
         close $in;
-        my($requires) = $m =~ /requires.*?=>.*?\{(.*?)\}/s;
+        my($requires) = $m =~ /(?<!_)requires.*?=>.*?\{(.*?)\}/s;
+        my($build_requires) = $m =~ /build_requires.*?=>.*?\{(.*?)\}/s;
+        my($optional_requires) = $m =~ /recommends.*?=>.*?\{(.*?)\}/s;
+        
+        $me->d->{got_prereq_from}='Build.PL';
+
         ## no critic (ProhibitStringyEval)
         eval "{ no strict; \$prereq = { $requires \n} }";
-        
+        ## no critic (ProhibitStringyEval)
+        eval "{ no strict; \$build = { $build_requires \n} }";
+        ## no critic (ProhibitStringyEval)
+        eval "{ no strict; \$optional = { $optional_requires \n} }";
     }
     else {
         open(my $in, '<', catfile($distdir,'Makefile.PL')) || return 1;
         my $m=join '', <$in>;
         close $in;
+        
+        $me->d->{got_prereq_from}='Makefile.PL';
 
         my($requires) = $m =~ /PREREQ_PM.*?=>.*?\{(.*?)\}/s;
         $requires||='';
         ## no critic (ProhibitStringyEval)
         eval "{ no strict; \$prereq = { $requires \n} }";
     }
-    return unless $prereq;
+    return unless $prereq || $build || $optional;
     
-    if (!ref $prereq) {
-        my $p={$prereq=>0};
-        $prereq=$p;
-    }
+    my %all=(
+        prereq              => $prereq,
+        build_prereq        => $build,
+        optional_prereq     => $optional
+    );
 
-    # sanitize version
     my @clean;
-    while (my($requires,$version)=each%$prereq) {
-        $version||=0;
-        $version=0 unless $version=~/[\d\._]+/;
-        push(@clean,{
-            requires=>$requires,
-            version=>$version,
-        });
+    while (my ($type,$data)=each %all) {
+        next unless $data;
+        if (!ref $data) {
+            my $p={$data=>0};
+            $data=$p;
+        }
+
+        # sanitize version
+        while (my($requires,$version)=each %$data) {
+            $version||=0;
+            $version=0 unless $version=~/[\d\._]+/;
+            push(@clean,{
+                requires=>$requires,
+                version=>$version,
+                'is_'.$type=>1,
+            });
+        }
     }
     $me->d->{prereq}=\@clean;
     return;
@@ -81,6 +110,29 @@ sub kwalitee_indicators{
             needs_db=>1,
             is_extra=>1,
         },
+        {
+            name=>'prereq_matches_use',
+            error=>q{This distribution uses a module or a dist that's not listed as a prerequisite.},
+            remedy=>q{List all used modules in META.yml requires},
+            code=>sub {
+                # this metric can only be run from within 
+                # Module::CPANTS::ProcessCPAN
+                return 0;               
+            },
+            needs_db=>1,
+        },
+        {
+            name=>'build_prereq_matches_use',
+            error=>q{This distribution uses a module or a dist in it's test suite that's not listed as a build prerequisite.},
+            remedy=>q{List all modules used in the test suite in META.yml build_requires},
+            code=>sub {
+                # this metric can only be run from within 
+                # Module::CPANTS::ProcessCPAN
+                return 0;               
+            },
+            needs_db=>1,
+        },
+        
     ];
 }
 

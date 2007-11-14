@@ -58,6 +58,7 @@ else {
         foreach my $ind (@{$mca->mck->get_indicators}) {
             if ($ind->{needs_db}) {
                 push(@need_db,$ind);
+                next;
             }
             if ($ind->{is_extra}) {
                 next if $ind->{name} eq 'is_prereq';
