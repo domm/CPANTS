@@ -7,7 +7,7 @@ __PACKAGE__->load_components(qw(PK::Auto Core));
 __PACKAGE__->table('dist');
 __PACKAGE__->add_columns(qw(
 id run
-bad_permissions bad_permissions_list cpants_errors dir_lib dir_t dir_xt dirs dirs_list dist vname extension extractable extracts_nicely file_build_pl file_changelog file_makefile_pl file_manifest file_meta_yml file_ninja file_readme file_signature file_test_pl file_license files files_list package author pod_errors released size_packed size_unpacked symlinks symlinks_list version version_major version_minor broken_module_install manifest_matches_dist buildfile_executable pod_errors_msg license metayml_parse_error metayml_is_parsable metayml_error error_manifest_matches_dist needs_compiler got_prereq_from
+bad_permissions bad_permissions_list cpants_errors dir_lib dir_t dir_xt dirs dirs_list dist vname extension extractable extracts_nicely file_build_pl file_changelog file_makefile_pl file_manifest file_meta_yml file_ninja file_readme file_signature file_test_pl file_license files files_list package author pod_errors released size_packed size_unpacked symlinks symlinks_list version version_major version_minor broken_module_install manifest_matches_dist buildfile_executable pod_errors_msg license metayml_parse_error metayml_is_parsable metayml_error error_manifest_matches_dist needs_compiler got_prereq_from error_prereq error_build_prereq is_core
 ));
 
 __PACKAGE__->set_primary_key('id');
@@ -24,10 +24,10 @@ __PACKAGE__->add_unique_constraint(
 );
 
 sub uses_in_code {
-    return shift->search_related('uses',{in_code=>{'>=',1}},{order_by=>'module'});
+    return shift->search_related('uses',{in_code=>{'>=',1}},{order_by=>'in_dist,module'});
 }
 sub uses_in_tests {
-    return shift->search_related('uses',{in_tests=>{'>=',1}},{order_by=>'module'});
+    return shift->search_related('uses',{in_tests=>{'>=',1}},{order_by=>'in_dist,module'});
 }
 
 

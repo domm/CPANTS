@@ -25,7 +25,7 @@ sub analyse {
             $prereq=$yaml->{requires};
         }
         if ($yaml->{build_requires}) {
-            $build=$yaml->{requires};
+            $build=$yaml->{build_requires};
         }
         if ($yaml->{recommends}) {
             $optional=$yaml->{recommends};

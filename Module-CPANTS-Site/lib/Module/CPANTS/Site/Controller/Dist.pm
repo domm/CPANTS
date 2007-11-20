@@ -51,12 +51,29 @@ sub prereq : Local {
     my $dist = $c->forward('get_dist',[ $distname ]);
     $c->stash->{ prereqs } = $dist->search_related(
         'prereq',
-        { },
+        { is_prereq => 1},
         {
-            order_by => 'me.requires',
+            order_by => 'me.in_dist,me.requires',
             prefetch => [ qw( dist ) ],
         }
     );
+    $c->stash->{ build_prereqs } = $dist->search_related(
+        'prereq',
+        { is_build_prereq => 1},
+        {
+            order_by => 'me.in_dist,me.requires',
+            prefetch => [ qw( dist ) ],
+        }
+    );
+    $c->stash->{ optional_prereqs } = $dist->search_related(
+        'prereq',
+        { is_optional_prereq => 1},
+        {
+            order_by => 'me.in_dist,me.requires',
+            prefetch => [ qw( dist ) ],
+        }
+    );
+
 }
 
 sub used_by : Local {

@@ -39,6 +39,8 @@ extracts_nicely
  metayml_has_license
  metayml_conforms_to_known_spec
  has_license
+ prereq_matches_use
+ build_prereq_matches_use
  ));
 
 __PACKAGE__->set_primary_key('id');

@@ -68,7 +68,10 @@ CREATE TABLE dist (
   metayml_error text,
   error_manifest_matches_dist text,
   needs_compiler integer not null default 0,
-  got_prereq_from text
+  got_prereq_from text,
+  error_prereq text,
+  error_build_prereq text,
+  is_core integer not null default 0
 );
 CREATE TABLE kwalitee (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -116,7 +119,8 @@ CREATE TABLE modules (
   module text,
   file text,
   in_lib integer not null default 0,
-  in_basedir integer not null default 0
+  in_basedir integer not null default 0,
+  is_core integer not null default 0
 );
 CREATE TABLE prereq (
   id  INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -149,6 +153,7 @@ CREATE UNIQUE INDEX dist_vname_key ON dist (vname);
 CREATE INDEX modules_basedir ON modules (in_basedir);
 CREATE INDEX modules_dist ON modules (dist);
 CREATE INDEX modules_lib ON modules (in_lib);
+CREATE INDEX modules_core ON modules (is_core);
 CREATE INDEX prereq_dist ON prereq (dist);
 CREATE INDEX prereq_in_dist ON prereq (in_dist);
 CREATE INDEX prereq_requires ON prereq (requires);

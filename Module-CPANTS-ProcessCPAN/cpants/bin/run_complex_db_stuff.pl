@@ -19,6 +19,21 @@ my @ind=$k->get_indicators;
 
 my $dbh=$p->db->storage->dbh;
 
+# set core modules
+print "update CoreList\n";
+my $core=$Module::CoreList::version{$]};
+foreach my $mod (keys %$core) {
+    $dbh->do("update modules set is_core=1 where module=?",undef,$mod);
+}
+{
+    my $sth=$dbh->prepare("select dist from modules where is_core=1");
+    $sth->execute;
+    while (my $dist=$sth->fetchrow_array) {
+        $dbh->do("update dist set is_core=1 where id=?",undef,$dist);
+    }
+}
+
+
 # build list of module->dist
 my %modules;
 {
@@ -28,9 +43,26 @@ my %modules;
         $modules{$module}=$dist;
     }
 }
+# build list of dist->id
+my %dists;
+{
+    my $sth=$dbh->prepare("select id,dist from dist");
+    $sth->execute;
+    while (my ($id,$dist)=$sth->fetchrow_array) {
+        $dists{$id}=$dist;
+    }
+}
+# build hash of core dists
+my %core_dists;
+{
+    my $sth=$dbh->prepare("select id from dist where is_core=1");
+    $sth->execute;
+    while (my ($dist)=$sth->fetchrow_array) {
+        $core_dists{$dist}=1;
+    }
+}
 
 # fill dist references in prereq
-# todo: handle modules provided by core
 {
     print "fill prereq with dist_ids\n";
     my $sth=$dbh->prepare("select distinct requires from prereq where in_dist = 0 order by requires");
@@ -73,20 +105,27 @@ my %kwalitee_updates;
     my $sth_uses=$dbh->prepare("select distinct dist,in_dist from uses where in_dist>0 AND in_code>0");
     $sth_uses->execute;
     while (my ($dist,$in)=$sth_uses->fetchrow_array) {
-        push(@{$uses{$dist}},$in);
+        $uses{$dist}->{$in}=1;
     }
     my $sth_prereq=$dbh->prepare("select distinct dist,in_dist from prereq where in_dist>0 AND (is_prereq=1 OR is_optional_prereq=1)");
     $sth_prereq->execute;
     while (my ($dist,$in)=$sth_prereq->fetchrow_array) {
-        push(@{$prereq{$dist}},$in);
+        $prereq{$dist}->{$in}=1;
     }
-    my $missing=0;
-    my $count=keys %uses;
+    
     foreach my $dist (keys %uses) {
         my $used=$uses{$dist};
         my $prereq=$prereq{$dist};
-        next unless $prereq && $used;
-        if (@$used > @$prereq) {
+        next unless $prereq;
+        my @missing;
+        foreach my $use (keys %$used) {
+            push(@missing,$use) unless $prereq->{$use} || $core_dists{$use};
+        }
+        if (@missing) {
+            my $error="Undefined prereqs: ".join(', ',map {$dists{$_}} @missing);
+            $dbh->do("update dist set error_prereq=? where id=?",undef,$error,$dist);
+        }
+        else {
             push(@{$kwalitee_updates{$dist}},'prereq_matches_use');
         }
     }
@@ -100,20 +139,28 @@ my %kwalitee_updates;
     my $sth_uses=$dbh->prepare("select distinct dist,in_dist from uses where in_dist>0 AND in_tests>0");
     $sth_uses->execute;
     while (my ($dist,$in)=$sth_uses->fetchrow_array) {
-        push(@{$uses{$dist}},$in);
+        $uses{$dist}->{$in}=1;
     }
     my $sth_prereq=$dbh->prepare("select distinct dist,in_dist from prereq where in_dist>0 AND is_build_prereq=1");
     $sth_prereq->execute;
     while (my ($dist,$in)=$sth_prereq->fetchrow_array) {
-        push(@{$prereq{$dist}},$in);
+        $prereq{$dist}->{$in}=1;
     }
-    my $missing=0;
-    my $count=keys %uses;
+    
     foreach my $dist (keys %uses) {
         my $used=$uses{$dist};
         my $prereq=$prereq{$dist};
-        next unless $prereq && $used;
-        if (@$used > @$prereq) {
+        next unless $prereq;
+        my @missing;
+        foreach my $use (keys %$used) {
+            push(@missing,$use) unless $prereq->{$use} || $core_dists{$use};
+;
+        }
+        if (@missing) {
+            my $error="Undefined prereqs: ".join(', ',map {$dists{$_}} @missing);
+            $dbh->do("update dist set error_build_prereq=? where id=?",undef,$error,$dist);
+        }
+        else {
             push(@{$kwalitee_updates{$dist}},'build_prereq_matches_use');
         }
     }
@@ -122,9 +169,9 @@ my %kwalitee_updates;
 # update kwalitee
 {
     print "update kwalitee\n";
-    while ((my $dist,$rows)=each %kwalitee_updates) {
-        $sth->do("update kwalitee set ".(
-            join(', ',map { "$_='1'" } @$rows
+    while (my ($dist,$rows)=each %kwalitee_updates) {
+        $dbh->do("update kwalitee set ".(
+            join(', ',map { "$_='1'" } @$rows)
         )." where dist=?",undef,$dist);
     }
 }
