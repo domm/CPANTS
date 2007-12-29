@@ -1,30 +1,32 @@
 
 CREATE TABLE run (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  id serial PRIMARY KEY,
   mcanalyse_version text,
   mcprocess_version text,
   available_kwalitee integer not null default 0,
   total_kwalitee integer not null default 0,
-  date timestamp
+  date timestamp default now()
 );
 
 CREATE TABLE author (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  id SERIAL PRIMARY KEY,
   pauseid text,
   name text,
   email text,
-  average_kwalitee numeric,
+  average_kwalitee numeric(6,3),
   num_dists integer not null default 0,
   rank integer not null default 0,
-  prev_av_kw numeric,
+  prev_av_kw numeric(6,3),
   prev_rank integer not null default 0
 );
+
 CREATE TABLE dist (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  id SERIAL PRIMARY KEY,
+  run integer references run(id),
   dist text,
   package text,
   vname text,
-  author integer not null default 0,
+  author integer references author(id),
   version text,
   version_major text,
   version_minor text,
@@ -34,7 +36,6 @@ CREATE TABLE dist (
   size_packed integer not null default 0,
   size_unpacked integer not null default 0,
   released timestamp without time zone,
-  cpants_errors text,
   files integer not null default 0,
   files_list text,
   dirs integer not null default 0,
@@ -45,7 +46,7 @@ CREATE TABLE dist (
   bad_permissions_list text,
   file_makefile_pl integer not null default 0,
   file_build_pl integer not null default 0,
-  file_readme text not null default 0,
+  file_readme text,
   file_manifest integer not null default 0,
   file_meta_yml integer not null default 0,
   file_signature integer not null default 0,
@@ -55,29 +56,37 @@ CREATE TABLE dist (
   dir_lib integer not null default 0,
   dir_t integer not null default 0,
   dir_xt integer not null default 0,
-  pod_errors integer not null default 0,
-  run integer not null default 0,
   broken_module_install text not null default 0,
   manifest_matches_dist integer not null default 0,
   buildfile_executable integer not null default 0,
-  pod_errors_msg text,
   license text,
-  metayml_parse_error text,
   metayml_is_parsable integer not null default 0,
   file_license integer not null default 0,
-  metayml_error text,
-  error_manifest_matches_dist text,
   needs_compiler integer not null default 0,
   got_prereq_from text,
+  is_core integer not null default 0,
+  
   error_prereq text,
   error_build_prereq text,
-  is_core integer not null default 0
+  error_manifest_matches_dist text,
+  error_metaym text,
+  error_cpants text,
+  error_pod integer not null default 0,
+  errorsmsg_pod text,
+  error_metayml_parse text
+
 );
+
 CREATE TABLE kwalitee (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  dist integer not null default 0,
-  run integer not null default 0,
+  id SERIAL PRIMARY KEY,
+  dist integer references dist(id),
+  run integer references run(id),
+  
   abs_kw integer not null default 0,
+  abs_core_kw integer not null default 0,
+  kwalitee numeric(6,3) not null default 0,
+  rel_core_kw numeric(6,3) not null default 0,
+
   extractable integer not null default 0,
   extracts_nicely integer not null default 0,
   has_version integer not null default 0,
@@ -97,9 +106,6 @@ CREATE TABLE kwalitee (
   has_test_pod integer not null default 0,
   has_test_pod_coverage integer not null default 0,
   no_pod_errors integer not null default 0,
-  kwalitee numeric not null default 0,
-  abs_core_kw integer not null default 0,
-  rel_core_kw numeric not null default 0,
   has_working_buildtool integer not null default 0,
   manifest_matches_dist integer not null default 0,
   has_example integer not null default 0,
@@ -111,11 +117,12 @@ CREATE TABLE kwalitee (
   metayml_conforms_to_known_spec integer not null default 0,
   has_license integer not null default 0,
   prereq_matches_use integer not null default 0,
-  build_prereq_matches_use integer not null default
+  build_prereq_matches_use integer not null default 0
 );
+
 CREATE TABLE modules (
-  id  INTEGER PRIMARY KEY AUTOINCREMENT,
-  dist integer not null default 0,
+  id SERIAL PRIMARY KEY,
+  dist integer references dist(id),
   module text,
   file text,
   in_lib integer not null default 0,
@@ -123,20 +130,20 @@ CREATE TABLE modules (
   is_core integer not null default 0
 );
 CREATE TABLE prereq (
-  id  INTEGER PRIMARY KEY AUTOINCREMENT,
-  dist integer not null default 0,
+  id SERIAL PRIMARY KEY,
+  dist integer references dist(id),
   requires text,
   version text,
-  in_dist integer not null default 0,
+  in_dist integer references dist(id),
   is_prereq integer not null default 0,
   is_build_prereq integer not null default 0,
   is_optional_prereq integer not null default 0
 );
 CREATE TABLE uses (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  dist integer not null default 0,
+  id SERIAL PRIMARY KEY,
+  dist integer references dist(id),
   module text,
-  in_dist integer not null default 0,
+  in_dist integer references dist(id),
   in_code integer not null default 0,
   in_tests integer not null default 0
 );
@@ -167,5 +174,22 @@ CREATE INDEX uses_in_tests ON uses (in_tests);
 CREATE INDEX uses_module ON uses (module);
 
 
+CREATE TABLE history_author (
+  id SERIAL PRIMARY KEY,
+  run integer references run(id),
+  author integer references author(id),
+  average_kwalitee numeric,
+  num_dists integer,
+  rank integer
+);
+
+CREATE TABLE history_dist (
+  id SERIAL PRIMARY KEY,
+  run integer references run (id),
+  dist integer references dist (id),
+  distname text,
+  version text,
+  kwalitee integer not null default 0
+);
 
 
