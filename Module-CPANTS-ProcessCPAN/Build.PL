@@ -19,18 +19,33 @@ my $build = Module::CPANTS::MyBuild->new(
         'Parse::CPAN::Packages'         => '2.25',
         'DBIx::Class'                   => '0.06002',
         'GD::Graph'                     => '1.00',
-        'DBD::SQLite'                   => '1.14',
+        'DBD::Pg'                       => '1.49',
         'version'                       => '0.73',
     },
     
     create_makefile_pl=>'passthrough',
 );
 
-my $home=$build->prompt(
-    "Please specify the CPANTS home directory:",
-    catdir(File::HomeDir->my_home,'cpants')
-);
+my %prompt_defaults;
+eval { require Module::CPANTS::ProcessCPAN::ConfigData };
+if ($@) {
+    $prompt_defaults{'home'}    = catdir(File::HomeDir->my_home,'cpants'),
+    $prompt_defaults{'db_user'} = 'cpants',
+    $prompt_defaults{'db_pwd'}  = 'cpants',
+} else {
+    foreach (qw(home db_user db_pwd)) {
+        $prompt_defaults{$_}=Module::CPANTS::ProcessCPAN::ConfigData->config($_);
+    }
+}
+
+
+my $home=$build->prompt("Please specify the CPANTS home directory:",$prompt_defaults{'home'});
 $build->config_data('home'=>$home);
+
+$build->config_data('db_user'=>$build->prompt("Postgres DB user:",$prompt_defaults{'db_user'}));
+$build->config_data('db_pwd'=>$build->prompt("Postgres DB password:",$prompt_defaults{'db_user'}));
+
+
 $build->notes('uid',$<);
 
 $build->create_build_script;
