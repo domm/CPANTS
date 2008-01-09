@@ -3,15 +3,14 @@ use strict;
 use warnings;
 
 use Module::CPANTS::Analyse;
-use Module::CPANTS::DB;
-use Module::CPANTS::DBHistory;
+use Module::CPANTS::Schema;
 use Module::CPANTS::Kwalitee;
 use Module::CPANTS::ProcessCPAN::ConfigData;
 use base qw(Class::Accessor);
 use Carp;
 use File::Spec::Functions qw(catdir catfile rel2abs);
 use Parse::CPAN::Packages;
-use YAML::Syck qw(LoadFile);
+use YAML::Syck qw(Load);
 use FindBin;
 use File::Copy;
 use DateTime;
@@ -55,10 +54,6 @@ sub start_run {
     });
     $me->run($run);
     print $run->id,"\n";
-    my %for_history=map {$_=>$run->$_} qw(id mcanalyse_version mcprocess_version available_kwalitee total_kwalitee date);
-    $me->db_hist->resultset('Run')->create(
-        \%for_history    
-    );
 
     return $me;
 }
@@ -67,10 +62,18 @@ sub process_cpan {
     my $me=shift;
     
     my $p=Parse::CPAN::Packages->new($me->cpan_02packages);
+    my $db=$me->db;
     my $lint=$me->lint;
     my $analysed=$me->yaml_analysed;
     my $processed=$me->yaml_processed;
     my %seen;
+    
+    # prefill in_db
+    my %in_db;
+    my $all_dists=$db->resultset('Dist')->search;
+    while (my $d=$all_dists->next) {
+        $in_db{$d->dist}++;
+    }
 
     foreach my $dist (sort {$a->dist cmp $b->dist} $p->latest_distributions) {
         my $vname=$dist->distvname;
@@ -79,9 +82,9 @@ sub process_cpan {
         next if $vname=~/^Perl6-Pugs/;
         next if $vname=~/^parrot-/;
         next if $vname=~/^Bundle-/;
-        $seen{$vname.'.yml'}++;
+        $seen{$dist->dist}++;
 
-        if (-e catfile($processed,$vname.'.yml')) {
+        if ($in_db{$dist->dist}) {
             if ($me->force) {
                 print "forced reindex of $vname\n";
             }
@@ -98,137 +101,116 @@ sub process_cpan {
         my $file=$me->cpan_path_to_dist($dist->prefix);
         
         # call cpants_lint.pl
-        system("$^X $lint --yaml --to_file --dir $analysed $file");
-    }
-
-    # dump old yaml files
-    opendir(DIR,$processed) || die "Cannot open dir $processed: $!";
-    while (my $file=readdir(DIR)) {
-        next unless $file=~/\.yml$/;
-        next if $seen{$file};
-        print "delete $file\n";
-        my $to_delete=catfile($processed,$file);
-        unlink $to_delete || die "Cannot unlink $file: $to_delete";
-    }
-}
-
-sub process_yaml {
-    my $me=shift;
+        my $from_lint=`$^X $lint --yaml --dir $analysed $file`;
+        $me->process_yaml($from_lint);   
     
-    my $p=Parse::CPAN::Packages->new($me->cpan_02packages);
-    my $db=$me->db;
-    my $run=$me->run;
-    
-    my $in_dir=$me->yaml_analysed;
-    my $out_dir=$me->yaml_processed;
-    
-    opendir(my $IN,$in_dir) || die "Cannot open YAML dir $in_dir: $!";
-    while (my $file=readdir $IN) {
-        next unless $file=~/\.yml$/;
-        my $absfile=catfile($in_dir,$file);
-        copy($absfile,catfile($out_dir,$file));
-        my $data;
-        eval { $data=LoadFile($absfile) };
-        if ($@) {
-            print "Cannot parse YAML $absfile: $@";
-            next;
-        }
-
-        print $data->{dist}."\n";
-
-        # remove old data from this dist
-        my $exists=$db->resultset('Dist')->find({dist=>$data->{dist}});
-        if ($exists) {
-            $me->make_dist_history($exists); 
-            $exists->delete;
-        }
-
-        # remove data that references other tables;
-        my $kwalitee=$data->{kwalitee};
-        my $modules=$data->{modules};
-        my $uses=$data->{uses};
-        my $prereq=$data->{prereq};
-        my $author=$data->{author};
-        foreach (qw(kwalitee modules uses prereq files_array dirs_array author meta_yml)) {
-            delete $data->{$_};
-        }
-        
-        my ($db_author,$db_dist);
-        
-        # save author 
-        eval { 
-            $db_author=$db->resultset('Author')->find_or_create({pauseid=>$author});
-            $me->make_author_history($db_author);
-            
-            $db_dist=$db_author->add_to_dists({ 
-                dist=>$data->{dist},
-                run=>$run->id,
-            })
-        };
-        print "DB ERROR: cannot create dist: $@" and next if $@; 
-
-        # add data and add stuff to other tables
-        eval {
-            $db_dist->update($data);
-            
-            foreach my $m (@$modules) {
-                $db_dist->add_to_modules($m);
-            }
-            foreach my $pq (@$prereq) {
-                $db_dist->add_to_prereq($pq);
-            }
-            foreach my $u (values %$uses) {
-                $db_dist->add_to_uses($u);
-            }
-        };
-        if ($@) {
-            my $from_cpants='';
-            if (my $old=$db_dist->cpants_errors) {
-                $from_cpants="$old\n";
-            }
-            print "$@\n";
-            $db_dist->cpants_errors(join('',$from_cpants,"DB: $@"));
-            $db_dist->update;
-            $kwalitee->{no_cpants_errors}=0;
-        }
-
-        eval {
-            $kwalitee->{dist}=$db_dist->id;
-            $kwalitee->{run}=$run->id;
-            $kwalitee->{kwalitee}=0;
-            $db->resultset('Kwalitee')->create($kwalitee);
-        };
-        if ($@) {
-            my $e=$@;
-            croak $data->{dist}." DB kwalitee error: $e";
-        }
-        unlink($absfile);
     }
-
-    return;
 
     # dump old dists from DB
     my @distributions=$p->distributions;
     my %dists=map {$_->dist => 1} grep { $_->dist }   @distributions;
 
-    my $rs=$db->resultset('Dist')->search;
-    if ($rs) {
-        while (my $in_db=$rs->next) {
-            unless ($dists{$in_db->dist}) {
-                print $in_db->dist." not on CPAN anymore, deleted from DB\n";
-                $in_db->delete;
-            }
+    $all_dists->reset;
+    while (my $d=$all_dists->next) {
+        unless ($seen{$d->dist}) {
+            print $d->dist." not on CPAN anymore, deleted from DB\n";
+            $d->delete;
         }
     }
+}
+
+sub process_yaml {
+    my ($me,$yaml)=@_;
+    
+    my $db=$me->db;
+    my $run=$me->run;
+    my $data; 
+    eval { $data=Load($yaml) };
+    if ($@) {
+        print "Cannot parse YAML: $@";
+        next;
+    }
+
+    print $data->{dist}."\n";
+        
+        
+    # remove old data from this dist
+    my $exists=$db->resultset('Dist')->find({dist=>$data->{dist}});
+    if ($exists) {
+        $me->make_dist_history($exists); 
+        $exists->delete;
+    }
+
+    # remove data that references other tables;
+    my $kwalitee=$data->{kwalitee};
+    my $modules=$data->{modules};
+    my $uses=$data->{uses};
+    my $prereq=$data->{prereq};
+    my $author=$data->{author};
+    foreach (qw(kwalitee modules uses prereq files_array dirs_array author meta_yml)) {
+        delete $data->{$_};
+    }
+        
+    my ($db_author,$db_dist);
+        
+    # save author 
+    eval { 
+        $db_author=$db->resultset('Author')->find_or_create({pauseid=>$author});
+        $me->make_author_history($db_author);
+            
+        $db_dist=$db_author->add_to_dists({ 
+            dist=>$data->{dist},
+            run=>$run->id,
+        })
+    };
+    print "DB ERROR: cannot create dist: $@" and next if $@; 
+
+    # add data and add stuff to other tables
+    eval {
+        $db_dist->update($data);
+            
+        foreach my $m (@$modules) {
+            $db_dist->add_to_modules($m);
+        }
+        foreach my $pq (@$prereq) {
+            $db_dist->add_to_prereq($pq);
+        }
+        foreach my $u (values %$uses) {
+            $db_dist->add_to_uses($u);
+        }
+    };
+    if ($@) {
+        my $from_cpants='';
+        if (my $old=$db_dist->error->cpants) {
+            $from_cpants="$old\n";
+        }
+        print "$@\n";
+        $db_dist->error_cpants(join('',$from_cpants,"DB: $@"));
+        $db_dist->update;
+        $kwalitee->{no_cpants_errors}=0;
+    }
+
+    eval {
+        $kwalitee->{dist}=$db_dist->id;
+        $kwalitee->{run}=$run->id;
+        $kwalitee->{kwalitee}=0;
+        $db->resultset('Kwalitee')->create($kwalitee);
+    };
+    if ($@) {
+        my $e=$@;
+        croak $data->{dist}." DB kwalitee error: $e";
+    }
+
+    return;
 }
 
 sub make_author_history {
     my $me=shift;
     my $author=shift;
     
-    my $dbhist=$me->db_hist;
+    my $db=$me->db;
 
-    $dbhist->resultset('Author')->create({
+    $db->resultset('HistoryAuthor')->create({
         run=>$me->run->id,
         author=>$author->id,
         average_kwalitee=>$author->average_kwalitee || 0,
@@ -244,10 +226,10 @@ sub make_author_history {
 
 sub make_dist_history {
     my ($me,$dist)=@_;
-    
+    return; 
     my $old_kw=$dist->kwalitee ? $dist->kwalitee->kwalitee : 0;
     
-    $me->db_hist->resultset('Dist')->find_or_create({
+    $me->db->resultset('HistoryDist')->find_or_create({
         run=>$me->run->id,
         distname=>$dist->dist,
         version=>$dist->version,
@@ -260,16 +242,11 @@ sub db {
     my $me=shift;
     return $me->_db if $me->_db;
    
-    my $name = catfile($me->home_dir,qw(sqlite cpants.db));
-    return $me->_db(Module::CPANTS::DB->connect('dbi:SQLite:dbname='.$name));
-}
-
-sub db_hist {
-    my $me=shift;
-    return $me->_db_hist if $me->_db_hist;
-   
-    my $name = catfile($me->home_dir,qw(sqlite cpants_history.db));
-    return $me->_db_hist(Module::CPANTS::DBHistory->connect("dbi:SQLite:dbname=$name"));
+    return $me->_db(Module::CPANTS::Schema->connect(
+        'dbi:Pg:dbname=cpants',
+        Module::CPANTS::ProcessCPAN::ConfigData->config('db_user'),
+        Module::CPANTS::ProcessCPAN::ConfigData->config('db_pwd')
+    ));
 }
 
 sub cpan_01mailrc {

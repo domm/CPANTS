@@ -181,93 +181,47 @@ __PACKAGE__->add_columns(
   },
   "is_core",
   { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
-  "error_prereq",
-  {
-    data_type => "text",
-    default_value => undef,
-    is_nullable => 1,
-    size => undef,
-  },
-  "error_build_prereq",
-  {
-    data_type => "text",
-    default_value => undef,
-    is_nullable => 1,
-    size => undef,
-  },
-  "error_manifest_matches_dist",
-  {
-    data_type => "text",
-    default_value => undef,
-    is_nullable => 1,
-    size => undef,
-  },
-  "error_metaym",
-  {
-    data_type => "text",
-    default_value => undef,
-    is_nullable => 1,
-    size => undef,
-  },
-  "error_cpants",
-  {
-    data_type => "text",
-    default_value => undef,
-    is_nullable => 1,
-    size => undef,
-  },
-  "error_pod",
-  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
-  "errorsmsg_pod",
-  {
-    data_type => "text",
-    default_value => undef,
-    is_nullable => 1,
-    size => undef,
-  },
-  "error_metayml_parse",
-  {
-    data_type => "text",
-    default_value => undef,
-    is_nullable => 1,
-    size => undef,
-  },
 );
 __PACKAGE__->set_primary_key("id");
 __PACKAGE__->belongs_to("run", "Module::CPANTS::Schema::Run", { id => "run" });
 __PACKAGE__->belongs_to("author", "Module::CPANTS::Schema::Author", { id => "author" });
-__PACKAGE__->has_many(
-  "history_dists",
-  "Module::CPANTS::Schema::HistoryDist",
+__PACKAGE__->has_one(
+  "error",
+  "Module::CPANTS::Schema::Error",
   { "foreign.dist" => "self.id" },
 );
 __PACKAGE__->has_many(
-  "kwalitees",
+  "history_dist",
+  "Module::CPANTS::Schema::HistoryDist",
+  { "foreign.dist" => "self.id" },
+);
+__PACKAGE__->has_one(
+  "kwalitee",
   "Module::CPANTS::Schema::Kwalitee",
   { "foreign.dist" => "self.id" },
 );
 __PACKAGE__->has_many(
-  "modules",
+  "module",
   "Module::CPANTS::Schema::Modules",
   { "foreign.dist" => "self.id" },
 );
 __PACKAGE__->has_many(
-  "prereq_in_dists",
+  "prereq_in_dist",
   "Module::CPANTS::Schema::Prereq",
   { "foreign.in_dist" => "self.id" },
 );
 __PACKAGE__->has_many(
-  "prereq_dists",
+  "prereq_dist",
   "Module::CPANTS::Schema::Prereq",
   { "foreign.dist" => "self.id" },
 );
 __PACKAGE__->has_many(
-  "uses_dists",
+  "uses_dist",
   "Module::CPANTS::Schema::Uses",
   { "foreign.dist" => "self.id" },
 );
 __PACKAGE__->has_many(
-  "uses_in_dists",
+  "uses_in_dist",
   "Module::CPANTS::Schema::Uses",
   { "foreign.in_dist" => "self.id" },
 );
@@ -278,4 +232,6 @@ __PACKAGE__->has_many(
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration
+
+
 1;

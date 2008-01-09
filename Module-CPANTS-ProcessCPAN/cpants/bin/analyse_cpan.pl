@@ -13,7 +13,7 @@ die "Cannot find cpants_lint.pl (in ".$opts{lint}.")" unless -e $opts{lint};
 
 my $p=Module::CPANTS::ProcessCPAN->new($opts{cpan},$opts{lint});
 $p->force(1) if $opts{force};
-
+$p->start_run;
 $p->process_cpan;
 
 

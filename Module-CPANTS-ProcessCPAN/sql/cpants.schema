@@ -64,17 +64,20 @@ CREATE TABLE dist (
   file_license integer not null default 0,
   needs_compiler integer not null default 0,
   got_prereq_from text,
-  is_core integer not null default 0,
-  
-  error_prereq text,
-  error_build_prereq text,
-  error_manifest_matches_dist text,
-  error_metaym text,
-  error_cpants text,
-  error_pod integer not null default 0,
-  errorsmsg_pod text,
-  error_metayml_parse text
+  is_core integer not null default 0
+);
 
+create table error (
+  id SERIAL PRIMARY KEY,
+  dist integer references dist(id),
+  prereq text,
+  build_prereq text,
+  manifest_matches_dist text,
+  metayml text,
+  cpants text,
+  pod integer not null default 0,
+  pod_message text,
+  metayml_parse text
 );
 
 CREATE TABLE kwalitee (
