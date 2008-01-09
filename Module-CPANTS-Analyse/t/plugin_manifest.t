@@ -17,8 +17,8 @@ use File::Path qw(rmtree);
     my $a=Module::CPANTS::Analyse->new({ dist => 't/eg/manifest/no-manifest-0.01.tar.gz' });
     $a->unpack;
     $a->analyse;
-    is( $a->d->{manifest_matches_dist}, undef, 'manifest does not match dist' );
-    is( $a->d->{error_manifest_matches_dist}, 'Cannot find MANIFEST in dist.','proper error message' );
+    is( $a->d->{manifest_matches_dist}, 0, 'manifest does not match dist' );
+    is( $a->d->{error}{manifest_matches_dist}, 'Cannot find MANIFEST in dist.','proper error message' );
 
 }
 
@@ -28,7 +28,7 @@ use File::Path qw(rmtree);
     $a->unpack;
     $a->analyse;
     is( $a->d->{manifest_matches_dist}, 0, 'manifest does not match dist' );
-    is( $a->d->{error_manifest_matches_dist},
+    is( $a->d->{error}{manifest_matches_dist},
         "MANIFEST (11) does not match dist (11):\n" .
         "Missing in MANIFEST: TODO\n" .
         "Missing in Dist: eg/demo2.pl", 'proper error message' );

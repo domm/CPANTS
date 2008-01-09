@@ -25,7 +25,7 @@ sub analyse {
             $me->d->{metayml_is_parsable}=1;
         };
         if ($@) {
-            $me->d->{metayml_parse_error}=$@;
+            $me->d->{error}{metayml_parse}=$@;
         }
     }    
 }
@@ -38,7 +38,7 @@ sub kwalitee_indicators{
     return [
         {
             name=>'metayml_is_parsable',
-            error=>q{The META.yml file of this distributioncould not be parsed by the version of YAML.pm CPANTS is using. See 'metayml_parse_error' in the dist view for more info.},
+            error=>q{The META.yml file of this distributioncould not be parsed by the version of YAML.pm CPANTS is using. See 'metayml_parse' in the dist error view for more info.},
             remedy=>q{If you don't have one, add a META.yml file. Else, upgrade your YAML generator so it produces valid YAML.},
             code=>sub { shift->{metayml_is_parsable} ? 1 : 0 }
         },
@@ -51,21 +51,9 @@ sub kwalitee_indicators{
                 my $yaml=$d->{meta_yml};
                 ($yaml->{license} and $yaml->{license} ne 'unknown') ? 1 : 0 }
         },
-#        {
-#            name=>'metayml_conforms_spec_1_0',
-#            error=>q{META.yml does not conform to the META.yml Spec 1.0. See 
-#            'metayml_error' in the dist view for more info.},
-#            remedy=>q{Take a look at the META.yml Spec at 
-#            http://module-build.sourceforge.net/META-spec-current.html and 
-#            change your META.yml accordingly},
-#            code=>sub {
-#                my $d=shift;
-#                return check_spec_conformance($d,'1.0');
-#            },
-#        },
         {
             name=>'metayml_conforms_to_known_spec',
-            error=>q{META.yml does not conform to any recognised META.yml Spec. See 'metayml_error' in the dist view for more info.},
+            error=>q{META.yml does not conform to any recognised META.yml Spec. See 'metayml' in the dist error view for more info.},
             remedy=>q{Take a look at the META.yml Spec at http://module-build.sourceforge.net/META-spec-current.html and change your META.yml accordingly},
             code=>sub {
                 my $d=shift;
@@ -75,7 +63,7 @@ sub kwalitee_indicators{
     {
             name=>'metayml_conforms_spec_current',
             is_extra=>1,
-            error=>qq{META.yml does not conform to the Current META.yml Spec ($CURRENT_SPEC). See 'metayml_error' in the dist view for more info.},
+            error=>qq{META.yml does not conform to the Current META.yml Spec ($CURRENT_SPEC). See 'metayml' in the dist error view for more info.},
             remedy=>q{Take a look at the META.yml Spec at http://module-build.sourceforge.net/META-spec-current.html and change your META.yml accordingly},
             code=>sub {
                 my $d=shift;
@@ -111,7 +99,7 @@ sub check_spec_conformance {
             push @errors,$e;
         }
         if (@errors) {
-            $d->{metayml_error}.=$report_version.": ".join(" ",@errors)." ";
+            $d->{error}{metayml}.=$report_version.": ".join(" ",@errors)." ";
             return 0;
         }
     }

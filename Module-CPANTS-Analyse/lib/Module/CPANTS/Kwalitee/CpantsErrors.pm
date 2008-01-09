@@ -22,7 +22,7 @@ sub analyse {
     my @eout=$sout->read;
     my @eerr=$serr->read;
     
-    $me->d->{cpants_errors}= (@eerr || @eout) ? join("\n",'STDERR:',@eerr,'STDOUT:',@eout) : '';
+    $me->d->{error}{cpants}= (@eerr || @eout) ? join("\n",'STDERR:',@eerr,'STDOUT:',@eout) : '';
 }
 
 
@@ -34,9 +34,9 @@ sub kwalitee_indicators {
     return [
         {
             name=>'no_cpants_errors',
-            error=>q{Some errors occured during CPANTS testing. They might be caused by bugs in CPANTS or some strange features of this distribution. See 'cpants_errors' in the dist view for more info.},
+            error=>q{Some errors occured during CPANTS testing. They might be caused by bugs in CPANTS or some strange features of this distribution. See 'cpants' in the dist error view for more info.},
             remedy=>q{Please report the error(s) to bug-module-cpants-analyse@rt.cpan.org},
-            code=>sub { shift->{cpants_errors} ? 0 : 1 },
+            code=>sub { shift->{error}{cpants} ? 0 : 1 },
         },
     ];
 }

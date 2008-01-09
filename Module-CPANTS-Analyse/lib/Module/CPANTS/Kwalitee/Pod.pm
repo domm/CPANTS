@@ -34,11 +34,11 @@ sub analyse {
             push(@msgs,$errata) if $errata=~/\w/;
         }
     }
-    $me->d->{pod_errors}=$pod_errors;
+    $me->d->{error}{pod}=$pod_errors;
     # work around Pod::Simple::Checker returning strange data
     my $errors=join("\n",@msgs);
     $errors=~s/[^\w\d\s]+/ /g;
-    $me->d->{pod_errors_msg}=$errors;
+    $me->d->{error}{pod_message}=$errors;
 }
 
 
@@ -50,9 +50,9 @@ sub kwalitee_indicators {
     return [
         {
             name=>'no_pod_errors',
-            error=>q{The documentation for this distribution contains syntactic errors in its POD. Note that this metric tests all .pl, .pm and .pod files, even if they are in t/. See 'pod_errors_msg' in the dist view for more info.},
+            error=>q{The documentation for this distribution contains syntactic errors in its POD. Note that this metric tests all .pl, .pm and .pod files, even if they are in t/. See 'pod_message' in the dist error view for more info.},
             remedy=>q{Remove the POD errors. You can check for POD errors automatically by including Test::Pod to your test suite.},
-            code=>sub { shift->{pod_errors} ? 0 : 1 },
+            code=>sub { shift->{error}{pod} ? 0 : 1 },
         },
     ];
 }

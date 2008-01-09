@@ -12,7 +12,7 @@ use IO::Capture::Stdout;
 use IO::Capture::Stderr;
 use YAML::Syck qw(LoadFile);
 
-use version; our $VERSION=version->new('0.76');
+use version; our $VERSION=version->new('0.77');
 
 use Module::Pluggable search_path=>['Module::CPANTS::Kwalitee'];
 
@@ -57,7 +57,7 @@ sub unpack {
         $me->capture_stdout->stop;
         $me->capture_stderr->stop;
         $me->d->{extractable}=0;
-        $me->d->{cpants_errors}=$error;
+        $me->d->{error}{cpants}=$error;
         $me->d->{kwalitee}{extractable}=0;
         my ($vol,$dir,$name)=splitpath($me->dist);
         $name=~s/\..*$//;
