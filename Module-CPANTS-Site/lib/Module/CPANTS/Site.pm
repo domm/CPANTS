@@ -7,6 +7,8 @@ use File::Spec::Functions;
 use Catalyst qw(Static::Simple );
 
 my $home=Module::CPANTS::ProcessCPAN::ConfigData->config('home');
+my $db_user=Module::CPANTS::ProcessCPAN::ConfigData->config('db_user');
+my $db_pwd=Module::CPANTS::ProcessCPAN::ConfigData->config('db_pwd');
 $Template::Directive::WHILE_MAX=3000;
 use version; our $VERSION = version->new('0.72');
 
@@ -19,8 +21,8 @@ __PACKAGE__->config(
         INCLUDE_PATH=>catdir($home,'templates'),
     },
     'Model::DBIC'=>{
-        schema_class=>'Module::CPANTS::DB',
-        connect_info=>['dbi:SQLite:dbname='.catfile($home,'sqlite','cpants.db')],
+        schema_class=>'Module::CPANTS::Schema',
+        connect_info=>['dbi:Pg:dbname=cpants',$db_user,$db_pwd],
     },
 );
 
