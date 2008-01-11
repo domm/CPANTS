@@ -131,9 +131,6 @@ sub process_yaml {
         next;
     }
 
-    print $data->{dist}."\n";
-        
-        
     # remove old data from this dist
     my $exists=$db->resultset('Dist')->find({dist=>$data->{dist}});
     if ($exists) {
@@ -193,11 +190,11 @@ sub process_yaml {
         }
         print "$@\n";
         $db_error->cpants(join('',$from_cpants,"DB: $@"));
-        $db_error->update;
         $kwalitee->{no_cpants_errors}=0;
     }
 
     eval {
+        $db_error->update;
         $kwalitee->{dist}=$db_dist->id;
         $kwalitee->{run}=$run->id;
         $kwalitee->{kwalitee}=0;
@@ -205,7 +202,7 @@ sub process_yaml {
     };
     if ($@) {
         my $e=$@;
-        croak $data->{dist}." DB kwalitee error: $e";
+        print $data->{dist}." DB kwalitee error: $e";
     }
 
     return;

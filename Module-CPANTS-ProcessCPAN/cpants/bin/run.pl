@@ -21,7 +21,7 @@ my $bin=catdir($home,'bin');
 $force='--force' if $force;
 
 system("$perl $bin/analyse_cpan.pl --cpan $cpan --lint $lint $force");
-system("$perl $bin/process_yaml.pl --cpan $cpan");
+#system("$perl $bin/process_yaml.pl --cpan $cpan");
 system("$perl $bin/run_complex_db_stuff.pl --cpan $cpan");
 system("$perl $bin/update_authors.pl --cpan $cpan");
 system("$perl $bin/make_graphs.pl");

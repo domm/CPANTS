@@ -69,7 +69,7 @@ CREATE TABLE dist (
 
 create table error (
   id SERIAL PRIMARY KEY,
-  dist integer references dist(id),
+  dist integer references dist(id) on delete cascade,
   prereq text,
   build_prereq text,
   manifest_matches_dist text,
@@ -82,7 +82,7 @@ create table error (
 
 CREATE TABLE kwalitee (
   id SERIAL PRIMARY KEY,
-  dist integer references dist(id),
+  dist integer references dist(id) on delete cascade,
   run integer references run(id),
   
   abs_kw integer not null default 0,
@@ -125,7 +125,7 @@ CREATE TABLE kwalitee (
 
 CREATE TABLE modules (
   id SERIAL PRIMARY KEY,
-  dist integer references dist(id),
+  dist integer references dist(id) on delete cascade,
   module text,
   file text,
   in_lib integer not null default 0,
@@ -134,19 +134,19 @@ CREATE TABLE modules (
 );
 CREATE TABLE prereq (
   id SERIAL PRIMARY KEY,
-  dist integer references dist(id),
+  dist integer references dist(id) on delete cascade,
   requires text,
   version text,
-  in_dist integer references dist(id),
+  in_dist integer,
   is_prereq integer not null default 0,
   is_build_prereq integer not null default 0,
   is_optional_prereq integer not null default 0
 );
 CREATE TABLE uses (
   id SERIAL PRIMARY KEY,
-  dist integer references dist(id),
+  dist integer references dist(id) on delete cascade,
   module text,
-  in_dist integer references dist(id),
+  in_dist integer,
   in_code integer not null default 0,
   in_tests integer not null default 0
 );
@@ -189,7 +189,7 @@ CREATE TABLE history_author (
 CREATE TABLE history_dist (
   id SERIAL PRIMARY KEY,
   run integer references run (id),
-  dist integer references dist (id),
+  dist integer,
   distname text,
   version text,
   kwalitee integer not null default 0
