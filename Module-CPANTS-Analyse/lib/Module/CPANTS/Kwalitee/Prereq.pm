@@ -120,6 +120,7 @@ sub kwalitee_indicators{
                 return 0;               
             },
             needs_db=>1,
+            is_extra=>1,
         },
         {
             name=>'build_prereq_matches_use',
@@ -131,6 +132,7 @@ sub kwalitee_indicators{
                 return 0;               
             },
             needs_db=>1,
+            is_extra=>1,
         },
         
     ];
