@@ -147,11 +147,12 @@ sub process_yaml {
     my $uses=$data->{uses};
     my $prereq=$data->{prereq};
     my $author=$data->{author};
-    foreach (qw(kwalitee modules uses prereq files_array dirs_array author meta_yml)) {
+    my $error=$data->{error};
+    foreach (qw(kwalitee modules uses prereq files_array dirs_array author meta_yml error)) {
         delete $data->{$_};
     }
         
-    my ($db_author,$db_dist);
+    my ($db_author,$db_dist,$db_error);
         
     # save author 
     eval { 
@@ -161,7 +162,9 @@ sub process_yaml {
         $db_dist=$db_author->add_to_dists({ 
             dist=>$data->{dist},
             run=>$run->id,
-        })
+        });
+
+        $db_error=$db->resultset('Error')->find_or_create({dist=>$db_dist->id});
     };
     print "DB ERROR: cannot create dist: $@" and next if $@; 
 
@@ -178,15 +181,19 @@ sub process_yaml {
         foreach my $u (values %$uses) {
             $db_dist->add_to_uses($u);
         }
+        while (my ($k,$v)=each %$error) {
+            $db_error->$k($v);
+        }
+        $db_error->update;
     };
     if ($@) {
         my $from_cpants='';
-        if (my $old=$db_dist->error->cpants) {
+        if (my $old=$db_error->cpants) {
             $from_cpants="$old\n";
         }
         print "$@\n";
-        $db_dist->error_cpants(join('',$from_cpants,"DB: $@"));
-        $db_dist->update;
+        $db_error->cpants(join('',$from_cpants,"DB: $@"));
+        $db_error->update;
         $kwalitee->{no_cpants_errors}=0;
     }
 

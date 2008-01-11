@@ -188,7 +188,7 @@ __PACKAGE__->belongs_to("author", "Module::CPANTS::Schema::Author", { id => "aut
 __PACKAGE__->has_one(
   "error",
   "Module::CPANTS::Schema::Error",
-  { "foreign.dist" => "self.id" },
+  #{ "foreign.dist" => "self.id" },
 );
 __PACKAGE__->has_many(
   "history_dist",
@@ -201,7 +201,7 @@ __PACKAGE__->has_one(
   { "foreign.dist" => "self.id" },
 );
 __PACKAGE__->has_many(
-  "module",
+  "modules",
   "Module::CPANTS::Schema::Modules",
   { "foreign.dist" => "self.id" },
 );
@@ -211,12 +211,12 @@ __PACKAGE__->has_many(
   { "foreign.in_dist" => "self.id" },
 );
 __PACKAGE__->has_many(
-  "prereq_dist",
+  "prereq",
   "Module::CPANTS::Schema::Prereq",
   { "foreign.dist" => "self.id" },
 );
 __PACKAGE__->has_many(
-  "uses_dist",
+  "uses",
   "Module::CPANTS::Schema::Uses",
   { "foreign.dist" => "self.id" },
 );
