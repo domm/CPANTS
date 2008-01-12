@@ -17,6 +17,19 @@
 
 <dl>
 
+<dt>2008-01-12: up again (soon)</dt>
+<dd>After a very long downtime caused by a combination of Christmas and me
+changing jobs, CPANTS will be soon back up to regular (daily) updates. I'm
+currently in the middle of setting things up on a new server provided by <a
+href="http://vienna.pm.org">Vienna.pm</a>, but until this is done you can get
+a preview here: http://cpants.useperl.at.
+<br><br>
+As soon as a) the site is running under mod_perl (DONE!) and b) I verified that the
+daily automatic updates actually work, I'll change cpants.perl.org to point to
+the new server.
+</dd>
+
+
 <dt>2007-11-07: better data</dt>
 <dd>
 I fixed a few bugs and generated new data (which took a bit more than 6 hours). But nothing fancy...
