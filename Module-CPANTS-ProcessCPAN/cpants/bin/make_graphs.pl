@@ -6,7 +6,7 @@ use File::Spec::Functions;
 use GD::Graph;
 use GD::Graph::bars;
 use Module::CPANTS::ProcessCPAN;
-use Module::CPANTS::DB;
+use Module::CPANTS::Schema;
 use Module::CPANTS::ProcessCPAN::ConfigData;
 my $home=Module::CPANTS::ProcessCPAN::ConfigData->config('home');
 

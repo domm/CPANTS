@@ -2,7 +2,7 @@
 use strict; 
 use warnings;
 use Module::CPANTS::ProcessCPAN;
-use Module::CPANTS::DB;
+use Module::CPANTS::Schema;
 use Module::CoreList;
 use Parse::CPAN::Authors;
 use Getopt::Long;
