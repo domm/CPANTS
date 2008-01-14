@@ -1,16 +1,13 @@
 [% INCLUDE 'dist/intro' %]
 
 <table>
-[% FOREACH c IN dist.columns.sort %]
-[% NEXT UNLESS c.match('error') %]
+[% e = dist.error %]
+[% FOREACH c IN
+['cpants','pod','pod_message','manifest_matches_dist','metayml','metayml_parse','prereq','build_prereq'] %]
 <tr>
     <td valign="top"><b>[% c %]</b></td>
     <td valign="top">
-[% IF c.match('_list$') %]
-    [% dist.$c.replace(';','<br>') %]
-[% ELSE %]
-    [% dist.$c %]
-[% END %]
+    [% e.$c.replace("\n+","<br>") %]
     </td>
 </tr>
 [% END %]

@@ -8,7 +8,7 @@
 
 <ul>
 [% WHILE (d = list.next) %]
-<li><a href="/dist/[% d.dist %]">[% d.dist %]</a>
+<li><a href="/dist/overview/[% d.dist %]">[% d.dist %]</a>
 [% END %]
 </ul>
 

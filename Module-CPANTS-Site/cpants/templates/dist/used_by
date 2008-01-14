@@ -7,7 +7,7 @@
 [% IF used_by.count %]
 [% WHILE (od = used_by.next) %]
 <tr>
-<td><a href="/dist/[% od.dist.dist %]">[% od.dist.dist %]</a></td>
+<td><a href="/dist/overview/[% od.dist.dist %]">[% od.dist.dist %]</a></td>
 <td>[% od.dist.kwalitee.kwalitee | format("%2.2f") %]%</td>
 <td><a href="/author/[% od.dist.author.pauseid %]">[% od.dist.author.pauseid %]</a></td>
 </tr>

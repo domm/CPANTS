@@ -14,7 +14,7 @@
 
 <ul>
 [% WHILE (d = list.next) %]
-<li><a href="/dist/[% d.dist %]">[% d.dist %]</a> ([% d.author.name %])
+<li><a href="/dist/overview/[% d.dist %]">[% d.dist %]</a> ([% d.author.name %])
 [% END%]
 </ul>
 

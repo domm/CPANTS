@@ -2,7 +2,7 @@
 <table cellspacing=5>
 <tr><th>Distribution</th><th>Author</th><th>Kwalitee</th></tr>
 [% WHILE (d = list.next ) %]
-<tr><td><a href="/dist/[% d.dist %]">[% d.dist %]</a><td><a href="/author/[% d.author.pauseid %]">[% d.author.pauseid %]</td><td>[% d.kwalitee.kwalitee %]</td></tr>
+<tr><td><a href="/dist/overview/[% d.dist %]">[% d.dist %]</a><td><a href="/author/[% d.author.pauseid %]">[% d.author.pauseid %]</td><td>[% d.kwalitee.kwalitee %]</td></tr>
 [% END%]
 </table>
 

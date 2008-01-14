@@ -4,7 +4,7 @@
 [% indicators = mck.get_indicators_hash %]
 
 
-<h1>Kwalitee for <a href="/dist/[% dist.dist %]">[% dist.vname %]</a></h1>
+<h1>Kwalitee for <a href="/dist/overview/[% dist.dist %]">[% dist.vname %]</a></h1>
 
 <table>
 <tr>
