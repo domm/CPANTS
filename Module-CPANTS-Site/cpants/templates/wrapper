@@ -37,9 +37,8 @@ Site generated with <a href="http://search.cpan.org/dist/Module-CPANTS-Site/">Mo
 CPANTS data generated with <a href="http://search.cpan.org/dist/Module-CPANTS-Analyse/">Module::CPANTS::Analyse</a> [% run.mcanalyse_version %] and <a href="http://search.cpan.org/dist/Module-CPANTS-ProcessCPAN/">Module::CPANTS::ProcessCPAN</a> [% run.mcprocess_version %], at <b>[% run.date %].</b><br />
 CPANTS and Site maintained by Thomas Klausner - domm@cpan.org
 <p>
-<p>Hosting and bandwidth provided by <a href="http://hexten.net"><img
-src="/static/hexten.gif" border="0" align="top" alt="Hexten" width="156"
-height="32"></a>.</p>
+<p>Hosting and bandwidth provided by <a
+href="http://vienna.pm.org">Vienna.pm</a>.</p>
 </div>
 
 </body>
