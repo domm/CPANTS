@@ -206,7 +206,7 @@ __PACKAGE__->has_many(
   { "foreign.dist" => "self.id" },
 );
 __PACKAGE__->has_many(
-  "prereq_in_dist",
+  "requiring",
   "Module::CPANTS::Schema::Prereq",
   { "foreign.in_dist" => "self.id" },
 );

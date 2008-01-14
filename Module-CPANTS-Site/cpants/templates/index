@@ -17,16 +17,21 @@
 
 <dl>
 
-<dt>2008-01-12: up again (soon)</dt>
+<dt>2008-01-14: up again</dt>
 <dd>After a very long downtime caused by a combination of Christmas and me
 changing jobs, CPANTS will be soon back up to regular (daily) updates. I'm
 currently in the middle of setting things up on a new server provided by <a
-href="http://vienna.pm.org">Vienna.pm</a>, but until this is done you can get
-a preview here: http://cpants.useperl.at.
+href="http://vienna.pm.org">Vienna.pm</a>. cpants.perl.org already points to
+the new server.<br>
+There are some bugs left, though:
+<ul>
+<li>'Other dists requiring this' is still empty
+<li>The same is true for 'prereq_matches_use' and 'build_prereq_matches_use'
+<li>Some graphs are missing/wrong.
+</ul>
+I'll adress this issues this week, and also get the automatic updates back.
 <br><br>
-As soon as a) the site is running under mod_perl (DONE!) and b) I verified that the
-daily automatic updates actually work, I'll change cpants.perl.org to point to
-the new server.
+Thanks for your patience, and sorry for any inconveniences...
 </dd>
 
 
