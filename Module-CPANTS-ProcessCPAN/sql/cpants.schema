@@ -137,7 +137,7 @@ CREATE TABLE prereq (
   dist integer references dist(id) on delete cascade,
   requires text,
   version text,
-  in_dist integer,
+  in_dist integer not null default 0,
   is_prereq integer not null default 0,
   is_build_prereq integer not null default 0,
   is_optional_prereq integer not null default 0
@@ -146,7 +146,7 @@ CREATE TABLE uses (
   id SERIAL PRIMARY KEY,
   dist integer references dist(id) on delete cascade,
   module text,
-  in_dist integer,
+  in_dist integer not null default 0,
   in_code integer not null default 0,
   in_tests integer not null default 0
 );

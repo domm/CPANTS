@@ -123,7 +123,7 @@ my %kwalitee_updates;
         }
         if (@missing) {
             my $error="Undefined prereqs: ".join(', ',map {$dists{$_}} @missing);
-            $dbh->do("update dist set error_prereq=? where id=?",undef,$error,$dist);
+            $dbh->do("update error set prereq=? where id=?",undef,$error,$dist);
         }
         else {
             push(@{$kwalitee_updates{$dist}},'prereq_matches_use');
@@ -158,7 +158,7 @@ my %kwalitee_updates;
         }
         if (@missing) {
             my $error="Undefined prereqs: ".join(', ',map {$dists{$_}} @missing);
-            $dbh->do("update dist set error_build_prereq=? where id=?",undef,$error,$dist);
+            $dbh->do("update error set build_prereq=? where id=?",undef,$error,$dist);
         }
         else {
             push(@{$kwalitee_updates{$dist}},'build_prereq_matches_use');
