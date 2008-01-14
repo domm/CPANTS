@@ -233,5 +233,11 @@ __PACKAGE__->has_many(
 
 # You can replace this text with custom content, and it will be preserved on regeneration
 
+sub uses_in_code {
+    return shift->search_related('uses',{in_code=>{'>=',1}},{order_by=>'module'});
+}
+sub uses_in_tests {
+    return shift->search_related('uses',{in_tests=>{'>=',1}},{order_by=>'module'});
+}
 
 1;
