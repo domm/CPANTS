@@ -2,7 +2,7 @@
 # Changes for Module::CPANTS::Site
 #-----------------------------------------------------------------
 
-0.73	
+0.73    2008-01-29	
     - adapted to new Module::CPANTS::Schema
     - fixed dist-links to use overview
     - fixed error view
