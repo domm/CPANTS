@@ -2,6 +2,9 @@
 # Changes for Module::CPANTS::ProcessCPAN
 #-----------------------------------------------------------------
 
+0.73	2008-01-29
+    - migrated to postgres
+
 
 0.72    2007-11-14
     - new metrics 'prereq_matches_use' and 'build_prereq_matches_use'
