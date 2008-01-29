@@ -2,7 +2,7 @@
 # Changes for Module::CPANTS::Analyse
 #-----------------------------------------------------------------
 
-0.77
+0.77	2008-01-29
     - made 'prereq_matches_use' and 'build_prereq_matches_use' optional metrics
     - changed data structure: all errors are now in a hashref called 'error'
 
