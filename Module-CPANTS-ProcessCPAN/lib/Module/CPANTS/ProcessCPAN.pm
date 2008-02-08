@@ -72,7 +72,7 @@ sub process_cpan {
     my %in_db;
     my $all_dists=$db->resultset('Dist')->search;
     while (my $d=$all_dists->next) {
-        $in_db{$d->dist}++;
+        $in_db{$d->vname}++;
     }
 
     foreach my $dist (sort {$a->dist cmp $b->dist} $p->latest_distributions) {
@@ -84,7 +84,7 @@ sub process_cpan {
         next if $vname=~/^Bundle-/;
         $seen{$dist->dist}++;
 
-        if ($in_db{$dist->dist}) {
+        if ($in_db{$dist->distvname}) {
             if ($me->force) {
                 print "forced reindex of $vname\n";
             }
