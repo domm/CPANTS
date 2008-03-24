@@ -90,13 +90,16 @@ http://rt.cpan.org/Ticket/Display.html?id=21370
 
 - include more dists in test (for better test coverage)
 
-improve NeedsCompiler (see its TODO)
+- improve NeedsCompiler (see its TODO)
 
 - history of module metrics and authors average.
+  (download all the currently available versions of a module from CPAN
+  (or even those from backpan), calculate the metric on each one of them
+  create nice graphs.
 
-Add opt-in e-mail notification when the kwalitee of a new releases is
-either < 60% or is worse than the previous value.
-(what to do when more metrics are added?)
+- Add opt-in e-mail notification when the kwalitee of a new releases is
+  either < 60% or is worse than the previous value.
+  (what to do when more metrics are added?)
 
 - Perl Critic report:
   As this is not really in the consensus probably it is better not add it as 
@@ -108,6 +111,18 @@ either < 60% or is worse than the previous value.
   e.g. http://cpants.perl.org/dist/overview/STAFService shows a Pod error
   and missing use strict. It would be nice if CPANTS could display the
   error code (in the pod case) or the file(s) that have no use strict.
+
+- One of the modules failing the extractable metric
+  http://cpants.perl.org/dist/shortcoming?metric=extractable
+  is http://cpants.perl.org/dist/overview/Catalyst-Plugin-Imager
+  but it does not seem to be on CPAN at all.
+  The same seems to be true to all 8 distros in this category.
+
+- pls display the number of failing distros for each metric
+  on the http://cpants.perl.org/kwalitee.html page too
+
+- Add a page to show the results of the Phalanx 100
+  http://qa.perl.org/phalanx/
 
 
 
