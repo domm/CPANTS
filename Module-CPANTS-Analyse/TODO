@@ -75,6 +75,15 @@ http://rt.cpan.org/Ticket/Display.html?id=21370
         file only or all the files or what)
 - licenses_are_consistent
 
+- no_generated_file
+  check for the following files and directories and makr the kwalitee as failed
+  if any of them exists.
+  Build
+  Makefile
+  _build
+  blib
+  pm_to_blib
+
 #-----------------------------------------------------------------
 # Other Stuff 
 #-----------------------------------------------------------------
