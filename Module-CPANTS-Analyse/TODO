@@ -29,6 +29,36 @@ http://rt.cpan.org/Ticket/Display.html?id=21370
 - has_rating ?
 - relation of subs to lines of code ?
 
+- easily_repackagable
+- easily_repackagable_by_debian
+- easily_repackagable_by_fedora
+  on http://www.perlfoundation.org/perl5/index.cgi?cpan_packaging
+  there are guidelines for module authors to make their modules easily
+  repackagable by downstream distros.
+  It  would be great if we could add as many to CPANTS as possible.
+  Some we can check without executing code.
+  Others might be verified by the CPAN Testers, reported by the tools
+  and then collected from the reports by CPANTS.
+
+- version_number_is_sane
+  There are several issues here: 
+  1) Is the version number sane for perl (I think there is a metric already)
+  2) Is the version number sane for Debian/RedHat (they have different meaning of sane)
+  3) Is the scheme of the version numbers stable? (In Debian they don't like when ppl are
+     changing from D.DD to a D.D scheme or vice versa.
+
+- has_no_indirect_code
+  Check the source code (and/or) the documentation if you see 
+  new Module::Name anywhere mark the metric as failed.
+
+- declares_minimal_version_of_perl
+  It has "use N" somewhere in the Makefile.PL and/or Build.PL and/or the source code.
+  (No specific N should be required)
+
+- "something about has good perl code"
+  (e.g. if uses 3 param open but does not say use perl 5.6 or similar)
+
+
 - change has_license to has_license_in_yaml,
   put the actual name of the license (perl, etc.) in the 
   database for later retreival
@@ -45,4 +75,11 @@ http://rt.cpan.org/Ticket/Display.html?id=21370
 - include more dists in test (for better test coverage)
 
 improve NeedsCompiler (see its TODO)
+
+- history of module metrics and authors average.
+
+Add opt-in e-mail notification when the kwalitee of a new releases is
+either < 60% or is worse than the previous value.
+(what to do when more metrics are added?)
+
 
