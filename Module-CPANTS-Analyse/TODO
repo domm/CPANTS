@@ -47,12 +47,19 @@ http://rt.cpan.org/Ticket/Display.html?id=21370
   3) Is the scheme of the version numbers stable? (In Debian they don't like when ppl are
      changing from D.DD to a D.D scheme or vice versa.
 
+  1.1.1 is not considered correct by MakeMaker but it is currently accepted by CPANTS
+  http://cpants.perl.org/dist/kwalitee/Sys-HostIP
+  http://www.nntp.perl.org/group/perl.qa/2007/12/msg10025.html
+
+- has_same_version_number_in_all_files ???
+
 - has_no_indirect_code
   Check the source code (and/or) the documentation if you see 
   new Module::Name anywhere mark the metric as failed.
 
 - declares_minimal_version_of_perl
   It has "use N" somewhere in the Makefile.PL and/or Build.PL and/or the source code.
+  (and they match to each other :-)
   (No specific N should be required)
 
 - "something about has good perl code"
@@ -81,5 +88,17 @@ improve NeedsCompiler (see its TODO)
 Add opt-in e-mail notification when the kwalitee of a new releases is
 either < 60% or is worse than the previous value.
 (what to do when more metrics are added?)
+
+- Perl Critic report:
+  As this is not really in the consensus probably it is better not add it as 
+  a metric now but it might be nice to run it on each module 
+  (starting at leevel 5 ) and display it along with the metrics.
+  Maybe it can be added as an optional metric.
+
+- Display the real errors as seen by CPANTS.
+  e.g. http://cpants.perl.org/dist/overview/STAFService shows a Pod error
+  and missing use strict. It would be nice if CPANTS could display the
+  error code (in the pod case) or the file(s) that have no use strict.
+
 
 

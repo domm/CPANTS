@@ -78,6 +78,11 @@ on ExtUtils::CBuilder or ExtUtils::ParseXS.
 How to recognize cases such as http://search.cpan.org/dist/Perl-API/ 
 and http://search.cpan.org/dist/Term-Size-Perl
 that generate the .c files during installation
+
+In addition there are modules that can work without their XS part.
+E.g. Scalar-List-Utils, Net-DNS, Template-Toolkit 
+For our purposes these all should be marked as "need C compiler"
+as they need it for their full functionality and speed.
  
 =head3 kwalitee_indicators
 
