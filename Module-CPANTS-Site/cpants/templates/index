@@ -17,6 +17,20 @@
 <h3>News</h3>
 
 <dl>
+<dt>2008-03-31: Preparing for the QA Hackathon</dt>
+<dd><p>
+This weekend, I'm participating in the <a
+href="http://perl-qa.hexten.net/wiki/index.php/Oslo_QA_Hackathon_2008">QA
+Hackathon</a> in Oslo. My journey there is sponsored by <a
+href="http://vienna.pm.org">Vienna.pm</a> - thanks!</p>
+<p>
+To prepare for the hacking, I finally set up a mailinglist for svn commit
+messages: <a
+href="http://lists.useperl.at/listinfo/cpants-commit">http://lists.useperl.at/listinfo/cpants-commit</a>.
+If you're interested in what is happening in the wonderfull world of CPANTS,
+go ahead and subscribe!
+</p>
+</dd>
 
 <dt>2008-01-14: up again</dt>
 <dd>After a very long downtime caused by a combination of Christmas and me
@@ -33,10 +47,7 @@ Thanks for your patience, and sorry for any inconveniences...
 I fixed a few bugs and generated new data (which took a bit more than 6 hours). But nothing fancy...
 </dd>
 
-<dt>2007-10-30: reworked dist view</dt>
-<dd>
-The view for a dist is now broken up into several subpages. This makes the data more easy to read. I've also fixed some minor problems in the list of prereqs etc (links are now going to the dist each module is in).
-</dd>
+
 </dl>
 
 <a href="/news.html">Not news anymore...</a>

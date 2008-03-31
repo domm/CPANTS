@@ -1,6 +1,21 @@
 <h2>News</h2>
 
 <dl>
+<dt>2008-03-31: Preparing for the QA Hackathon</dt>
+<dd><p>
+This weekend, I'm participating in the <a
+href="http://perl-qa.hexten.net/wiki/index.php/Oslo_QA_Hackathon_2008">QA
+Hackathon</a> in Oslo. My journey there is sponsored by <a
+href="http://vienna.pm.org">Vienna.pm</a> - thanks!</p>
+<p>
+To prepare for the hacking, I finally set up a mailinglist for svn commit
+messages: <a
+href="http://lists.useperl.at/listinfo/cpants-commit">http://lists.useperl.at/listinfo/cpants-commit</a>.
+If you're interested in what is happening in the wonderfull world of CPANTS,
+go ahead and subscribe!
+</p>
+</dd>
+
 
 <dt>2008-01-14: up again</dt>
 <dd>After a very long downtime caused by a combination of Christmas and me
