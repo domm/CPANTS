@@ -21,6 +21,7 @@ my $build = Module::CPANTS::MyBuild->new(
         'GD::Graph'                     => '1.00',
         'DBD::Pg'                       => '1.49',
         'version'                       => '0.73',
+        'File::HomeDir'                 => '0.66',
     },
     
     create_makefile_pl=>'passthrough',
