@@ -1,4 +1,4 @@
-use Test::More tests => 14;
+use Test::More tests => 15;
 
 use Module::CPANTS::Analyse;
 use File::Spec::Functions;
@@ -26,8 +26,9 @@ is($kw->{use_strict},1,'use_strict');
 is($kw->{has_example},1,'has_example');
 is($kw->{buildtool_not_executable},1,'buildtool_not_executable');
 is($kw->{no_cpants_errors},1,'no_cpants_errors');
+is($kw->{no_generated_files},1,'no_generated_files');
 
-is($kw->{kwalitee},22,'some kwalitee points');
+is($kw->{kwalitee},23,'some kwalitee points');
 
 use Data::Dumper;
 #diag(Dumper $a->d);

@@ -1,9 +1,9 @@
-use Test::More tests => 19;
+use Test::More tests => 14;
 
 use Module::CPANTS::Analyse;
 use File::Spec::Functions;
 my $a=Module::CPANTS::Analyse->new({
-    dist=>'t/eg/Test-YAML-Meta-0.04.tar.gz',
+    dist=>'t/eg/Acme-DonMartinOther-0.06.tar.gz',
     _dont_cleanup=>$ENV{DONT_CLEANUP},
 });
 
@@ -11,11 +11,6 @@ my $rv=$a->unpack;
 is($rv,undef,'unpack ok');
 
 $a->analyse;
-
-my $d=$a->d;
-is($d->{files},37,'files');
-is(@{$d->{modules}},2,'module');
-
 $a->calc_kwalitee;
 
 my $kw=$a->d->{kwalitee};
@@ -31,10 +26,9 @@ is($kw->{use_strict},1,'use_strict');
 is($kw->{has_example},1,'has_example');
 is($kw->{buildtool_not_executable},1,'buildtool_not_executable');
 is($kw->{no_cpants_errors},1,'no_cpants_errors');
-is($kw->{metayml_has_license},1,'has license in META.yml');
-is($kw->{metayml_conforms_to_known_spec},1,'META.yml conforms to a known version of the spec.');
-is($kw->{metayml_conforms_spec_current},1,'META.yml conforms to v1.3 of the spec.');
 
-is($kw->{kwalitee},28,'some kwalitee points');
+is($kw->{kwalitee},22,'some kwalitee points');
 
+use Data::Dumper;
+#diag(Dumper $a->d);
 

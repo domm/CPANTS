@@ -75,15 +75,6 @@ http://rt.cpan.org/Ticket/Display.html?id=21370
         file only or all the files or what)
 - licenses_are_consistent
 
-- no_generated_file
-  check for the following files and directories and makr the kwalitee as failed
-  if any of them exists.
-  Build
-  Makefile
-  _build
-  blib
-  pm_to_blib
-
 #-----------------------------------------------------------------
 # Other Stuff 
 #-----------------------------------------------------------------
@@ -124,5 +115,16 @@ http://rt.cpan.org/Ticket/Display.html?id=21370
 - Add a page to show the results of the Phalanx 100
   http://qa.perl.org/phalanx/
 
+- http://cpants.perl.org/author/search should also work on partial names
+  adding % % automatically (or at least tell the users on the search page to
+  use % as widecards.
 
+- create stats (or metrics) for distros that were uploaded recently with failing metrics.
+  e.g. the fact that 9920 Distributions failing 'metayml_has_license' is skewed by the
+  many modules that were not updated in the past 1-2 years. It would be more important
+  to see the number of modules uploaded in the last year without metayml of without license
+  field in the metayaml.
+
+- Export the kwalitee of each distro in a csv file like so it can be easily integrated into
+  other web sites such as the search engines.
 
