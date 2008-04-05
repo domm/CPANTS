@@ -17,6 +17,7 @@ my $build = Module::Build->new(
         'Array::Diff'               => '0.04',
         'Test::YAML::Meta::Version' => '0.06',
         'version'                   => '0.73',
+        'List::MoreUtils'           => '0',
     },
     script_files=>[qw(bin/cpants_lint.pl)],
     create_makefile_pl=>'traditional',

@@ -7,7 +7,7 @@ my $a=Module::CPANTS::Analyse->new({});
 
 {
 	my @plugins=$a->plugins;
-	is(@plugins,12,'number of plugins');
+	is(@plugins,13,'number of plugins');
 }
 
 
@@ -26,6 +26,8 @@ cmp_deeply($plugins,bag(
             Module::CPANTS::Kwalitee::BrokenInstaller
             Module::CPANTS::Kwalitee::Manifest
             Module::CPANTS::Kwalitee::License
-            Module::CPANTS::Kwalitee::NeedsCompiler)),'plugin the rest');
+            Module::CPANTS::Kwalitee::NeedsCompiler
+            Module::CPANTS::Kwalitee::Repackageable
+        )),'plugin the rest');
 
 
