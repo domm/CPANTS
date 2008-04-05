@@ -19,5 +19,22 @@
 * various statistic views
   (sorted by prereqs, by depenecies, ..)
 
-test
+- Display the real errors as seen by CPANTS.
+  e.g. http://cpants.perl.org/dist/overview/STAFService shows a Pod error
+  and missing use strict. It would be nice if CPANTS could display the
+  error code (in the pod case) or the file(s) that have no use strict.
+
+- One of the modules failing the extractable metric
+  http://cpants.perl.org/dist/shortcoming?metric=extractable
+  is http://cpants.perl.org/dist/overview/Catalyst-Plugin-Imager
+  but it does not seem to be on CPAN at all.
+  The same seems to be true to all 8 distros in this category.
+
+- pls display the number of failing distros for each metric
+  on the http://cpants.perl.org/kwalitee.html page too
+
+- Add a page to show the results of the Phalanx 100
+  http://qa.perl.org/phalanx/
+
+
 
