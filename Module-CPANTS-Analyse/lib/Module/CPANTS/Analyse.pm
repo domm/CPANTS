@@ -97,18 +97,17 @@ sub calc_kwalitee {
     my $me=shift;
 
     my $kwalitee=0;
-    my %k;
+    $me->d->{kwalitee}={};
     foreach my $mod (@{$me->mck->generators}) {
         foreach my $i (@{$mod->kwalitee_indicators}) {
             next if $i->{needs_db};
             my $rv=$i->{code}($me->d);
-            $k{$i->{name}}=$rv;
+            $me->d->{kwalitee}{$i->{name}}=$rv;
             $kwalitee+=$rv;
         }
     }
-    $k{'kwalitee'}=$kwalitee;
+    $me->d->{'kwalitee'}{'kwalitee'}=$kwalitee;
     
-    $me->d->{kwalitee}=\%k;
 }
 
 #----------------------------------------------------------------

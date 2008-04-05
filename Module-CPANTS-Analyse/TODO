@@ -10,7 +10,6 @@
 #-----------------------------------------------------------------
 
 Robert 'phaylon' Sedlacek <phaylon@dunkelheit.at>
-  2. Bei einer $VERSION = '0.01_02'; bekomme ich von cpants_lint.pl die           
   Meldung, dass 'has_proper_version' nicht bestanden wird.     
 
 http://rt.cpan.org/Ticket/Display.html?id=21370
@@ -83,37 +82,14 @@ http://rt.cpan.org/Ticket/Display.html?id=21370
 
 - improve NeedsCompiler (see its TODO)
 
-- history of module metrics and authors average.
-  (download all the currently available versions of a module from CPAN
-  (or even those from backpan), calculate the metric on each one of them
-  create nice graphs.
-
-- Add opt-in e-mail notification when the kwalitee of a new releases is
-  either < 60% or is worse than the previous value.
-  (what to do when more metrics are added?)
-
 - Perl Critic report:
   As this is not really in the consensus probably it is better not add it as 
   a metric now but it might be nice to run it on each module 
   (starting at leevel 5 ) and display it along with the metrics.
   Maybe it can be added as an optional metric.
 
-- Display the real errors as seen by CPANTS.
-  e.g. http://cpants.perl.org/dist/overview/STAFService shows a Pod error
-  and missing use strict. It would be nice if CPANTS could display the
-  error code (in the pod case) or the file(s) that have no use strict.
 
-- One of the modules failing the extractable metric
-  http://cpants.perl.org/dist/shortcoming?metric=extractable
-  is http://cpants.perl.org/dist/overview/Catalyst-Plugin-Imager
-  but it does not seem to be on CPAN at all.
-  The same seems to be true to all 8 distros in this category.
 
-- pls display the number of failing distros for each metric
-  on the http://cpants.perl.org/kwalitee.html page too
-
-- Add a page to show the results of the Phalanx 100
-  http://qa.perl.org/phalanx/
 
 - http://cpants.perl.org/author/search should also work on partial names
   adding % % automatically (or at least tell the users on the search page to
@@ -124,6 +100,9 @@ http://rt.cpan.org/Ticket/Display.html?id=21370
   many modules that were not updated in the past 1-2 years. It would be more important
   to see the number of modules uploaded in the last year without metayml of without license
   field in the metayaml.
+
+- Export the kwalitee of each distro in a csv file like so it can be easily integrated into
+  other web sites such as the search engines.
 
 - Export the kwalitee of each distro in a csv file like so it can be easily integrated into
   other web sites such as the search engines.
