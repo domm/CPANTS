@@ -85,7 +85,6 @@ my %core_dists;
     while (my ($module)=$sth->fetchrow_array) {
         next unless defined $modules{$module};
         $dbh->do("update uses set in_dist=? where module=?",undef,$modules{$module},$module);
-
     }
 }
 
@@ -149,7 +148,6 @@ sub check_prereq {
         }
         if (@missing) {
             my $error="Undefined prereqs: ".join(', ', @missing);
-            print $error."\n";
             my $efld=$type;
             $efld=~s/_matches_use//;
             $dbh->do("update error set $efld=? where id=?",undef,$error,$dist);

@@ -12,6 +12,7 @@ my $db_pwd=Module::CPANTS::ProcessCPAN::ConfigData->config('db_pwd');
 $Template::Directive::WHILE_MAX=3000;
 use version; our $VERSION = version->new('0.74');
 
+
 __PACKAGE__->config(
     name    => 'Module::CPANTS::Site',
     home    => $home,
