@@ -23,6 +23,7 @@ http://rt.cpan.org/Ticket/Display.html?id=21370
 - has_valid_filenames
 - declares_dependencies
 - no_open_bugs
+- no_old_open_bugs  (older than a year?)
 
 - Signature checking ?
 - has_rating ?

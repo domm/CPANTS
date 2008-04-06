@@ -27,11 +27,12 @@ sub analyse {
 sub kwalitee_indicators{
     my @fedora_licenses = qw(perl apache artistic_2 gpl lgpl mit mozilla);
     # based on: http://fedoraproject.org/wiki/Licensing
-    my $fedora_licenses = "Acceptable icenses: (" . join(", ", @fedora_licenses) . ")";
+    my $fedora_licenses = "Acceptable licenses: (" . join(", ", @fedora_licenses) . ")";
+    my $experimental = "This is an experimental metric. Still researching its requirements.";
     return [
          {
             name=>'easily_repackageagble_by_fedora',
-            error=>qq{It is easy to repackage this module by Fedora. $fedora_licenses},
+            error=>qq{It is easy to repackage this module by Fedora. $fedora_licenses. $experimental},
             remedy=>q{Fix each one of the metrics this depends on},
             is_extra=>1,
             code=>sub { 
@@ -46,7 +47,7 @@ sub kwalitee_indicators{
         },
          {
             name=>'easily_repackageagble',
-            error=>q{It is easy to repackage this module},
+            error=>qq{It is easy to repackage this module. $experimental},
             remedy=>q{Fix each one of the metrics this depends on},
             is_extra=>1,
             code=>sub { 

@@ -4,6 +4,7 @@
 
     - add no_generated_files metric
     - add easily_repackageagble_by_fedora and easily_repackageagble metric
+    - add has_version_in_each_file metric
 
 0.77	2008-01-29
     - made 'prereq_matches_use' and 'build_prereq_matches_use' optional metrics

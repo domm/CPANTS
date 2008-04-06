@@ -17,6 +17,7 @@ our @files=();
 our @dirs=();
 our $size=0;
 my %generated_db_files;
+my $match_version = qr/\A\s*   (?:our)?  \s*  \$VERSION \s*=\s*    (['"]?)([^; ]+)\1   \s*;\s*\z/x;
 
 sub analyse {
     my $class=shift;
@@ -54,6 +55,8 @@ sub analyse {
     $me->d->{dirs_array}=\@dirs;
     $me->d->{symlinks}=scalar @symlinks;
     $me->d->{symlinks_list}=join(';',@symlinks);
+
+    $me->d->{versions} = _fetch_version_numbers($me, \@files);
 
     # find special files
     my %reqfiles;
@@ -115,6 +118,32 @@ sub map_filenames {
     return %ret;
 }
 
+sub _fetch_version_numbers {
+    my $me=shift;
+    my $files=shift;
+    my $distdir=$me->distdir;
+
+    my %version_of;
+    foreach my $file (@$files) {
+        next if $file !~ /\.pm$/;
+        my $version;
+        if (open my $fh, '<', catfile($distdir, $file)) {
+            while (my $line = <$fh>) {
+                if ($line =~ $match_version) {
+                    $version = $2;  
+                    last;
+                }
+            }
+        } else {
+            # report error that cannot open file?
+            $version_of{$file} = "Could not open file '$file' $!";
+            last;
+        }
+        $version_of{$file} = $version;
+    }
+
+    return \%version_of;
+}
 
 #-----------------------------------------------------------------
 # get_files
@@ -222,7 +251,7 @@ sub kwalitee_indicators {
         remedy=>q{Remove the offending file!},
         code=>sub {
             my $d=shift;
-            use Data::Dumper;
+            #use Data::Dumper;
             #die Dumper \%generated_db_files;
             my @errors = map { $generated_db_files{$_} }
                          grep { $d->{$_} }
@@ -231,6 +260,26 @@ sub kwalitee_indicators {
             if (@errors) {
                 $d->{error}{no_generated_files} = join ", ", @errors;
                 
+                return 0;
+            }
+            return 1;
+        },
+    },
+    {
+        name=>'has_version_in_each_file',
+        error=>q{This distribution has a .pm file without version number. (Using $match_version to match them)},
+        remedy=>q{Add a version number to each .pm file.},
+        is_extra=>1,
+        code=>sub {
+            my $d=shift;
+            #use Data::Dumper;
+            #die Dumper $d->{versions};
+            my @errors = map { $d->{versions}{$_} }
+                         grep { defined $d->{versions}{$_} }
+                         keys %{ $d->{versions} };
+            ##die $d->{build};
+            if (@errors) {
+                $d->{error}{has_version_in_each_file} = join ", ", @errors;
                 return 0;
             }
             return 1;
@@ -307,6 +356,8 @@ Returns the Kwalitee Indicators datastructure.
 =item * has_example (optional)
 
 =item * no_generated_file
+
+=item * has_version_in_each_file
 
 =back
 
