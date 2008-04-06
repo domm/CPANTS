@@ -38,9 +38,19 @@ sub kwalitee_indicators{
             code=>sub { 
                 my $d=shift;
                 my @required = qw(no_generated_files has_tests_in_t_dir);
+                my @errors;
 
                 my $good = all { $d->{kwalitee}{$_} } @required;
-                return $good;
+                foreach my $key qw(stdin_in_makefile_pl stdin_in_build_pl) {
+                    if (!$d->{$key}) {
+                        push @errors, $key;
+                    }
+                }
+                if (@errors) {
+                    $d->{error}{easily_repackagable_by_debian} = "Make sure STDIN is not used in Makefile.PL or Build.PL see http://www.perlfoundation.org/perl5/index.cgi?cpan_packaging";
+                    $good = 0;
+                }
+                return $good ? 1 : 0;
             }
         },
          {
@@ -69,7 +79,7 @@ sub kwalitee_indicators{
                 my $good = all { $d->{kwalitee}{$_} } @required;
                 #use Data::Dumper;
                 #print STDERR Dumper $d;
-                return $good;
+                return $good ? 1 : 0;
             }
         },
     ];

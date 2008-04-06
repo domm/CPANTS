@@ -103,6 +103,23 @@ sub analyse {
         $build_exe=3 unless ($me->d->{file_makefile_pl} || $me->d->{file_build_pl});
         $me->d->{buildfile_executable}=$build_exe;
     }
+
+    # check STDIN in Makefile.PL and Build.PL 
+    # objective: convince people to use prompt();
+    # http://www.perlfoundation.org/perl5/index.cgi?cpan_packaging
+    {
+        foreach my $file ('Makefile.PL', 'Build.PL') {
+            (my $handle = $file) =~ s/\./_/;
+            $handle = "stdin_in_" . lc $handle;
+            my $path = catfile($me->distdir,$file);
+            next if not -e $path;
+            if (open my $fh, '<', $path) {
+                if (grep {/STDIN/} <$fh>) {
+                    $me->d->{$handle} = 1;
+                }
+            }
+        } 
+    } 
     return;
 }
 

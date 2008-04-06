@@ -52,6 +52,8 @@ http://rt.cpan.org/Ticket/Display.html?id=21370
   http://www.nntp.perl.org/group/perl.qa/2007/12/msg10025.html
 
 - has_same_version_number_in_all_files ???
+  Some people will argue that when one of the files does not change, there is no
+  need to change its version number. So this might not be a good metric.
 
 - was_patched_by_debian
   indicates that the version in Debian was patched

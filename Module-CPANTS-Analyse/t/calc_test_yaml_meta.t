@@ -1,4 +1,4 @@
-use Test::More tests => 20;
+use Test::More tests => 4;
 
 use Module::CPANTS::Analyse;
 use File::Spec::Functions;
@@ -19,23 +19,45 @@ is(@{$d->{modules}},2,'module');
 $a->calc_kwalitee;
 
 my $kw=$a->d->{kwalitee};
-is($kw->{has_changelog},1,'has_changelog');
-is($kw->{has_version},1,'has_version');
-is($kw->{has_tests},1,'has_tests');
-is($kw->{has_tests_in_t_dir},1,'has_tests_in_t_dir');
-is($kw->{proper_libs},1,'proper_libs');
-is($kw->{extracts_nicely},1,'extracts_nicely');
-is($kw->{no_pod_errors},1,'no_pod_errors');
-is($kw->{has_test_pod},1,'has_test_pod');
-is($kw->{has_test_pod_coverage},1,'has_test_pod_coverage');
-is($kw->{use_strict},1,'use_strict');
-is($kw->{has_example},1,'has_example');
-is($kw->{buildtool_not_executable},1,'buildtool_not_executable');
-is($kw->{no_cpants_errors},1,'no_cpants_errors');
-is($kw->{metayml_has_license},1,'has license in META.yml');
-is($kw->{metayml_conforms_to_known_spec},1,'META.yml conforms to a known version of the spec.');
-is($kw->{metayml_conforms_spec_current},1,'META.yml conforms to v1.3 of the spec.');
+my $expected_kwalitee = {
+           'extracts_nicely' => 1,
+           'has_buildtool' => 1,
+           'has_readme' => 1,
+           'manifest_matches_dist' => 1,
+           'has_example' => 1,
+           'has_test_pod_coverage' => 1,
+           'metayml_is_parsable' => 1,
+           'easily_repackageagble' => 0,
+           'proper_libs' => 1,
+           'has_changelog' => 1,
+           'no_pod_errors' => 1,
+           'use_strict' => 1,
+           'kwalitee' => 30,
+           'has_test_pod' => 1,
+           'has_tests' => 1,
+           'easily_repackageagble_by_debian' => 0,
+           'has_manifest' => 1,
+           'no_symlinks' => 1,
+           'has_version' => 1,
+           'extractable' => 1,
+           'buildtool_not_executable' => 1,
+           'has_working_buildtool' => 1,
+           'metayml_has_license' => 1,
+           'has_humanreadable_license' => 1,
+           'no_generated_files' => 1,
+           'has_meta_yml' => 1,
+           'easily_repackageagble_by_fedora' => 1,
+           'metayml_conforms_spec_current' => 1,
+           'use_warnings' => 1,
+           'no_cpants_errors' => 1,
+           'has_version_in_each_file' => 0,
+           'has_tests_in_t_dir' => 1,
+           'has_proper_version' => 1,
+           'metayml_conforms_to_known_spec' => 1
+         };
 
-is($kw->{kwalitee},32,'some kwalitee points');
+is_deeply($kw, $expected_kwalitee, 'metrics are as expected');
 
-
+#use Data::Dumper;
+#diag(Dumper $kw);
+#diag(Dumper $a->d);
