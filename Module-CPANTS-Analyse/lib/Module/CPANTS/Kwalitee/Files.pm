@@ -56,8 +56,6 @@ sub analyse {
     $me->d->{symlinks}=scalar @symlinks;
     $me->d->{symlinks_list}=join(';',@symlinks);
 
-    $me->d->{versions} = _fetch_version_numbers($me, \@files);
-
     # find special files
     my %reqfiles;
     my @special_files=(qw(Makefile.PL Build.PL META.yml SIGNATURE MANIFEST NINJA test.pl LICENSE));
@@ -133,33 +131,6 @@ sub map_filenames {
         $ret{$db_file}=$file;
     }
     return %ret;
-}
-
-sub _fetch_version_numbers {
-    my $me=shift;
-    my $files=shift;
-    my $distdir=$me->distdir;
-
-    my %version_of;
-    foreach my $file (@$files) {
-        next if $file !~ /\.pm$/;
-        my $version;
-        if (open my $fh, '<', catfile($distdir, $file)) {
-            while (my $line = <$fh>) {
-                if ($line =~ $match_version) {
-                    $version = $2;  
-                    last;
-                }
-            }
-        } else {
-            # report error that cannot open file?
-            $version_of{$file} = "Could not open file '$file' $!";
-            last;
-        }
-        $version_of{$file} = $version;
-    }
-
-    return \%version_of;
 }
 
 #-----------------------------------------------------------------
@@ -288,26 +259,6 @@ sub kwalitee_indicators {
             if (@errors) {
                 $d->{error}{no_generated_files} = join ", ", @errors;
                 
-                return 0;
-            }
-            return 1;
-        },
-    },
-    {
-        name=>'has_version_in_each_file',
-        error=>q{This distribution has a .pm file without version number. (Using $match_version to match them)},
-        remedy=>q{Add a version number to each .pm file.},
-        is_extra=>1,
-        code=>sub {
-            my $d=shift;
-            #use Data::Dumper;
-            #die Dumper $d->{versions};
-            my @errors = map { $d->{versions}{$_} }
-                         grep { defined $d->{versions}{$_} }
-                         keys %{ $d->{versions} };
-            ##die $d->{build};
-            if (@errors) {
-                $d->{error}{has_version_in_each_file} = join ", ", @errors;
                 return 0;
             }
             return 1;

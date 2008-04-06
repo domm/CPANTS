@@ -2,12 +2,17 @@
 # Changes for Module::CPANTS::Analyse
 #-----------------------------------------------------------------
 
+0.78-tobe
+    - moved has_version_in_each_file into MCK::Version & fixed a bug
+      in it 
+    Gabor Szabo:
     - add no_generated_files metric
     - add easily_repackageagble_by_fedora, easily_repackagable_by_debian
       and easily_repackageagble metric
     - add has_version_in_each_file metric
     - add has_tests_in_t_dir metric
     - add no_stdin_for_prompting metric checking for STDIN in Makefile.PL and Build.PL
+
 
 0.77	2008-01-29
     - made 'prereq_matches_use' and 'build_prereq_matches_use' optional metrics

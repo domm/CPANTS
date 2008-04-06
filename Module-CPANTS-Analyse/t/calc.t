@@ -9,7 +9,6 @@ my $a=Module::CPANTS::Analyse->new({
 
 my $rv=$a->unpack;
 is($rv,undef,'unpack ok');
-
 $a->analyse;
 $a->calc_kwalitee;
 
@@ -27,7 +26,7 @@ my $expected_kwalitee =  {
            'has_changelog' => 1,
            'no_pod_errors' => 1,
            'use_strict' => 1,
-           'kwalitee' => 28,
+           'kwalitee' => 29,
            'has_test_pod' => 1,
            'has_tests' => 1,
            'easily_repackageable_by_debian' => 1,
@@ -45,7 +44,7 @@ my $expected_kwalitee =  {
            'metayml_conforms_spec_current' => 0,
            'use_warnings' => 0,
            'no_cpants_errors' => 1,
-           'has_version_in_each_file' => 0,
+           'has_version_in_each_file' => 1,
            'has_tests_in_t_dir' => 1,
            'has_proper_version' => 1,
            'metayml_conforms_to_known_spec' => 0,
