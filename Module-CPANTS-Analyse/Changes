@@ -6,6 +6,7 @@
     - add easily_repackageagble_by_fedora, easily_repackagable_by_debian
       and easily_repackageagble metric
     - add has_version_in_each_file metric
+    - add has_tests_in_t_dir metric
 
 0.77	2008-01-29
     - made 'prereq_matches_use' and 'build_prereq_matches_use' optional metrics

@@ -228,6 +228,17 @@ sub kwalitee_indicators {
         },
     },
     {
+        name=>'has_tests_in_t_dir',
+        error=>q{This distribution contains either a file called 'test.pl' (the old test file) or is missing a directory called 't'. This indicates that it uses the old test mechanism or it has no test-suite.},
+        remedy=>q{Add tests or move tests.pl to the t/ directory!},
+        is_extra=>1,
+        code=>sub {
+            my $d=shift;
+            return 1 if !$d->{file_test_pl} && $d->{dir_t};
+            return 0;
+        },
+    },
+    {
         name=>'buildtool_not_executable',
         error=>q{The buildtool (Build.PL/Makefile.PL) is executable. This is bad, because you should specifiy which perl you want to use while installing.},
         remedy=>q{Change the permissions of Build.PL/Makefile.PL to not-executable.},
@@ -350,6 +361,8 @@ Returns the Kwalitee Indicators datastructure.
 =item * no_symlinks
 
 =item * has_tests
+
+=item * has_tests_in_t_dir
 
 =item * buildfile_not_executabel
 

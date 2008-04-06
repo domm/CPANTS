@@ -37,7 +37,7 @@ sub kwalitee_indicators{
             is_extra=>1,
             code=>sub { 
                 my $d=shift;
-                my @required = qw(no_generated_files);
+                my @required = qw(no_generated_files has_tests_in_t_dir);
 
                 my $good = all { $d->{kwalitee}{$_} } @required;
                 return $good;

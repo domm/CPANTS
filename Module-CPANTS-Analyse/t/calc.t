@@ -1,4 +1,4 @@
-use Test::More tests => 15;
+use Test::More tests => 16;
 
 use Module::CPANTS::Analyse;
 use File::Spec::Functions;
@@ -17,6 +17,7 @@ my $kw=$a->d->{kwalitee};
 is($kw->{has_changelog},1,'has_changelog');
 is($kw->{has_version},1,'has_version');
 is($kw->{has_tests},1,'has_tests');
+is($kw->{has_tests_in_t_dir},1,'has_tests_in_t_dir');
 is($kw->{proper_libs},1,'proper_libs');
 is($kw->{extracts_nicely},1,'extracts_nicely');
 is($kw->{no_pod_errors},1,'no_pod_errors');
@@ -28,7 +29,7 @@ is($kw->{buildtool_not_executable},1,'buildtool_not_executable');
 is($kw->{no_cpants_errors},1,'no_cpants_errors');
 is($kw->{no_generated_files},1,'no_generated_files');
 
-is($kw->{kwalitee},26,'some kwalitee points');
+is($kw->{kwalitee},27,'some kwalitee points');
 
 #use Data::Dumper;
 #diag(Dumper $a->d);

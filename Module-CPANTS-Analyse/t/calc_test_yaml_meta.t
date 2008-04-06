@@ -1,4 +1,4 @@
-use Test::More tests => 19;
+use Test::More tests => 20;
 
 use Module::CPANTS::Analyse;
 use File::Spec::Functions;
@@ -22,6 +22,7 @@ my $kw=$a->d->{kwalitee};
 is($kw->{has_changelog},1,'has_changelog');
 is($kw->{has_version},1,'has_version');
 is($kw->{has_tests},1,'has_tests');
+is($kw->{has_tests_in_t_dir},1,'has_tests_in_t_dir');
 is($kw->{proper_libs},1,'proper_libs');
 is($kw->{extracts_nicely},1,'extracts_nicely');
 is($kw->{no_pod_errors},1,'no_pod_errors');
@@ -35,6 +36,6 @@ is($kw->{metayml_has_license},1,'has license in META.yml');
 is($kw->{metayml_conforms_to_known_spec},1,'META.yml conforms to a known version of the spec.');
 is($kw->{metayml_conforms_spec_current},1,'META.yml conforms to v1.3 of the spec.');
 
-is($kw->{kwalitee},31,'some kwalitee points');
+is($kw->{kwalitee},32,'some kwalitee points');
 
 
