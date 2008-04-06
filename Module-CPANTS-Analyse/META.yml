@@ -17,6 +17,7 @@ requires:
   CPAN::DistnameInfo: 0.06
   Class::Accessor: 0.19
   IO::Capture: 0.05
+  List::MoreUtils: 0
   Module::ExtractUse: 0.18
   Module::Pluggable: 2.96
   Pod::Simple::Checker: 2.02
@@ -51,9 +52,11 @@ provides:
     file: lib/Module/CPANTS/Kwalitee/Pod.pm
   Module::CPANTS::Kwalitee::Prereq:
     file: lib/Module/CPANTS/Kwalitee/Prereq.pm
+  Module::CPANTS::Kwalitee::Repackageable:
+    file: lib/Module/CPANTS/Kwalitee/Repackageable.pm
   Module::CPANTS::Kwalitee::Uses:
     file: lib/Module/CPANTS/Kwalitee/Uses.pm
-generated_by: Module::Build version 0.2808
+generated_by: Module::Build version 0.280801
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html
   version: 1.2

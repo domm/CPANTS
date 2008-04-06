@@ -31,7 +31,7 @@ sub kwalitee_indicators{
     my $experimental = "This is an experimental metric. Still researching its requirements.";
     return [
          {
-            name=>'easily_repackageagble_by_debian',
+            name=>'easily_repackageable_by_debian',
             error=>qq{It is easy to repackage this module by Debian. $experimental},
             remedy=>q{Fix each one of the metrics this depends on},
             is_extra=>1,
@@ -45,7 +45,7 @@ sub kwalitee_indicators{
             }
          },
          {
-            name=>'easily_repackageagble_by_fedora',
+            name=>'easily_repackageable_by_fedora',
             error=>qq{It is easy to repackage this module by Fedora. $fedora_licenses. $experimental},
             remedy=>q{Fix each one of the metrics this depends on},
             is_extra=>1,
@@ -60,13 +60,13 @@ sub kwalitee_indicators{
             }
         },
          {
-            name=>'easily_repackageagble',
+            name=>'easily_repackageable',
             error=>qq{It is easy to repackage this module. $experimental See <a href="http://www.perlfoundation.org/perl5/index.cgi?cpan_packaging">cpan_packaging</a> },
             remedy=>q{Fix each one of the metrics this depends on},
             is_extra=>1,
             code=>sub { 
                 my $d=shift;
-                my @required = qw(easily_repackageagble_by_debian easily_repackageagble_by_fedora);
+                my @required = qw(easily_repackageable_by_debian easily_repackageable_by_fedora);
                 my $good = all { $d->{kwalitee}{$_} } @required;
                 #use Data::Dumper;
                 #print STDERR Dumper $d;
@@ -108,9 +108,9 @@ Returns the Kwalitee Indicators datastructure.
 
 =over
 
-=item * easily_repackageagble
+=item * easily_repackageable
 
-=item * easily_repackageagble_by_fedora
+=item * easily_repackageable_by_fedora
 
 =back
 
