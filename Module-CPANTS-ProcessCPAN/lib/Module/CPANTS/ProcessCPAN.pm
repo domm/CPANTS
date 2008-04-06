@@ -152,6 +152,7 @@ sub process_yaml {
         if ($db_dist=$db->resultset('Dist')->find({dist=>$data->{dist}})) {
             $me->make_dist_history($db_dist);
             $db_dist->run($run->id);
+            $db_author=$db_dist->author;
         }
         else {    
             $db_author=$db->resultset('Author')->find_or_create({pauseid=>$author});
@@ -228,30 +229,34 @@ sub make_author_history {
     
     my $db=$me->db;
 
-    $db->resultset('HistoryAuthor')->find_or_create({
-        run=>$me->run->id,
-        author=>$author->id,
-        average_kwalitee=>$author->average_kwalitee || 0,
-        num_dists=>$author->num_dists || 0,
-        rank=>$author->rank || 0,
-    });
+    eval {
+        $db->resultset('HistoryAuthor')->find_or_create({
+            run=>$me->run->id,
+            author=>$author->id,
+            average_kwalitee=>$author->average_kwalitee || 0,
+            num_dists=>$author->num_dists || 0,
+            rank=>$author->rank || 0,
+        });
     
-    # set conveniece fields in current author
-    $author->prev_av_kw($author->average_kwalitee || 0);
-    $author->prev_rank($author->rank|| 0);
-    $author->update; 
+        # set conveniece fields in current author
+        $author->prev_av_kw($author->average_kwalitee || 0);
+        $author->prev_rank($author->rank|| 0);
+        $author->update; 
+    };
 }
 
 sub make_dist_history {
     my ($me,$dist)=@_;
-    my $old_kw=$dist->kwalitee ? $dist->kwalitee->kwalitee : 0;
-    $me->db->resultset('HistoryDist')->find_or_create({
-        dist=>$dist->id,
-        run=>$me->run->id,
-        distname=>$dist->dist,
-        version=>$dist->version,
-        kwalitee=>$old_kw,
-    });
+    eval {
+        my $old_kw=$dist->kwalitee ? $dist->kwalitee->kwalitee : 0;
+        $me->db->resultset('HistoryDist')->find_or_create({
+            dist=>$dist->id,
+            run=>$me->run->id,
+            distname=>$dist->dist,
+            version=>$dist->version,
+            kwalitee=>$old_kw,
+        });
+    };
     return;
 }
 
