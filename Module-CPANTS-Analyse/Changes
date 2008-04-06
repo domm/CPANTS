@@ -3,6 +3,8 @@
 #-----------------------------------------------------------------
 
 0.78-tobe
+    - very hacky workaround for problems with Meta.YML, version 
+      objects, etc
     - moved has_version_in_each_file into MCK::Version & fixed a bug
       in it 
     Gabor Szabo:

@@ -88,7 +88,7 @@ sub analyse {
     my $me=shift;
 
     foreach my $mod (@{$me->mck->generators}) {
-        print "$mod\n" if $me->opts->{verbose};
+        print "analyse $mod\n" if $me->opts->{verbose};
         $mod->analyse($me);
     }
 }
@@ -101,12 +101,14 @@ sub calc_kwalitee {
     foreach my $mod (@{$me->mck->generators}) {
         foreach my $i (@{$mod->kwalitee_indicators}) {
             next if $i->{needs_db};
+            print $i->{name}."\n" if $me->opts->{verbose};
             my $rv=$i->{code}($me->d);
             $me->d->{kwalitee}{$i->{name}}=$rv;
             $kwalitee+=$rv;
         }
     }
     $me->d->{'kwalitee'}{'kwalitee'}=$kwalitee;
+    print "done\n" if $me->opts->{verbose};
     
 }
 

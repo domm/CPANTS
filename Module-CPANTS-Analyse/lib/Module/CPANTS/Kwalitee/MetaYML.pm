@@ -2,7 +2,7 @@ package Module::CPANTS::Kwalitee::MetaYML;
 use warnings;
 use strict;
 use File::Spec::Functions qw(catfile);
-use YAML::Syck qw(LoadFile);
+use YAML::Syck qw(Load LoadFile);
 use Test::YAML::Meta::Version;
 
 sub order { 20 }
@@ -16,12 +16,15 @@ my $CURRENT_SPEC = '1.3';
 sub analyse {
     my $class=shift;
     my $me=shift;
-
     my $files=$me->d->{files_array};
     my $distdir=$me->distdir;
     if (grep {/^META\.yml$/} @$files) {
         eval {
-            $me->d->{meta_yml}=LoadFile(catfile($distdir,'META.yml'));
+            open(my $FH,'<',catfile($distdir,'META.yml')) || die "Cannot read META.yml: $!";
+            my $yml=join('',<$FH>);
+            close $FH;
+            die "I do not want to handle stuff like version: !!perl/hash:version" if $yml=~/!!/;
+            $me->d->{meta_yml}=Load($yml);
             $me->d->{metayml_is_parsable}=1;
         };
         if ($@) {
@@ -75,6 +78,7 @@ sub kwalitee_indicators{
 
 sub check_spec_conformance {
     my ($d,$version,$check_current)=@_;
+    
     my $yaml=$d->{meta_yml};
     my %hash=(
         yaml=>$yaml,
@@ -89,7 +93,6 @@ sub check_spec_conformance {
         }
     }
     $hash{spec} = $version;
-
     my $spec = Test::YAML::Meta::Version->new(%hash);
     if ($spec->parse()) {
         my $report_version= $version || 'known';
