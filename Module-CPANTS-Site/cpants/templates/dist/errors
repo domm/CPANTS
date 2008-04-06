@@ -1,9 +1,10 @@
 [% INCLUDE 'dist/intro' %]
 
+
 <table>
 [% e = dist.error %]
-[% FOREACH c IN
-['cpants','pod','pod_message','manifest_matches_dist','metayml','metayml_parse','prereq','build_prereq'] %]
+[% FOREACH c IN e.columns.sort %]
+[% NEXT IF c == 'id' %]
 <tr>
     <td valign="top"><b>[% c %]</b></td>
     <td valign="top">

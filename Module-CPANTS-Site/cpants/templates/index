@@ -8,10 +8,9 @@
 <li>Search for <a href="/author/search">authors</a> or <a href="/dist/search">distributions</a>.
 <li>Take a look at the various <a href="graphs.html">reports</a> generated at this site.
 <li>Admire the top gamers of the <a href="highscores">CPANTS game</a>. 
-<!--<li>Download the latest CPANTS data as a SQLite DB from here
+<li>Download the latest CPANTS data as a SQLite DB from here
 <blockquote><a href='/static/cpants_all.db.bz2'>cpants_all.db.bz2</a>
 </blockquote>
--->
 </ul>
 
 <h3>News</h3>

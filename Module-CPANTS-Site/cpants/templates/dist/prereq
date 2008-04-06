@@ -65,7 +65,7 @@
 <tr>
 <td>[% used.module %]</td>
 <td>[% used.in_code %]</td>
-<td>[% INCLUDE 'helper/in_dist2link' in_dist=used.in_dist %]</td>
+<td>[% INCLUDE 'helper/in_dist2link' module=used in_dist=used.in_dist %]</td>
 </tr>
 [% END %]
 <tr><td>&nbsp;</td></tr>
@@ -77,7 +77,7 @@
 <tr>
 <td>[% used.module %]</td>
 <td>[% used.in_tests %]</td>
-<td>[% INCLUDE 'helper/in_dist2link' in_dist=used.in_dist %]</td>
+<td>[% INCLUDE 'helper/in_dist2link' module=used in_dist=used.in_dist %]</td>
 </tr>
 [% END %]
 </table>
