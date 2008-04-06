@@ -53,6 +53,13 @@ http://rt.cpan.org/Ticket/Display.html?id=21370
 
 - has_same_version_number_in_all_files ???
 
+- was_patched_by_debian
+  indicates that the version in Debian was patched
+  this information must be  fetched from the Debian repository and we have to make sure
+  that the patch in Debian is agains the latest version so we won't penalize a module
+  because Debian has not yet integrated the newer version that possibly already includes
+  the patch.
+
 - has_no_indirect_code
   Check the source code (and/or) the documentation if you see 
   new Module::Name anywhere mark the metric as failed.

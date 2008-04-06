@@ -3,7 +3,8 @@
 #-----------------------------------------------------------------
 
     - add no_generated_files metric
-    - add easily_repackageagble_by_fedora and easily_repackageagble metric
+    - add easily_repackageagble_by_fedora, easily_repackagable_by_debian
+      and easily_repackageagble metric
     - add has_version_in_each_file metric
 
 0.77	2008-01-29
