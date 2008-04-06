@@ -6,7 +6,7 @@ use Module::CPANTS::Kwalitee;
 my $k=Module::CPANTS::Kwalitee->new({});
 
 is($k->available_kwalitee,25,'available kwalitee');
-is($k->total_kwalitee,36,'total kwalitee');
+is($k->total_kwalitee,37,'total kwalitee');
 
 
 my $ind=$k->get_indicators_hash;
@@ -15,7 +15,7 @@ is(ref($ind->{use_strict}),'HASH','hash element');
 
 {
     my @all=$k->all_indicator_names;
-    is(@all,36,'number of all indicators');
+    is(@all,37,'number of all indicators');
 }
 
 {
@@ -25,6 +25,6 @@ is(ref($ind->{use_strict}),'HASH','hash element');
 
 {
     my @all=$k->optional_indicator_names;
-    is(@all,11,'number of optional indicators');
+    is(@all,12,'number of optional indicators');
 }
 

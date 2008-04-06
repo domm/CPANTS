@@ -313,6 +313,20 @@ sub kwalitee_indicators {
             return 1;
         },
     },
+    {
+        name=>'no_stdin_for_prompting',
+        error=>q{This distribution is using direct call from STDIN instead of prompt())},
+        remedy=>q{Use the prompt() method},
+        is_extra=>1,
+        code=>sub {
+            my $d=shift;
+            if ($d->{stdin_in_makefile_pl}||$d->{stdin_in_build_pl}) {
+                $d->{error}{no_stdin_for_prompting} = "Make sure STDIN is not used in Makefile.PL or Build.PL see http://www.perlfoundation.org/perl5/index.cgi?cpan_packaging";
+                return 0;
+            }
+            return 1;
+        },
+    },
 ];
 }
 
@@ -388,6 +402,8 @@ Returns the Kwalitee Indicators datastructure.
 =item * no_generated_file
 
 =item * has_version_in_each_file
+
+=item * no_stdin_for_prompting
 
 =back
 

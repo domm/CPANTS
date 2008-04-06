@@ -25,6 +25,8 @@ http://rt.cpan.org/Ticket/Display.html?id=21370
 - no_open_bugs
 - no_old_open_bugs  (older than a year?)
 
+- no_bugs_in_debian  (The Debian ppl will provide the interface)
+
 - Signature checking ?
 - has_rating ?
 - relation of subs to lines of code ?

@@ -7,7 +7,7 @@
       and easily_repackageagble metric
     - add has_version_in_each_file metric
     - add has_tests_in_t_dir metric
-    - add checking for STDIN in Makefile.PL and Build.PL
+    - add no_stdin_for_prompting metric checking for STDIN in Makefile.PL and Build.PL
 
 0.77	2008-01-29
     - made 'prereq_matches_use' and 'build_prereq_matches_use' optional metrics

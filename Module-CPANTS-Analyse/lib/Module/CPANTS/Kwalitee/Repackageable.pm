@@ -37,22 +37,13 @@ sub kwalitee_indicators{
             is_extra=>1,
             code=>sub { 
                 my $d=shift;
-                my @required = qw(no_generated_files has_tests_in_t_dir);
+                my @required = qw(no_generated_files has_tests_in_t_dir no_stdin_for_prompting);
                 my @errors;
 
                 my $good = all { $d->{kwalitee}{$_} } @required;
-                foreach my $key qw(stdin_in_makefile_pl stdin_in_build_pl) {
-                    if (!$d->{$key}) {
-                        push @errors, $key;
-                    }
-                }
-                if (@errors) {
-                    $d->{error}{easily_repackagable_by_debian} = "Make sure STDIN is not used in Makefile.PL or Build.PL see http://www.perlfoundation.org/perl5/index.cgi?cpan_packaging";
-                    $good = 0;
-                }
                 return $good ? 1 : 0;
             }
-        },
+         },
          {
             name=>'easily_repackageagble_by_fedora',
             error=>qq{It is easy to repackage this module by Fedora. $fedora_licenses. $experimental},
