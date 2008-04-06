@@ -5,13 +5,13 @@ use warnings;
 
 use base 'DBIx::Class';
 
-__PACKAGE__->load_components("Core");
+__PACKAGE__->load_components("InflateColumn", "PK", "Core");
 __PACKAGE__->table("uses");
 __PACKAGE__->add_columns(
   "id",
   {
     data_type => "integer",
-    default_value => "nextval('public.uses_id_seq'::text)",
+    default_value => "nextval('uses_id_seq'::regclass)",
     is_nullable => 0,
     size => 4,
   },
@@ -25,20 +25,22 @@ __PACKAGE__->add_columns(
     size => undef,
   },
   "in_dist",
-  { data_type => "integer", default_value => undef, is_nullable => 1, size => 4 },
+  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
   "in_code",
   { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
   "in_tests",
   { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
 );
 __PACKAGE__->set_primary_key("id");
+
+
+# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-06 18:00:22
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:paOBmoHwOOZhnNVG5z6yjw
+
 __PACKAGE__->belongs_to("dist", "Module::CPANTS::Schema::Dist", { id => "dist" });
 __PACKAGE__->belongs_to("in_dist", "Module::CPANTS::Schema::Dist", { id => "in_dist" });
 
 
-# Created by DBIx::Class::Schema::Loader v0.04002 @ 2007-12-29 23:19:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:z7khWjdwQorh80qNkTNHsQ
-
-
-# You can replace this text with custom content, and it will be preserved on regeneration
+# You can replace this text with custom content, and it will be 
+# preserved on regeneration
 1;

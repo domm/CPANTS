@@ -5,13 +5,13 @@ use warnings;
 use DBD::PgLite::MirrorPgToSQLite qw(pg_to_sqlite);
 
 use File::Spec::Functions;
-use Module::CPANTS::DB;
+use Module::CPANTS::Schema;
 use Module::CPANTS::Kwalitee;
 use Module::CPANTS::ProcessCPAN;
 use Module::CPANTS::ProcessCPAN::ConfigData;
 my $home=Module::CPANTS::ProcessCPAN::ConfigData->config('home');
 
-my $outpath=shift(@ARGV) || catdir($home,'sqlite');
+my $outpath=shift(@ARGV) || catdir($home,'root','static');
 
 my @now=localtime(time);
 my $now=sprintf("%02d_%02d_%02d", $now[5] % 100,@now[4, 3]);

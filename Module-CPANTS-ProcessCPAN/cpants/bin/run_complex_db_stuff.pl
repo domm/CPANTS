@@ -21,18 +21,22 @@ my $dbh=$p->db->storage->dbh;
 
 # set core modules
 print "update CoreList\n";
-my $core=$Module::CoreList::version{$]};
+$p->db->resultset('Modules')->find_or_create({module=>'perl',is_core=>1,dist=>0});
+my $core=$Module::CoreList::version{$] *1};
 foreach my $mod (keys %$core) {
-    $dbh->do("update modules set is_core=1 where module=?",undef,$mod);
-}
-{
-    my $sth=$dbh->prepare("select dist from modules where is_core=1");
-    $sth->execute;
-    while (my $dist=$sth->fetchrow_array) {
-        $dbh->do("update dist set is_core=1 where id=?",undef,$dist);
-    }
+    my $m=$p->db->resultset('Modules')->find_or_create({module=>$mod});
+    $m->is_core(1);
+    $m->dist(0) unless $m->dist;
+    $m->update;
 }
 
+{
+    my $sth=$dbh->prepare("select distinct dist from modules where is_core=1");
+    $sth->execute;
+    while (my $dist=$sth->fetchrow_arrayref) {
+        $dbh->do("update dist set is_core=1 where id=?",undef,$dist->[0]);
+    }
+}
 
 # build list of module->dist
 my %modules;
@@ -43,6 +47,7 @@ my %modules;
         $modules{$module}=$dist;
     }
 }
+
 # build list of dist->id
 my %dists;
 {
@@ -65,20 +70,20 @@ my %core_dists;
 # fill dist references in prereq
 {
     print "fill prereq with dist_ids\n";
-    my $sth=$dbh->prepare("select distinct requires from prereq where in_dist = 0 order by requires");
+    my $sth=$dbh->prepare("select distinct requires from prereq where in_dist is null order by requires");
     $sth->execute();
     while (my ($module)=$sth->fetchrow_array) {
-        next unless $modules{$module};
+        next unless defined $modules{$module};
         $dbh->do("update prereq set in_dist=? where requires=?",undef,$modules{$module},$module);
     }
 }
 
 {
     print "fill uses with dist_ids\n";
-    my $sth=$dbh->prepare("select distinct module from uses where in_dist = 0 order by module");
+    my $sth=$dbh->prepare("select distinct module from uses where in_dist is null order by module");
     $sth->execute();
     while (my ($module)=$sth->fetchrow_array) {
-        next unless $modules{$module};
+        next unless defined $modules{$module};
         $dbh->do("update uses set in_dist=? where module=?",undef,$modules{$module},$module);
 
     }
@@ -97,74 +102,65 @@ my %kwalitee_updates;
     }
 }
 
+
 # prereq_matches_use
 {
     print "prereq_matches_use\n";
-    my %uses;
-    my %prereq;
-    my $sth_uses=$dbh->prepare("select distinct dist,in_dist from uses where in_dist>0 AND in_code>0");
-    $sth_uses->execute;
-    while (my ($dist,$in)=$sth_uses->fetchrow_array) {
-        $uses{$dist}->{$in}=1;
-    }
-    my $sth_prereq=$dbh->prepare("select distinct dist,in_dist from prereq where in_dist>0 AND (is_prereq=1 OR is_optional_prereq=1)");
-    $sth_prereq->execute;
-    while (my ($dist,$in)=$sth_prereq->fetchrow_array) {
-        $prereq{$dist}->{$in}=1;
-    }
-    
-    foreach my $dist (keys %uses) {
-        my $used=$uses{$dist};
-        my $prereq=$prereq{$dist};
-        next unless $prereq;
-        my @missing;
-        foreach my $use (keys %$used) {
-            push(@missing,$use) unless $prereq->{$use} || $core_dists{$use};
-        }
-        if (@missing) {
-            my $error="Undefined prereqs: ".join(', ',map {$dists{$_}} @missing);
-            $dbh->do("update error set prereq=? where id=?",undef,$error,$dist);
-        }
-        else {
-            push(@{$kwalitee_updates{$dist}},'prereq_matches_use');
-        }
-    }
+    check_prereq('prereq_matches_use','in_code>0','is_prereq=1 OR is_optional_prereq=1');
 }
 
-#build_prereq_matches_use
+# prereq_matches_use
 {
     print "build_prereq_matches_use\n";
+    check_prereq('build_prereq_matches_use','in_tests>0','is_prereq=1 OR is_optional_prereq=1 OR is_build_prereq=1');
+}
+
+sub check_prereq {
+    my ($type,$uses_sql,$prereq_sql)=@_;
+
     my %uses;
     my %prereq;
-    my $sth_uses=$dbh->prepare("select distinct dist,in_dist from uses where in_dist>0 AND in_tests>0");
+    my $sth_uses=$dbh->prepare("select dist,in_dist,module from uses where $uses_sql");
     $sth_uses->execute;
-    while (my ($dist,$in)=$sth_uses->fetchrow_array) {
-        $uses{$dist}->{$in}=1;
+    while (my ($dist,$in,$module)=$sth_uses->fetchrow_array) {
+        if (defined $in) {
+            $uses{$dist}->{$in}=$module;
+        } else {
+            push(@{$uses{$dist}->{not_in_cpants}},$module);
+        }
     }
-    my $sth_prereq=$dbh->prepare("select distinct dist,in_dist from prereq where in_dist>0 AND is_build_prereq=1");
+    my $sth_prereq=$dbh->prepare("select distinct dist,in_dist from prereq where in_dist is not null AND ($prereq_sql)");
     $sth_prereq->execute;
     while (my ($dist,$in)=$sth_prereq->fetchrow_array) {
         $prereq{$dist}->{$in}=1;
     }
     
     foreach my $dist (keys %uses) {
-        my $used=$uses{$dist};
-        my $prereq=$prereq{$dist};
-        next unless $prereq;
+        my $used=$uses{$dist} || {};
+        my $prereq=$prereq{$dist} || {};
         my @missing;
-        foreach my $use (keys %$used) {
-            push(@missing,$use) unless $prereq->{$use} || $core_dists{$use};
-;
+        foreach my $distid (keys %$used) {
+            if ($distid eq 'not_in_cpants') {
+                push(@missing,@{$used->{$distid}});
+            }
+            else {
+                push(@missing,$used->{$distid}) unless $prereq->{$distid} || $core_dists{$distid};
+            }
         }
         if (@missing) {
-            my $error="Undefined prereqs: ".join(', ',map {$dists{$_}} @missing);
-            $dbh->do("update error set build_prereq=? where id=?",undef,$error,$dist);
+            my $error="Undefined prereqs: ".join(', ', @missing);
+            print $error."\n";
+            my $efld=$type;
+            $efld=~s/_matches_use//;
+            $dbh->do("update error set $efld=? where id=?",undef,$error,$dist);
         }
         else {
-            push(@{$kwalitee_updates{$dist}},'build_prereq_matches_use');
+            push(@{$kwalitee_updates{$dist}},$type);
         }
     }
+
 }
+
 
 # update kwalitee
 {

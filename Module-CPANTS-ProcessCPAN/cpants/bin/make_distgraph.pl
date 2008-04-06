@@ -4,7 +4,7 @@ use warnings;
  
 use GD::Graph;
 use GD::Graph::linespoints;
-use Module::CPANTS::DB;
+use Module::CPANTS::Schema;
 use Module::CPANTS::Kwalitee;
 use Module::CPANTS::ProcessCPAN;
 use File::Spec::Functions;
@@ -16,7 +16,7 @@ my $mck=Module::CPANTS::Kwalitee->new;
 my $max_y=int(($mck->total_kwalitee / $mck->available_kwalitee)*100);
 
 my $mcp=bless {},'Module::CPANTS::ProcessCPAN';
-my $db=$mcp->db_hist;
+my $db=$mcp->db;
 
 my @runs=$db->resultset('Run')->search({},
     {
@@ -25,24 +25,29 @@ my @runs=$db->resultset('Run')->search({},
     }
 );
 my $run=$runs[0];
-my $dists=$db->resultset('Module::CPANTS::DBHistory::Dist')->search({run=>$run->id});
-my %authors;
+my $dists=$db->resultset('HistoryDist')->search({run=>$run->id});
+
 print "making distgraphs\n";
 while (my $dist=$dists->next) {
     make_distgraph($dist);
-    #$authors{$dist->author->id}=$dist->author;
 }
-exit;
-foreach my $author (values %authors) {
+
+print "making authorgraphs\n";
+my $authors=$db->resultset('Author')->search({
+    'dists.run'=>$run->id
+    }, {
+        join=>'dists',
+        prefetch=>'dists',
+    });
+while (my $author=$authors->next) {
     make_authorgraph($author);
 }
 
-exit;
 
 sub make_distgraph {
     my ($dist)=@_;   
     
-    my $results=$db->resultset('Module::CPANTS::DBHistory::Dist')->search(distname=>$dist->distname);
+    my $results=$db->resultset('HistoryDist')->search(distname=>$dist->distname);
     
     my $graph=GD::Graph::linespoints->new(800,300);
     $graph->set(
@@ -59,7 +64,7 @@ sub make_distgraph {
     
     my @date; my @kw;
     while (my $set=$results->next) {
-        my $date=substr($set->run->date,0,10) || '?';
+        my $date=$set->run ? $set->run->date : '?';
         push(@date,"$date (".($set->version || '?').")");
         push(@kw,sprintf("%.2f",$set->kwalitee));
     }
@@ -73,7 +78,7 @@ sub make_distgraph {
 
 sub make_authorgraph {
     my $author=shift;
-    my $results=$db->resultset('Module::CPANTS::DBHistory::Author')->search(author=>$author->id);
+    my $results=$db->resultset('HistoryAuthor')->search(author=>$author->id);
 
     my @date; my @kw; my @dists;
     my $max_dists=0;
@@ -90,9 +95,6 @@ sub make_authorgraph {
     
     print_graph('dists','Number of Dists',$author,\@date,\@dists,$max_dists+1+(int $max_dists*0.1));
     print_graph('kw','Average Kwalitte',$author,\@date,\@kw,$max_y);
-
-    exit;
-    return;
 }
 
 

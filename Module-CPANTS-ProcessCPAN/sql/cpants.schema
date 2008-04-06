@@ -20,6 +20,7 @@ CREATE TABLE author (
   prev_rank integer not null default 0
 );
 
+
 CREATE TABLE dist (
   id SERIAL PRIMARY KEY,
   run integer references run(id),
@@ -53,6 +54,11 @@ CREATE TABLE dist (
   file_ninja integer not null default 0,
   file_test_pl integer not null default 0,
   file_changelog text,
+  file__build integer not null default 0,
+  file_build integer not null default 0,
+  file_makefile integer not null default 0,
+  file_blib integer not null default 0,
+  file_pm_to_blib integer not null default 0,
   dir_lib integer not null default 0,
   dir_t integer not null default 0,
   dir_xt integer not null default 0,
@@ -64,6 +70,8 @@ CREATE TABLE dist (
   file_license integer not null default 0,
   needs_compiler integer not null default 0,
   got_prereq_from text,
+  stdin_in_makefile_pl integer not null default 0,
+  stdin_in_build_pl integer not null default 0,
   is_core integer not null default 0
 );
 
@@ -77,7 +85,10 @@ create table error (
   cpants text,
   pod integer not null default 0,
   pod_message text,
-  metayml_parse text
+  metayml_parse text,
+  no_generated_files text,
+  has_version_in_each_file text,
+  no_stdin_for_prompting text
 );
 
 CREATE TABLE kwalitee (
@@ -120,7 +131,15 @@ CREATE TABLE kwalitee (
   metayml_conforms_to_known_spec integer not null default 0,
   has_license integer not null default 0,
   prereq_matches_use integer not null default 0,
-  build_prereq_matches_use integer not null default 0
+  build_prereq_matches_use integer not null default 0,
+  no_generated_files integer not null default 0,
+  has_version_in_each_file integer not null default 0,
+  has_tests_in_t_dir integer not null default 0,
+  no_stdin_for_prompting integer not null default 0,
+  easily_repackageable_by_fedora integer not null default 0,
+  easily_repackageable_by_debian integer not null default 0,
+  easily_repackageable integer not null default 0
+
 );
 
 CREATE TABLE modules (
@@ -137,7 +156,7 @@ CREATE TABLE prereq (
   dist integer references dist(id) on delete cascade,
   requires text,
   version text,
-  in_dist integer not null default 0,
+  in_dist integer default NULL,
   is_prereq integer not null default 0,
   is_build_prereq integer not null default 0,
   is_optional_prereq integer not null default 0
@@ -189,10 +208,10 @@ CREATE TABLE history_author (
 CREATE TABLE history_dist (
   id SERIAL PRIMARY KEY,
   run integer references run (id),
-  dist integer,
+  dist integer references dist(id) on delete set null,
   distname text,
   version text,
-  kwalitee integer not null default 0
+  kwalitee numeric(6,3)
 );
 
 

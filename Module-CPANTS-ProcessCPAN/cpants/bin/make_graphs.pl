@@ -49,7 +49,7 @@ foreach (
     },
     {
         title=>'Dists released per year',
-        sql=>'select substr(released,-4,4) as year,count(substr(released,-4,4)) from dist group by year order by year',
+        sql=>'select extract(year from released) as year,count(*) from dist group by year order by year',
         lablex=>'Year',
         labley=>'Dists',
     },

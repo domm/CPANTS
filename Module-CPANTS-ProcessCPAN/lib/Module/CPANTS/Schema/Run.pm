@@ -5,13 +5,13 @@ use warnings;
 
 use base 'DBIx::Class';
 
-__PACKAGE__->load_components("Core");
+__PACKAGE__->load_components("InflateColumn", "PK", "Core");
 __PACKAGE__->table("run");
 __PACKAGE__->add_columns(
   "id",
   {
     data_type => "integer",
-    default_value => "nextval('public.run_id_seq'::text)",
+    default_value => "nextval('run_id_seq'::regclass)",
     is_nullable => 0,
     size => 4,
   },
@@ -42,6 +42,11 @@ __PACKAGE__->add_columns(
   },
 );
 __PACKAGE__->set_primary_key("id");
+
+
+# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-06 18:00:22
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:yGef191jOHdG1MtzuKNt5g
+
 __PACKAGE__->has_many(
   "dists",
   "Module::CPANTS::Schema::Dist",
@@ -63,9 +68,6 @@ __PACKAGE__->has_many(
   { "foreign.run" => "self.id" },
 );
 
-
-# Created by DBIx::Class::Schema::Loader v0.04002 @ 2007-12-29 23:19:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:S42ft3CxjtCqCQcXgl62EA
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

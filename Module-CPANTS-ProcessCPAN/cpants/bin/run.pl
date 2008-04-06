@@ -18,15 +18,12 @@ die "Cannot find cpants_lint.pl (in $lint)" unless -e $lint;
 my $perl=$^X;
 my $home=Module::CPANTS::ProcessCPAN::ConfigData->config('home');
 my $bin=catdir($home,'bin');
-$force='--force' if $force;
+$force = $force ? '--force' : '';
 
 system("$perl $bin/analyse_cpan.pl --cpan $cpan --lint $lint $force");
 system("$perl $bin/run_complex_db_stuff.pl --cpan $cpan");
 system("$perl $bin/update_authors.pl --cpan $cpan");
 system("$perl $bin/make_graphs.pl");
-
-#system($perl,"-I$lib", 
-#$path."/make_distgraph.pl",$site."root/static/graphs");
-
+system("$perl $bin/make_distgraph.pl");
 system("$perl $bin/dump_sqlite.pl");
 

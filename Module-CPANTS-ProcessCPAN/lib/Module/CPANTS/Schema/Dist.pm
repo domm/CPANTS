@@ -5,13 +5,13 @@ use warnings;
 
 use base 'DBIx::Class';
 
-__PACKAGE__->load_components("Core");
+__PACKAGE__->load_components("InflateColumn", "PK", "Core");
 __PACKAGE__->table("dist");
 __PACKAGE__->add_columns(
   "id",
   {
     data_type => "integer",
-    default_value => "nextval('public.dist_id_seq'::text)",
+    default_value => "nextval('dist_id_seq'::regclass)",
     is_nullable => 0,
     size => 4,
   },
@@ -147,6 +147,16 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     size => undef,
   },
+  "file__build",
+  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
+  "file_build",
+  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
+  "file_makefile",
+  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
+  "file_blib",
+  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
+  "file_pm_to_blib",
+  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
   "dir_lib",
   { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
   "dir_t",
@@ -179,10 +189,19 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     size => undef,
   },
+  "stdin_in_makefile_pl",
+  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
+  "stdin_in_build_pl",
+  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
   "is_core",
   { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
 );
 __PACKAGE__->set_primary_key("id");
+
+
+# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-06 18:00:22
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ytKEs0Jl7iTPmRxJ2LOY9w
+
 __PACKAGE__->belongs_to("run", "Module::CPANTS::Schema::Run", { id => "run" });
 __PACKAGE__->belongs_to("author", "Module::CPANTS::Schema::Author", { id => "author" });
 __PACKAGE__->has_one(
@@ -227,12 +246,6 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.04002 @ 2007-12-29 23:19:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:tHsoeFb+BNYSuEqr7bvNvw
-
-
-# You can replace this text with custom content, and it will be preserved on regeneration
-
 sub uses_in_code {
     return shift->search_related('uses',{in_code=>{'>=',1}},{order_by=>'module'});
 }
@@ -240,4 +253,9 @@ sub uses_in_tests {
     return shift->search_related('uses',{in_tests=>{'>=',1}},{order_by=>'module'});
 }
 
+
+
+
+
+# You can replace this text with custom content, and it will be preserved on regeneration
 1;

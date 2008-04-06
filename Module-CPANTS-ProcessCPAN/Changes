@@ -2,6 +2,14 @@
 # Changes for Module::CPANTS::ProcessCPAN
 #-----------------------------------------------------------------
 
+
+0.74-tobe
+    - fixed some scripts that still were using the old SQLite interface
+    - updated schema
+    - fixed prereq_matches_* metrics
+    - fixed dependecies
+
+
 0.73	2008-01-29
     - migrated to postgres
 

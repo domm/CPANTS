@@ -17,7 +17,7 @@ use DateTime;
 
 use version; our $VERSION=version->new('0.73');
 
-__PACKAGE__->mk_accessors(qw(cpan lint force run prev_run _db _db_hist));
+__PACKAGE__->mk_accessors(qw(cpan lint force run prev_run _db _db_hist mck));
 
 sub new {
     my ($class,$cpan,$lint)=@_;
@@ -32,6 +32,7 @@ sub start_run {
     my $me=shift;
 
     my $mck=Module::CPANTS::Kwalitee->new;
+    $me->mck($mck);
     my $total_kwalitee=$mck->total_kwalitee;
     
     # prev run
@@ -66,15 +67,21 @@ sub process_cpan {
     my $lint=$me->lint;
     my $analysed=$me->yaml_analysed;
     my $processed=$me->yaml_processed;
-    my %seen;
+    my %seen=('Core'=>1);
     
     # prefill in_db
     my %in_db;
     my $all_dists=$db->resultset('Dist')->search;
-    while (my $d=$all_dists->next) {
-        $in_db{$d->vname}++;
+    if($all_dists) {
+        while (my $d=$all_dists->next) {
+            next unless $d->vname;
+            next if $d->dist eq 'Core';
+            $in_db{$d->vname}++;
+        }
     }
+    $db->resultset('Dist')->find_or_create({dist=>'Core',id=>0,is_core=>1});
 
+    my %authors;
     foreach my $dist (sort {$a->dist cmp $b->dist} $p->latest_distributions) {
         my $vname=$dist->distvname;
         next if $vname=~/^perl[-\d]/;
@@ -109,7 +116,6 @@ sub process_cpan {
     # dump old dists from DB
     my @distributions=$p->distributions;
     my %dists=map {$_->dist => 1} grep { $_->dist }   @distributions;
-
     $all_dists->reset;
     while (my $d=$all_dists->next) {
         unless ($seen{$d->dist}) {
@@ -131,52 +137,57 @@ sub process_yaml {
         next;
     }
 
-    # remove old data from this dist
-    my $exists=$db->resultset('Dist')->find({dist=>$data->{dist}});
-    if ($exists) {
-        $me->make_dist_history($exists); 
-        $exists->delete;
-    }
-
     # remove data that references other tables;
-    my $kwalitee=$data->{kwalitee};
-    my $modules=$data->{modules};
-    my $uses=$data->{uses};
-    my $prereq=$data->{prereq};
-    my $author=$data->{author};
-    my $error=$data->{error};
-    foreach (qw(kwalitee modules uses prereq files_array dirs_array author meta_yml error)) {
+    my $kwalitee    = delete $data->{kwalitee};
+    my $modules     = delete $data->{modules};
+    my $uses        = delete $data->{uses};
+    my $prereq      = delete $data->{prereq};
+    my $author      = delete $data->{author};
+    my $error       = delete $data->{error};
+    my $versions    = delete $data->{versions};
+    foreach (qw(files_array dirs_array meta_yml)) {
         delete $data->{$_};
     }
         
     my ($db_author,$db_dist,$db_error);
-        
-    # save author 
-    eval { 
-        $db_author=$db->resultset('Author')->find_or_create({pauseid=>$author});
-        $me->make_author_history($db_author);
-            
-        $db_dist=$db_author->add_to_dists({ 
-            dist=>$data->{dist},
-            run=>$run->id,
-        });
-
+    eval {
+        if ($db_dist=$db->resultset('Dist')->find({dist=>$data->{dist}})) {
+            $me->make_dist_history($db_dist);
+            $db_dist->run($run->id);
+        }
+        else {    
+            $db_author=$db->resultset('Author')->find_or_create({pauseid=>$author});
+                   
+            $db_dist=$db_author->add_to_dists({ 
+                dist=>$data->{dist},
+                run=>$run->id,
+            });
+        }
         $db_error=$db->resultset('Error')->find_or_create({dist=>$db_dist->id});
     };
-    print "DB ERROR: cannot create dist: $@" and next if $@; 
+    print "DB ERROR: cannot create dist: $@" and return if $@; 
 
+    # todo move to update authors..
+    $me->make_author_history($db_dist->author);
+    
     # add data and add stuff to other tables
+    my $distid=$db_dist->id;
     eval {
         $db_dist->update($data);
-            
+        $db_dist->modules->delete;
+        $db_dist->prereq->delete;
+        $db_dist->uses->delete;
         foreach my $m (@$modules) {
-            $db_dist->add_to_modules($m);
+            $m->{dist}=$distid;
+            $db->resultset('Modules')->find_or_create($m);
         }
         foreach my $pq (@$prereq) {
-            $db_dist->add_to_prereq($pq);
+            $pq->{dist}=$distid;
+            $db->resultset('Prereq')->find_or_create($pq);
         }
         foreach my $u (values %$uses) {
-            $db_dist->add_to_uses($u);
+            $u->{dist}=$distid;
+            $db->resultset('Uses')->find_or_create($u);
         }
         while (my ($k,$v)=each %$error) {
             $db_error->$k($v);
@@ -196,16 +207,21 @@ sub process_yaml {
     eval {
         $db_error->update;
         $kwalitee->{dist}=$db_dist->id;
-        $kwalitee->{run}=$run->id;
-        $kwalitee->{kwalitee}=0;
-        $db->resultset('Kwalitee')->create($kwalitee);
+        my $kwdb=$db->resultset('Kwalitee')->find_or_create({
+            dist=>$db_dist->id,
+        });
+        my %new_kwalitee=map { $_=>0 } $me->mck->all_indicator_names;
+        
+        while (my ($k,$v)=each %$kwalitee) {
+            $new_kwalitee{$k}=$v;
+        }
+        $kwdb->update(\%new_kwalitee);
     };
     if ($@) {
         my $e=$@;
         print $data->{dist}." DB kwalitee error: $e";
     }
 
-    return;
 }
 
 sub make_author_history {
@@ -214,7 +230,7 @@ sub make_author_history {
     
     my $db=$me->db;
 
-    $db->resultset('HistoryAuthor')->create({
+    $db->resultset('HistoryAuthor')->find_or_create({
         run=>$me->run->id,
         author=>$author->id,
         average_kwalitee=>$author->average_kwalitee || 0,
@@ -230,16 +246,15 @@ sub make_author_history {
 
 sub make_dist_history {
     my ($me,$dist)=@_;
-    return; 
     my $old_kw=$dist->kwalitee ? $dist->kwalitee->kwalitee : 0;
-    
     $me->db->resultset('HistoryDist')->find_or_create({
+        dist=>$dist->id,
         run=>$me->run->id,
         distname=>$dist->dist,
         version=>$dist->version,
         kwalitee=>$old_kw,
     });
-    
+    return;
 }
 
 sub db {
@@ -247,10 +262,23 @@ sub db {
     return $me->_db if $me->_db;
    
     return $me->_db(Module::CPANTS::Schema->connect(
+        $me->dsn
+    ));
+}
+
+=head3 dsn
+
+Returns the DSN as a three element list (dbname, user, pwd)
+
+=cut
+
+sub dsn {
+    my $me=shift;
+    return (
         'dbi:Pg:dbname=cpants',
         Module::CPANTS::ProcessCPAN::ConfigData->config('db_user'),
         Module::CPANTS::ProcessCPAN::ConfigData->config('db_pwd')
-    ));
+    );
 }
 
 sub cpan_01mailrc {

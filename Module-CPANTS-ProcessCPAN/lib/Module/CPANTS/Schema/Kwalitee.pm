@@ -5,13 +5,13 @@ use warnings;
 
 use base 'DBIx::Class';
 
-__PACKAGE__->load_components("Core");
+__PACKAGE__->load_components("InflateColumn", "PK", "Core");
 __PACKAGE__->table("kwalitee");
 __PACKAGE__->add_columns(
   "id",
   {
     data_type => "integer",
-    default_value => "nextval('public.kwalitee_id_seq'::text)",
+    default_value => "nextval('kwalitee_id_seq'::regclass)",
     is_nullable => 0,
     size => 4,
   },
@@ -89,15 +89,29 @@ __PACKAGE__->add_columns(
   { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
   "build_prereq_matches_use",
   { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
+  "no_generated_files",
+  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
+  "has_version_in_each_file",
+  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
+  "has_tests_in_t_dir",
+  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
+  "no_stdin_for_prompting",
+  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
+  "easily_repackageable_by_fedora",
+  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
+  "easily_repackageable_by_debian",
+  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
+  "easily_repackageable",
+  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
 );
 __PACKAGE__->set_primary_key("id");
+
+
+# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-06 18:00:22
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:DXqHk9kd62mH//197VC4DA
+
 __PACKAGE__->belongs_to("dist", "Module::CPANTS::Schema::Dist", { id => "dist" });
-__PACKAGE__->belongs_to("run", "Module::CPANTS::Schema::Run", { id => "run" });
 
-
-# Created by DBIx::Class::Schema::Loader v0.04002 @ 2007-12-29 23:19:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:oQeJoLzJAN8HyzTcaK5WGw
-
-
-# You can replace this text with custom content, and it will be preserved on regeneration
+# You can replace this text with custom content, and it will be 
+# preserved on regeneration
 1;

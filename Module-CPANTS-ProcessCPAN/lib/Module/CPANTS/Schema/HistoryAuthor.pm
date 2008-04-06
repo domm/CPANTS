@@ -5,13 +5,13 @@ use warnings;
 
 use base 'DBIx::Class';
 
-__PACKAGE__->load_components("Core");
+__PACKAGE__->load_components("InflateColumn", "PK", "Core");
 __PACKAGE__->table("history_author");
 __PACKAGE__->add_columns(
   "id",
   {
     data_type => "integer",
-    default_value => "nextval('public.history_author_id_seq'::text)",
+    default_value => "nextval('history_author_id_seq'::regclass)",
     is_nullable => 0,
     size => 4,
   },
@@ -32,12 +32,13 @@ __PACKAGE__->add_columns(
   { data_type => "integer", default_value => undef, is_nullable => 1, size => 4 },
 );
 __PACKAGE__->set_primary_key("id");
-__PACKAGE__->belongs_to("author", "Module::CPANTS::Schema::Author", { id => "author" });
+
+
+# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-06 18:00:22
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Qq/75seiCD3kJIq6l0FG9g
+
 __PACKAGE__->belongs_to("run", "Module::CPANTS::Schema::Run", { id => "run" });
 
-
-# Created by DBIx::Class::Schema::Loader v0.04002 @ 2007-12-29 23:19:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:4no17OptqqrFpv+vpwmVOw
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

@@ -1,2 +1,12 @@
-see Module-CPANTS-Analyse TODO
+
+- history of module metrics and authors average.
+  (download all the currently available versions of a module from CPAN
+  (or even those from backpan), calculate the metric on each one of them
+  create nice graphs.
+
+- Add opt-in e-mail notification when the kwalitee of a new releases is
+  either < 60% or is worse than the previous value.
+  (what to do when more metrics are added?)
+
+- generate sqlite dump of DB
 
