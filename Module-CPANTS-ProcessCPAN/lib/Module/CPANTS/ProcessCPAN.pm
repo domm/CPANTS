@@ -106,7 +106,7 @@ sub process_cpan {
         my $file=$me->cpan_path_to_dist($dist->prefix);
         
         # call cpants_lint.pl
-        my $from_lint=`$^X $lint --yaml --dir $analysed $file`;
+        my $from_lint=`$^X $lint --yaml $file`;
         $me->process_yaml($from_lint);   
     
     }
