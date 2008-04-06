@@ -23,7 +23,7 @@ sub analyse {
             open(my $FH,'<',catfile($distdir,'META.yml')) || die "Cannot read META.yml: $!";
             my $yml=join('',<$FH>);
             close $FH;
-            die "I do not want to handle stuff like version: !!perl/hash:version" if $yml=~/ !!perl/;
+            die "I do not want to handle stuff like version: !!perl/hash:version" if $yml=~/ !perl/;
             $me->d->{meta_yml}=Load($yml);
             $me->d->{metayml_is_parsable}=1;
         };

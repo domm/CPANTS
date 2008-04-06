@@ -65,8 +65,6 @@ sub process_cpan {
     my $p=Parse::CPAN::Packages->new($me->cpan_02packages);
     my $db=$me->db;
     my $lint=$me->lint;
-    my $analysed=$me->yaml_analysed;
-    my $processed=$me->yaml_processed;
     my %seen=('Core'=>1);
     
     # prefill in_db
@@ -213,7 +211,7 @@ sub process_yaml {
         my %new_kwalitee=map { $_=>0 } $me->mck->all_indicator_names;
         
         while (my ($k,$v)=each %$kwalitee) {
-            $new_kwalitee{$k}=$v;
+            $new_kwalitee{$k}=$v || 0;
         }
         $kwdb->update(\%new_kwalitee);
     };
@@ -306,8 +304,6 @@ sub home_dir {
     return Module::CPANTS::ProcessCPAN::ConfigData->config('home');
 }
 
-sub yaml_analysed { return catdir(shift->home_dir,qw(yaml analysed)) }
-sub yaml_processed { return catdir(shift->home_dir,qw(yaml processed)) }
 
 1;
 
