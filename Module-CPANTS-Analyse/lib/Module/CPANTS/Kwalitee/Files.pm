@@ -217,6 +217,7 @@ sub kwalitee_indicators {
     },
     {
         name=>'has_tests_in_t_dir',
+        is_extra=>1,
         error=>q{This distribution contains either a file called 'test.pl' (the old test file) or is missing a directory called 't'. This indicates that it uses the old test mechanism or it has no test-suite.},
         remedy=>q{Add tests or move tests.pl to the t/ directory!},
         code=>sub {
@@ -266,6 +267,7 @@ sub kwalitee_indicators {
     {
         name=>'no_stdin_for_prompting',
         error=>q{This distribution is using direct call from STDIN instead of prompt())},
+        is_extra=>1,
         remedy=>q{Use the prompt() method},
         code=>sub {
             my $d=shift;
