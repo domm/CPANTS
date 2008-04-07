@@ -82,6 +82,9 @@ Moose and MooseX turn on strict, so count Moose[X] as use_strict
   Check the source code (and/or) the documentation if you see 
   new Module::Name anywhere mark the metric as failed.
 
+
+- all_links_in_the_documentation_still_exist
+
 - declares_minimal_version_of_perl
   It has "use N" somewhere in the Makefile.PL and/or Build.PL and/or the source code.
   (and they match to each other :-)
