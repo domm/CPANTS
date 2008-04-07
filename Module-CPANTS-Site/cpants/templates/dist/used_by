@@ -1,5 +1,7 @@
 [% INCLUDE 'dist/intro' %]
 
+<h3>Used by [% used_by %] other dists</h3>
+
 <table>
 <tr>
 <td class="grey"><b><code>use</code>d by</b></td><td class='grey'>Kwalitee</td><td class='grey'>PauseID</td>
