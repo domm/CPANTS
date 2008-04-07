@@ -44,8 +44,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-07 19:01:51
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ccd0mM11cBSsWYxR+HtekA
+# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-08 01:45:59
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:w/GIrQNII/MiBo6i78jnYA
 
 __PACKAGE__->has_many(
   "dists",
