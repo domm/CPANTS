@@ -14,8 +14,6 @@ sub order { 10 }
 ##################################################################
 
 # global values needed for File::Find
-my @files;
-our @dirs=();
 my %generated_db_files;
 my $match_version = qr/\A\s*   (?:our)?  \s*  \$VERSION \s*=\s*    (['"]?)([^; ]+)\1   \s*;\s*\z/x;
 
@@ -24,8 +22,8 @@ sub analyse {
     my $me=shift;
     my $distdir=$me->distdir;
     
-    @files = File::Find::Rule->file()->relative()->in($distdir);
-    @dirs  = File::Find::Rule->directory()->relative()->in($distdir);
+    my @files = File::Find::Rule->file()->relative()->in($distdir);
+    my @dirs  = File::Find::Rule->directory()->relative()->in($distdir);
     #my $unixy=join('/',splitdir($File::Find::name));
 
     my $size = 0;
