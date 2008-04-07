@@ -111,7 +111,7 @@ my %kwalitee_updates;
 # prereq_matches_use
 {
     print "build_prereq_matches_use\n";
-    check_prereq('build_prereq_matches_use','in_tests>0','is_prereq=1 OR is_optional_prereq=1 OR is_build_prereq=1');
+    check_prereq('build_prereq_matches_use',q{in_tests>0 AND module not like 'Test::Pod%'},'(is_prereq=1 OR is_optional_prereq=1 OR is_build_prereq=1)');
 }
 
 sub check_prereq {
@@ -119,7 +119,7 @@ sub check_prereq {
 
     my %uses;
     my %prereq;
-    my $sth_uses=$dbh->prepare("select dist,in_dist,module from uses where module !~ '^v?5'  AND $uses_sql");
+    my $sth_uses=$dbh->prepare("select dist,in_dist,module from uses where module !~ '^v?5' AND $uses_sql");
     $sth_uses->execute;
     while (my ($dist,$in,$module)=$sth_uses->fetchrow_array) {
         if (defined $in) {
