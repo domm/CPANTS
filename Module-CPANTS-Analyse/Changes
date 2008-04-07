@@ -7,6 +7,7 @@
     - add aggregating key to metric to list the other metrics being aggregated
     - unhide some errors during testing
     - renamed some error fields
+    - add metayml_declares_perl_version metric
 
 0.78    2008-04-06
     * released at the Oslo QA Hackathon 2008

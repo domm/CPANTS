@@ -58,19 +58,25 @@ Moose and MooseX turn on strict, so count Moose[X] as use_strict
   Some people will argue that when one of the files does not change, there is no
   need to change its version number. So this might not be a good metric.
 
-- no_bugs_in_debian  (The Debian ppl will provide the interface)
-- was_patched_by_debian
-  indicates that the version in Debian was patched
-  this information must be  fetched from the Debian repository and we have to make sure
-  that the patch in Debian is agains the latest version so we won't penalize a module
-  because Debian has not yet integrated the newer version that possibly already includes
-  the patch.
-
+- no_bugs_in_debian
+- has_patches_in_debian
+- no_bugs_in_freebsd
 - has_patches_in_freebsd
-  We should have an optional negative metric in case the module is
-  included in FreeBSD but is patched. (Maybe we need to make sure
-  that we set this negative metric only when the versions are the same.
+  The Debian and FreeBSD ppl will provide the interface for this -probably a csv file
+  that can be fetched using http.
 
+  This should be (an optional?) negative metric in case the module is
+  included in FreeBSD or Debian but it had to be patched. 
+  (Maybe we need to make sure that we set this negative metric only when the 
+   module versions are the same so we won't penalize a module because XYZ
+  has not yet integrated the newer version that possibly already includes 
+  the patch.
+- We might even have an optional metric to show that 
+  "the latest version of the module is included in Debian/FreeBSD etc".
+  This will be lost every time a new version of a module is released but
+  over time it will become ok again.
+
+  (in xt/ or in t/ and the same file has RELEASE_TESTING   in it)
 
 - has_no_indirect_code
   Check the source code (and/or) the documentation if you see 

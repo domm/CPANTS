@@ -73,6 +73,17 @@ sub kwalitee_indicators{
                 return check_spec_conformance($d,$CURRENT_SPEC,1);
             },
         },
+        {
+            name=>'metayml_declares_perl_version',
+            error=>q{This distribution does not declare the minimum perl version in META.yml.},
+            remedy=>q{If you are using Build.PL define the {requires}{perl} = VERSION field. If you are using MakeMaker (Makefile.PL) you should upgrade ExtUtils::MakeMaker to a future version.},
+            code=>sub { 
+                my $d=shift;
+                my $yaml=$d->{meta_yml};
+                return $yaml->{requires}{perl} ? 1 : 0;
+            },
+        },
+
     ];
 }
 
@@ -152,8 +163,10 @@ Returns the Kwalitee Indicators datastructure.
 =item * metayml_conforms_spec_1_0
 
 =item * metayml_conforms_known_spec
-=
-item * metayml_conforms_spec_current
+
+=item * metayml_conforms_spec_current
+
+=item * metayml_declares_perl_version
 
 =back
 

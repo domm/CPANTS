@@ -50,6 +50,7 @@ my $expected_kwalitee =  {
            'has_proper_version' => 1,
            'metayml_conforms_to_known_spec' => 0,
            'no_stdin_for_prompting' => 1,
+           'metayml_declares_perl_version' => 0,
          };
 
 is_deeply($kw, $expected_kwalitee, 'metrics are as expected');
