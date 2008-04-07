@@ -135,17 +135,36 @@ sub get_dist : Private {
 sub by : Local {
     my ( $self, $c, $fld ) = @_;
     $c->stash->{field}=$fld;
-
+    my $order = $fld == 'released' ? '' : 'DESC';
     $c->stash->{ list } = $c->model( 'DBIC::Dist' )->search(
         {},
         {
-            order_by => $fld . ' DESC',
+            order_by => $fld . ' '.$order,
             page     => $c->request->param( 'page' ) || 1,
             rows     => 40,
         }
     );
 }
    
+sub by_required : Local {
+    my ( $self, $c, $fld ) = @_;
+    $c->stash->{field}=$fld;
+    $c->stash->{template}='dist/by';
+
+    $c->stash->{ list } = $c->model( 'DBIC::Dist' )->search_related(
+        'requiring',
+        { 'requiring.in_dist'=> { '>'=>'0' } },
+        {
+            select  => [{count=>'requiring.in_dist'}],
+            #as      => [qw(in_dist count)],
+            group_by    => [qw(in_dist)],
+            page     => $c->request->param( 'page' ) || 1,
+            rows     => 40,
+        }
+    );
+
+
+}
 
 
 # TODO move to Kwalitee

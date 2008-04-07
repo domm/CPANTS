@@ -22,6 +22,8 @@
 <span style="color:#f00">ALPHA VERSION - Hic sunt dracones!</span>
 </div>
 
+[% USE Number.Format %]
+
 [% INCLUDE 'widgets/distlinks' IF dist %]
 
 [% IF cpants_is_analysing %]
