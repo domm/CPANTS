@@ -71,7 +71,6 @@ sub kwalitee_indicators{
             is_experimental=>1,
             code=>sub { 
                 my $d=shift;
-
                 my $license = $d->{meta_yml}{license};
                 return ((defined $license and any {$license eq $_} @fedora_licenses) ? 1 : 0);
 

@@ -85,7 +85,6 @@ sub kwalitee_indicators{
                 return $yaml->{requires}{perl} ? 1 : 0;
             },
         },
-
     ];
 }
 

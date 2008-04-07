@@ -143,7 +143,7 @@ sub process_yaml {
     my $author      = delete $data->{author};
     my $error       = delete $data->{error};
     my $versions    = delete $data->{versions};
-    foreach (qw(files_array dirs_array meta_yml)) {
+    foreach (qw(files_array files_hash dirs_array meta_yml)) {
         delete $data->{$_};
     }
         
