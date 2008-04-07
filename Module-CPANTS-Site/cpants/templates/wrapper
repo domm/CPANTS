@@ -38,7 +38,7 @@ CPANTS is currently analysing dists. Results might be inconsistent!
 <div class="footer">
 <p>
 Site generated with <a href="http://search.cpan.org/dist/Module-CPANTS-Site/">Module::CPANTS::Site</a> [% VERSION %].<br />
-CPANTS data generated with <a href="http://search.cpan.org/dist/Module-CPANTS-Analyse/">Module::CPANTS::Analyse</a> [% run.mcanalyse_version %] and <a href="http://search.cpan.org/dist/Module-CPANTS-ProcessCPAN/">Module::CPANTS::ProcessCPAN</a> [% run.mcprocess_version %], at <b>[% run.date %].</b><br />
+CPANTS data generated with Perl [% perlversion %], <a href="http://search.cpan.org/dist/Module-CPANTS-Analyse/">Module::CPANTS::Analyse</a> [% run.mcanalyse_version %] and <a href="http://search.cpan.org/dist/Module-CPANTS-ProcessCPAN/">Module::CPANTS::ProcessCPAN</a> [% run.mcprocess_version %], at <b>[% run.date %].</b><br />
 CPANTS and Site maintained by Thomas Klausner - domm@cpan.org
 <p>
 <p>Hosting and bandwidth provided by <a

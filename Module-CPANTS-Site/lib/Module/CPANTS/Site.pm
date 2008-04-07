@@ -45,6 +45,7 @@ sub end : Private {
     $c->stash->{ VERSION } = $VERSION;
     $c->stash->{ run     } = $rs->first;
     $c->stash->{ mck     } = $kw;
+    $c->stash->{ perlversion } = $];
 
     $c->stash->{cpants_is_analysing}=1 if (-e catfile($home,'cpants_is_analysing'));
 
