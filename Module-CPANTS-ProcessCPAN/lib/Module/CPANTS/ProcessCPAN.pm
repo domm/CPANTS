@@ -15,7 +15,7 @@ use FindBin;
 use File::Copy;
 use DateTime;
 
-use version; our $VERSION=version->new('0.74');
+use version; our $VERSION=version->new('0.75');
 
 __PACKAGE__->mk_accessors(qw(cpan lint force run prev_run _db _db_hist mck));
 
