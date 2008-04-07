@@ -10,8 +10,7 @@ cpants/bin/rec_dep.pl
 cpants/bin/run.pl
 cpants/bin/run_complex_db_stuff.pl
 cpants/bin/update_authors.pl
-cpants/sqlite/cpants_history_tpl.db
-cpants/sqlite/cpants_tpl.db
+helper/generate_schema.pl
 lib/Module/CPANTS/MyBuild.pm
 lib/Module/CPANTS/ProcessCPAN.pm
 lib/Module/CPANTS/Schema.pm
@@ -30,7 +29,6 @@ MANIFEST			This list of files
 META.yml
 README
 sql/cpants.schema
-sql/cpants_history.schema
 t/99_pod.t
 t/new.t
 TODO
