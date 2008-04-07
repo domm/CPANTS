@@ -2,6 +2,16 @@
 # Changes for Module::CPANTS::Site
 #-----------------------------------------------------------------
 
+0.75-tobe
+    - show error messages in kwalitee view
+
+
+0.74    Mon Apr  7 07:14:34 CEST 2008
+    * released at the Oslo QA Hackathon 2008
+    - updated TODO & news
+    - added info on commit list
+
+
 0.73    2008-01-29	
     - adapted to new Module::CPANTS::Schema
     - fixed dist-links to use overview

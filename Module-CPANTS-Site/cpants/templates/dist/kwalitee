@@ -32,6 +32,8 @@
     not&nbsp;ok</td></tr>
     <tr><td class="[% class %]_light" valign="top" align="right">Error:</td><td colspan=2>[% indicators.$c.error %]</td></tr>
     <tr><td class="[% class %]_light" valign="top" align="right">Remedy:</td><td colspan=2>[% indicators.$c.remedy %]</td></tr>
+    [% IF item.error.$c %]
+    <tr><td valign="top" align="right">Error Message</td><td colspan=2>[% item.error.$c %]</td></tr>
 [% END %]
 [% END %]
 
