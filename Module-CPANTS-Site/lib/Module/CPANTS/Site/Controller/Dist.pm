@@ -135,7 +135,11 @@ sub get_dist : Private {
 sub by : Local {
     my ( $self, $c, $fld ) = @_;
     $c->stash->{field}=$fld;
-    my $order = $fld == 'released' ? '' : 'DESC';
+    my $order='DESC';
+    if ($fld eq 'released') {
+        $order='';
+        $c->stash->{template}='dist/by_date';
+    }
     $c->stash->{ list } = $c->model( 'DBIC::Dist' )->search(
         {},
         {

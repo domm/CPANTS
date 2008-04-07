@@ -3,11 +3,10 @@
 [% pager = list.pager %]
 [% nav_pager = INCLUDE 'widgets/pager' action=$field %]
 [% nav_pager %]
-[% USE Number.Format %]
 <table>
 <tr><td><b>Dist</b></td><td><b>[% field %]</b></td></tr>
 [% WHILE (d=list.next) %]
-<tr><td><a href="/dist/overview/[% d.dist %]">[% d.dist %]<a/></td><td>[% d.$field  | format_number %]</td></tr>
+<tr><td><a href="/dist/overview/[% d.dist %]">[% d.dist %]<a/></td><td>[% d.$field %]</td></tr>
 [% END %]
 </table>
 [% nav_pager %]
