@@ -14,8 +14,9 @@ lib/Module/CPANTS/Kwalitee/MetaYML.pm
 lib/Module/CPANTS/Kwalitee/NeedsCompiler.pm
 lib/Module/CPANTS/Kwalitee/Pod.pm
 lib/Module/CPANTS/Kwalitee/Prereq.pm
-lib/Module/CPANTS/Kwalitee/Uses.pm
 lib/Module/CPANTS/Kwalitee/Repackageable.pm
+lib/Module/CPANTS/Kwalitee/Uses.pm
+lib/Module/CPANTS/Kwalitee/Version.pm
 Makefile.PL
 MANIFEST			This list of files
 META.yml
@@ -33,7 +34,6 @@ t/analyse_html_tiny.t
 t/analyse_test_yaml_meta.t
 t/calc.t
 t/calc_test_yaml_meta.t
-t/generated_files.t
 t/eg/Acme-DonMartin-0.06.tar.gz
 t/eg/Acme-DonMartinOther-0.06.tar.gz
 t/eg/AFS-2.4.0.tar.gz
@@ -46,6 +46,7 @@ t/eg/manifest/Good-Dist-0.01.tar.gz
 t/eg/manifest/no-manifest-0.01.tar.gz
 t/eg/not_extractable.gz
 t/eg/Test-YAML-Meta-0.04.tar.gz
+t/generated_files.t
 t/kwalitee.t
 t/plugin_manifest.t
 t/plugins.t
