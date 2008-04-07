@@ -66,6 +66,12 @@ Moose and MooseX turn on strict, so count Moose[X] as use_strict
   because Debian has not yet integrated the newer version that possibly already includes
   the patch.
 
+- has_patches_in_freebsd
+  We should have an optional negative metric in case the module is
+  included in FreeBSD but is patched. (Maybe we need to make sure
+  that we set this negative metric only when the versions are the same.
+
+
 - has_no_indirect_code
   Check the source code (and/or) the documentation if you see 
   new Module::Name anywhere mark the metric as failed.
