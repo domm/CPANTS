@@ -112,7 +112,7 @@ sub analyse {
             my $path = catfile($me->distdir,$file);
             next if not -e $path;
             if (open my $fh, '<', $path) {
-                if (grep {/STDIN/} <$fh>) {
+                if (grep {/<STDIN>/} <$fh>) {
                     $me->d->{$handle} = 1;
                 }
             }

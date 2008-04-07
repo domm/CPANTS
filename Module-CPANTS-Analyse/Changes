@@ -2,9 +2,11 @@
 # Changes for Module::CPANTS::Analyse
 #-----------------------------------------------------------------
 
-0.79-tobe
+    - add fits_fedora_license metric that was inside the easily_repackageable_by_fedora metric
+    - add is_experimental flag to some of the metrics
+    - add aggregating key to metric to list the other metrics being aggregated
+    - unhide some errors during testing
     - renamed some error fields
-
 
 0.78    2008-04-06
     * released at the Oslo QA Hackathon 2008

@@ -59,10 +59,13 @@ sub kwalitee_indicators{
 sub _aggregator { 
     my $d=shift;
     my $metric=shift;
-    my @errors;
-    
-    my $good = all { $d->{kwalitee}{$_} } @{ $metric->{aggregating} };
-    return $good ? 1 : 0;
+
+    my @errors = grep { !$d->{kwalitee}{$_} } @{ $metric->{aggregating} };
+    if (@errors) {
+        $d->{error}{ $metric->{name} } = join ", ", @errors;
+        return 0;
+    }
+    return 1;
 }
 
 q{Favourite record of the moment:

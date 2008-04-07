@@ -27,7 +27,6 @@ Moose and MooseX turn on strict, so count Moose[X] as use_strict
 - no_open_bugs
 - no_old_open_bugs  (older than a year?)
 
-- no_bugs_in_debian  (The Debian ppl will provide the interface)
 
 - Signature checking ?
 - has_rating ?
@@ -59,6 +58,7 @@ Moose and MooseX turn on strict, so count Moose[X] as use_strict
   Some people will argue that when one of the files does not change, there is no
   need to change its version number. So this might not be a good metric.
 
+- no_bugs_in_debian  (The Debian ppl will provide the interface)
 - was_patched_by_debian
   indicates that the version in Debian was patched
   this information must be  fetched from the Debian repository and we have to make sure
