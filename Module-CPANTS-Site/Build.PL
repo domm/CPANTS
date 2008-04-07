@@ -22,7 +22,7 @@ my $build = Module::CPANTS::MyBuild->new(
         'Catalyst::Plugin::ConfigLoader'   => '0.11', 
         'Catalyst::Plugin::Static::Simple' => '0.14',
         'version'                          => '0.73', 
-
+        'Template::Plugin::Number::Format' => '1.02',
     },
     create_makefile_pl => 'traditional',
 
