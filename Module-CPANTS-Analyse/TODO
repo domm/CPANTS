@@ -79,10 +79,8 @@ Moose and MooseX turn on strict, so count Moose[X] as use_strict
   (e.g. if uses 3 param open but does not say use perl 5.6 or similar)
 
 
-- change has_license to has_license_in_yaml,
-  put the actual name of the license (perl, etc.) in the 
-  database for later retreival
-- has_license_in_source
+- has_humanreadable_license
+  the actual name of the license (perl, etc.) is in the database, use it 
     Module::License::Report  integration
     (though I am not sure if that should mean the main .pm
         file only or all the files or what)

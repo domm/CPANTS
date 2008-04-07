@@ -2,6 +2,10 @@
 # Changes for Module::CPANTS::Analyse
 #-----------------------------------------------------------------
 
+    - add fits_fedora_license metric that was inside the easily_repackageable_by_fedora metric
+    - add is_experimental and is_aggregate flags to some of the metrics
+    - unhide some errors during testing
+
 0.78-tobe
     - very hacky workaround for problems with Meta.YML, version 
       objects, etc

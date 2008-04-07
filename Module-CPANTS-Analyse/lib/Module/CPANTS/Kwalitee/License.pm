@@ -2,7 +2,8 @@ package Module::CPANTS::Kwalitee::License;
 use warnings;
 use strict;
 use File::Spec::Functions qw(catfile);
-use  Pod::Simple::TextContent;
+use Pod::Simple::TextContent;
+use List::MoreUtils qw(all any);
 
 
 sub order { 100 }
@@ -51,6 +52,10 @@ sub analyse {
 ##################################################################
 
 sub kwalitee_indicators{
+    my @fedora_licenses = qw(perl apache artistic_2 gpl lgpl mit mozilla);
+    # based on: http://fedoraproject.org/wiki/Licensing
+    my $fedora_licenses = "Acceptable licenses: (" . join(", ", @fedora_licenses) . ")";
+
     return [
          {
             name=>'has_humanreadable_license',
@@ -58,7 +63,21 @@ sub kwalitee_indicators{
             remedy=>q{Add a section called 'LICENSE' to the documentation, or add a file named LICENSE to the distribution.},
             code=>sub { shift->{license} ? 1 : 0 }
         },
-        
+        {
+            name=>'fits_fedora_license',
+            error=>qq{Fits the licensing requirements of Fedora ($fedora_licenses).},
+            remedy=>q{Replace the license or convince Fedora to accept this license as well.},
+            is_extra=>1,
+            is_experimental=>1,
+            code=>sub { 
+                my $d=shift;
+
+                my $license = $d->{meta_yml}{license};
+                return ((defined $license and any {$license eq $_} @fedora_licenses) ? 1 : 0);
+
+            }
+        },
+ 
     ];
 }
 

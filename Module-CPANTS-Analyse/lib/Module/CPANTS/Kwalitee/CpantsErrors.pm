@@ -12,7 +12,7 @@ sub analyse {
     my $class=shift;
     my $me=shift;
 
-    return if $me->opts->{no_capture};
+    return if $me->opts->{no_capture} or $INC{'Test/More.pm'};
 
     my $sout=$me->capture_stdout;
     my $serr=$me->capture_stderr;

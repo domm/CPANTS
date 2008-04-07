@@ -25,16 +25,14 @@ sub analyse {
 ##################################################################
 
 sub kwalitee_indicators{
-    my @fedora_licenses = qw(perl apache artistic_2 gpl lgpl mit mozilla);
-    # based on: http://fedoraproject.org/wiki/Licensing
-    my $fedora_licenses = "Acceptable licenses: (" . join(", ", @fedora_licenses) . ")";
-    my $experimental = "This is an experimental metric. Still researching its requirements.";
     return [
          {
             name=>'easily_repackageable_by_debian',
-            error=>qq{It is easy to repackage this module by Debian. $experimental},
+            error=>qq{It is easy to repackage this module by Debian.},
             remedy=>q{Fix each one of the metrics this depends on},
             is_extra=>1,
+            is_aggregate=>1,
+            is_experimental=>1,
             code=>sub { 
                 my $d=shift;
                 my @required = qw(no_generated_files has_tests_in_t_dir no_stdin_for_prompting);
@@ -46,24 +44,26 @@ sub kwalitee_indicators{
          },
          {
             name=>'easily_repackageable_by_fedora',
-            error=>qq{It is easy to repackage this module by Fedora. $fedora_licenses. $experimental},
+            error=>qq{It is easy to repackage this module by Fedora.},
             remedy=>q{Fix each one of the metrics this depends on},
             is_extra=>1,
+            is_aggregate=>1,
+            is_experimental=>1,
             code=>sub { 
                 my $d=shift;
-                my @required = qw(no_generated_files);
+                my @required = qw(no_generated_files fits_fedora_license);
 
                 my $good = all { $d->{kwalitee}{$_} } @required;
-                my $license = $d->{meta_yml}{license};
-                $good = $good and defined $license and any {$license eq $_} @fedora_licenses;
-                return $good;
+                return $good ? 1 : 0;
             }
         },
          {
             name=>'easily_repackageable',
-            error=>qq{It is easy to repackage this module. $experimental See <a href="http://www.perlfoundation.org/perl5/index.cgi?cpan_packaging">cpan_packaging</a> },
+            error=>qq{It is easy to repackage this module. See <a href="http://www.perlfoundation.org/perl5/index.cgi?cpan_packaging">cpan_packaging</a> },
             remedy=>q{Fix each one of the metrics this depends on},
             is_extra=>1,
+            is_aggregate=>1,
+            is_experimental=>1,
             code=>sub { 
                 my $d=shift;
                 my @required = qw(easily_repackageable_by_debian easily_repackageable_by_fedora);

@@ -29,7 +29,7 @@ sub new {
 
     $me->mck(Module::CPANTS::Kwalitee->new);
     
-    unless ($me->opts->{no_capture}) {
+    unless ($me->opts->{no_capture} or $INC{'Test/More.pm'}) {
         my $cserr=IO::Capture::Stderr->new;
         my $csout=IO::Capture::Stdout->new;
         $cserr->start;
@@ -54,8 +54,10 @@ sub unpack {
     };
 
     if (my $error=$@) {
-        $me->capture_stdout->stop;
-        $me->capture_stderr->stop;
+        if (not $INC{'Test/More.pm'}) {
+            $me->capture_stdout->stop;
+            $me->capture_stderr->stop;
+        }
         $me->d->{extractable}=0;
         $me->d->{error}{cpants}=$error;
         $me->d->{kwalitee}{extractable}=0;
