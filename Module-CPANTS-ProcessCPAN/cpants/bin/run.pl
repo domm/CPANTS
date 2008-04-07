@@ -20,10 +20,12 @@ my $home=Module::CPANTS::ProcessCPAN::ConfigData->config('home');
 my $bin=catdir($home,'bin');
 $force = $force ? '--force' : '';
 
+my $lockfile=catfile($home,'cpants_is_analysing');
+system("touch $lockfile");
 system("$perl $bin/analyse_cpan.pl --cpan $cpan --lint $lint $force");
 system("$perl $bin/run_complex_db_stuff.pl --cpan $cpan");
 system("$perl $bin/update_authors.pl --cpan $cpan");
 system("$perl $bin/make_graphs.pl");
 system("$perl $bin/make_distgraph.pl");
 system("$perl $bin/dump_sqlite.pl");
-
+unlink($lockfile);

@@ -2,8 +2,13 @@
 # Changes for Module::CPANTS::ProcessCPAN
 #-----------------------------------------------------------------
 
+0.75-tobe
+    - renamed lots of error names to better work with frontend
+    - some minor fixes in various scripts
 
-0.74-tobe
+
+0.74    2008-04-06
+    * released at the Oslo QA Hackathon 2008
     - fixed some scripts that still were using the old SQLite interface
     - updated schema
     - fixed prereq_matches_* metrics

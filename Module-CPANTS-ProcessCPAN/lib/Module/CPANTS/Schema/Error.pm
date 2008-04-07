@@ -17,14 +17,14 @@ __PACKAGE__->add_columns(
   },
   "dist",
   { data_type => "integer", default_value => undef, is_nullable => 1, size => 4 },
-  "prereq",
+  "prereq_matches_use",
   {
     data_type => "text",
     default_value => undef,
     is_nullable => 1,
     size => undef,
   },
-  "build_prereq",
+  "build_prereq_matches_use",
   {
     data_type => "text",
     default_value => undef,
@@ -38,7 +38,7 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     size => undef,
   },
-  "metayml",
+  "metayml_conforms_to_known_spec",
   {
     data_type => "text",
     default_value => undef,
@@ -52,16 +52,14 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     size => undef,
   },
-  "pod",
-  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
-  "pod_message",
+  "no_pod_errors",
   {
     data_type => "text",
     default_value => undef,
     is_nullable => 1,
     size => undef,
   },
-  "metayml_parse",
+  "metayml_is_parsable",
   {
     data_type => "text",
     default_value => undef,
@@ -93,8 +91,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-06 18:00:22
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3lND5SJEiSpALlC9bZNnUw
+# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-07 13:47:59
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:I8BQwV2TD8NBRi4/Yw0X4w
 
 __PACKAGE__->belongs_to("dist", "Module::CPANTS::Schema::Dist", { id => "dist" });
 

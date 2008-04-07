@@ -82,7 +82,7 @@ sub process_cpan {
     my %authors;
     foreach my $dist (sort {$a->dist cmp $b->dist} $p->latest_distributions) {
         my $vname=$dist->distvname;
-        next if $vname=~/^perl[-\d]/;
+        next if $vname=~/^perl[-_]/;
         next if $vname=~/^ponie-/;
         next if $vname=~/^Perl6-Pugs/;
         next if $vname=~/^parrot-/;

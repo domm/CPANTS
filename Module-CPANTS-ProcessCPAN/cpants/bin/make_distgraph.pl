@@ -72,7 +72,6 @@ sub make_distgraph {
     open(IMG, ">",catfile($outpath,$dist->distname.".png")) or die $!;
     binmode IMG;
     print IMG $gd->png;
-    print $dist->distname,"\n";
     return;
 }
 

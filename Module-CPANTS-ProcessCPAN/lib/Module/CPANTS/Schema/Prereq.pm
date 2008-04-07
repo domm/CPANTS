@@ -43,8 +43,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-06 18:00:22
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:R6Hr9teswrtfAxjZuz7z1g
+# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-07 13:47:59
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:4GQVltLPj55hkir4QWlJng
 
 __PACKAGE__->belongs_to("in_dist", "Module::CPANTS::Schema::Dist", { id => "in_dist" });
 __PACKAGE__->belongs_to("dist", "Module::CPANTS::Schema::Dist", { id => "dist" });

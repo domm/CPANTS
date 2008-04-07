@@ -25,7 +25,7 @@ __PACKAGE__->add_columns(
     size => undef,
   },
   "in_dist",
-  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
+  { data_type => "integer", default_value => undef, is_nullable => 1, size => 4 },
   "in_code",
   { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
   "in_tests",
@@ -34,8 +34,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-06 18:00:22
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:paOBmoHwOOZhnNVG5z6yjw
+# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-07 13:47:59
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:mvvcFRzFt3WaPi+IFvztrg
 
 __PACKAGE__->belongs_to("dist", "Module::CPANTS::Schema::Dist", { id => "dist" });
 __PACKAGE__->belongs_to("in_dist", "Module::CPANTS::Schema::Dist", { id => "in_dist" });

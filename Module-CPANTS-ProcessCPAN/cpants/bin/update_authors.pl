@@ -17,7 +17,6 @@ my $p = Parse::CPAN::Authors->new($mcp->cpan_01mailrc);
 foreach my $auth ($p->authors) {
     my $pauseid=$auth->pauseid;
     my $a=$db->resultset('Author')->find_or_create(pauseid=>$pauseid);
-    print "$pauseid\n";
     foreach (qw(name email)) {
         $a->$_($auth->$_);
     }

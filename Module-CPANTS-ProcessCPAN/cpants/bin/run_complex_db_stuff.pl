@@ -148,9 +148,7 @@ sub check_prereq {
         }
         if (@missing) {
             my $error="Undefined prereqs: ".join(', ', @missing);
-            my $efld=$type;
-            $efld=~s/_matches_use//;
-            $dbh->do("update error set $efld=? where id=?",undef,$error,$dist);
+            $dbh->do("update error set $type=? where id=?",undef,$error,$dist);
         }
         else {
             push(@{$kwalitee_updates{$dist}},$type);
