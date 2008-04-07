@@ -104,7 +104,7 @@ sub calc_kwalitee {
         foreach my $i (@{$mod->kwalitee_indicators}) {
             next if $i->{needs_db};
             print $i->{name}."\n" if $me->opts->{verbose};
-            my $rv=$i->{code}($me->d);
+            my $rv=$i->{code}($me->d, $i);
             $me->d->{kwalitee}{$i->{name}}=$rv;
             $kwalitee+=$rv;
         }

@@ -31,51 +31,39 @@ sub kwalitee_indicators{
             error=>qq{It is easy to repackage this module by Debian.},
             remedy=>q{Fix each one of the metrics this depends on},
             is_extra=>1,
-            is_aggregate=>1,
+            aggregating => [qw(no_generated_files has_tests_in_t_dir no_stdin_for_prompting)],
             is_experimental=>1,
-            code=>sub { 
-                my $d=shift;
-                my @required = qw(no_generated_files has_tests_in_t_dir no_stdin_for_prompting);
-                my @errors;
-
-                my $good = all { $d->{kwalitee}{$_} } @required;
-                return $good ? 1 : 0;
-            }
+            code=>\&_aggregator,
          },
          {
             name=>'easily_repackageable_by_fedora',
             error=>qq{It is easy to repackage this module by Fedora.},
             remedy=>q{Fix each one of the metrics this depends on},
             is_extra=>1,
-            is_aggregate=>1,
+            aggregating=> [qw(no_generated_files fits_fedora_license)],
             is_experimental=>1,
-            code=>sub { 
-                my $d=shift;
-                my @required = qw(no_generated_files fits_fedora_license);
-
-                my $good = all { $d->{kwalitee}{$_} } @required;
-                return $good ? 1 : 0;
-            }
+            code=>\&_aggregator,
         },
          {
             name=>'easily_repackageable',
             error=>qq{It is easy to repackage this module. See <a href="http://www.perlfoundation.org/perl5/index.cgi?cpan_packaging">cpan_packaging</a> },
             remedy=>q{Fix each one of the metrics this depends on},
             is_extra=>1,
-            is_aggregate=>1,
+            aggregating=>[qw(easily_repackageable_by_debian easily_repackageable_by_fedora)],
             is_experimental=>1,
-            code=>sub { 
-                my $d=shift;
-                my @required = qw(easily_repackageable_by_debian easily_repackageable_by_fedora);
-                my $good = all { $d->{kwalitee}{$_} } @required;
-                #use Data::Dumper;
-                #print STDERR Dumper $d;
-                return $good ? 1 : 0;
-            }
+            code=>\&_aggregator,
         },
     ];
 }
 
+sub _aggregator { 
+    my $d=shift;
+    my $metric=shift;
+    my @errors;
+    
+    my $good = all { $d->{kwalitee}{$_} } @{ $metric->{aggregating} };
+    return $good ? 1 : 0;
+}
 
 q{Favourite record of the moment:
   Lili Allen - Allright, still};
