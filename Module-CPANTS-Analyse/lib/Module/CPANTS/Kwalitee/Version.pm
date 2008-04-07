@@ -12,7 +12,6 @@ sub order { 100 }
 # Analyse
 ##################################################################
 
-# global values needed for File::Find
 my $match_version = qr/\A\s*   (?:our)?  \s*  \$VERSION \s*=\s*    (['"]?)([^; ]+)\1   \s*;\s*\z/x;
 
 sub analyse {

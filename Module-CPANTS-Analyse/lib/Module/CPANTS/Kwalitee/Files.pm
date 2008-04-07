@@ -6,6 +6,7 @@ use File::Spec::Functions qw(catdir catfile abs2rel splitdir);
 use File::stat;
 use File::Basename;
 use Data::Dumper;
+use Readonly;
 
 sub order { 10 }
 
@@ -13,9 +14,9 @@ sub order { 10 }
 # Analyse
 ##################################################################
 
-# global values needed for File::Find
+Readonly::Scalar my $large_file => 100_000;
+
 my %generated_db_files;
-my $match_version = qr/\A\s*   (?:our)?  \s*  \$VERSION \s*=\s*    (['"]?)([^; ]+)\1   \s*;\s*\z/x;
 
 sub analyse {
     my $class=shift;
@@ -35,12 +36,12 @@ sub analyse {
     #die Dumper \%files;
     $me->d->{size_unpacked}=$size;
 
-    $me->d->{files}=\@files;
+    $me->d->{files}=\%files;
     $me->d->{dirs}=\@dirs;
 
     # find symlinks
     my @symlinks;
-    foreach my $f (@dirs,@files) {
+    foreach my $f (@dirs, @files) {
         my $p=catfile($distdir,$f);
         if (-l $f) {
             push(@symlinks,$f);
@@ -51,6 +52,7 @@ sub analyse {
     $me->d->{files}=scalar @files;
     $me->d->{files_list}=join(';',@files);
     $me->d->{files_array}=\@files;
+    $me->d->{files_hash}=\%files;
     $me->d->{dirs}=scalar @dirs;
     $me->d->{dirs_list}=join(';',@dirs);
     $me->d->{dirs_array}=\@dirs;
@@ -259,6 +261,24 @@ sub kwalitee_indicators {
             my $d=shift;
             if ($d->{stdin_in_makefile_pl}||$d->{stdin_in_build_pl}) {
                 $d->{error}{no_stdin_for_prompting} = "Make sure STDIN is not used in Makefile.PL or Build.PL see http://www.perlfoundation.org/perl5/index.cgi?cpan_packaging";
+                return 0;
+            }
+            return 1;
+        },
+    },
+    {
+        name=>'no_large_files',
+        error=>q{This distribution has at least one file larger than $large_file bytes)},
+        remedy=>q{No remedy for that.},
+        is_extra=>1,
+        is_experimental=>1,
+        code=>sub {
+            my $d=shift;
+            my @errors = map { "$_:$d->{files_hash}{$_}{size}" }
+                         grep { $d->{files_hash}{$_}{size} > $large_file }
+                         keys %{ $d->{files_hash} };
+            if (@errors) {
+                $d->{error}{no_large_files} = join "; ", @errors;
                 return 0;
             }
             return 1;

@@ -3,6 +3,7 @@
 #-----------------------------------------------------------------
  
     - replace File::Find by File::Find::Rule
+    - add no_large_files metrics
 
     - add fits_fedora_license metric that was inside the easily_repackageable_by_fedora metric
     - add is_experimental flag to some of the metrics
