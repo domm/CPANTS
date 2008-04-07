@@ -19,6 +19,7 @@ my $build = Module::Build->new(
         'version'                   => '0.73',
         'List::MoreUtils'           => '0',
         'Test::Warn'                => '0',
+        'File::Find::Rule'          => '0',
     },
     script_files=>[qw(bin/cpants_lint.pl)],
     create_makefile_pl=>'traditional',

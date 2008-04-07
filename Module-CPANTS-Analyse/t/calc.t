@@ -1,4 +1,4 @@
-use Test::More tests => 2;
+use Test::More tests => 5;
 
 use Module::CPANTS::Analyse;
 use File::Spec::Functions;
@@ -55,7 +55,22 @@ my $expected_kwalitee =  {
 
 is_deeply($kw, $expected_kwalitee, 'metrics are as expected');
 
+is $a->d->{size_packed}, 7736, 'size_packed';
+is $a->d->{size_unpacked}, 14805, 'size_unpacked';
+is_deeply $a->d->{files_array}, [
+          'MANIFEST',
+          'META.yml',
+          'DonMartin.pm',
+          'Changes',
+          'README',
+          'Makefile.PL',
+          't/01-basic.t',
+          'eg/freq.pl',
+          'eg/hello.pl'
+        ], 'files_array';
+
+
 #use Data::Dumper;
 #diag(Dumper $kw);
-#diag(Dumper $a->d);
+#diag(Dumper $a);
 

@@ -1,10 +1,11 @@
 package Module::CPANTS::Kwalitee::Files;
 use warnings;
 use strict;
-use File::Find;
+use File::Find::Rule;
 use File::Spec::Functions qw(catdir catfile abs2rel splitdir);
 use File::stat;
 use File::Basename;
+use Data::Dumper;
 
 sub order { 10 }
 
@@ -13,9 +14,8 @@ sub order { 10 }
 ##################################################################
 
 # global values needed for File::Find
-our @files=();
+my @files;
 our @dirs=();
-our $size=0;
 my %generated_db_files;
 my $match_version = qr/\A\s*   (?:our)?  \s*  \$VERSION \s*=\s*    (['"]?)([^; ]+)\1   \s*;\s*\z/x;
 
@@ -24,15 +24,18 @@ sub analyse {
     my $me=shift;
     my $distdir=$me->distdir;
     
-    # use File::Find to get unpacked size & filelist
-    @files=(); @dirs=(); $size=0;
-    find(\&get_files,$distdir);
-    $me->d->{size_unpacked}=$size;
+    @files = File::Find::Rule->file()->relative()->in($distdir);
+    @dirs  = File::Find::Rule->directory()->relative()->in($distdir);
+    #my $unixy=join('/',splitdir($File::Find::name));
 
-    # munge filelist
-    my $moddir = basename($distdir);
-    @files = map {s!^.*?$moddir/!!;$_} @files;
-    @dirs  = map {s!^.*?$moddir/!!;$_} @dirs;
+    my $size = 0;
+    my %files;
+    foreach my $name (@files) { 
+        $files{$name}{size} += -s catfile($distdir, $name) || 0;
+        $size += $files{$name}{size};
+    }
+    #die Dumper \%files;
+    $me->d->{size_unpacked}=$size;
 
     $me->d->{files}=\@files;
     $me->d->{dirs}=\@dirs;
@@ -131,20 +134,6 @@ sub map_filenames {
         $ret{$db_file}=$file;
     }
     return %ret;
-}
-
-#-----------------------------------------------------------------
-# get_files
-#-----------------------------------------------------------------
-sub get_files {
-    return if /^\.+$/;
-    my $unixy=join('/',splitdir($File::Find::name));
-    if (-d $_) {
-        push (@dirs,$unixy);
-    } elsif (-f $_) {
-        push (@files,$unixy);
-        $size+=-s _ || 0;
-    }
 }
 
 ##################################################################
@@ -250,7 +239,6 @@ sub kwalitee_indicators {
         remedy=>q{Remove the offending file!},
         code=>sub {
             my $d=shift;
-            #use Data::Dumper;
             #die Dumper \%generated_db_files;
             my @errors = map { $generated_db_files{$_} }
                          grep { $d->{$_} }

@@ -1,6 +1,8 @@
 #-----------------------------------------------------------------
 # Changes for Module::CPANTS::Analyse
 #-----------------------------------------------------------------
+ 
+    - replace File::Find by File::Find::Rule
 
     - add fits_fedora_license metric that was inside the easily_repackageable_by_fedora metric
     - add is_experimental flag to some of the metrics
