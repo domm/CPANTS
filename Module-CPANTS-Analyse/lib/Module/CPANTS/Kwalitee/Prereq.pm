@@ -45,9 +45,9 @@ sub analyse {
         ## no critic (ProhibitStringyEval)
         eval "{ no strict; \$prereq = { $requires \n} }";
         ## no critic (ProhibitStringyEval)
-        eval "{ no strict; \$build = { $build_requires \n} }";
+        eval "{ no strict; \$build = { $build_requires \n} }" if $build_requires;
         ## no critic (ProhibitStringyEval)
-        eval "{ no strict; \$optional = { $optional_requires \n} }";
+        eval "{ no strict; \$optional = { $optional_requires \n} }" if $optional_requires;
     }
     else {
         open(my $in, '<', catfile($distdir,'Makefile.PL')) || return 1;

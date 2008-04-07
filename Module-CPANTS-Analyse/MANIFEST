@@ -57,7 +57,8 @@ t/eg/manifest/no-manifest-0.01.tar.gz
 t/eg/not_extractable.gz
 t/eg/Test-YAML-Meta-0.04.tar.gz
 t/eg/Text-CSV_XS-0.40.tgz
-
+t/eg/Pipe-0.03.tar.gz 
+t/eg/PPI-HTML-1.07.tar.gz
 
 xt/99_critic.t
 xt/99_pod.t
