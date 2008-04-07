@@ -33,10 +33,18 @@ body {
 }
 
 .headers { 
-  border: 1px solid black;
   padding: 2px;
   color: black;
   background-color: #dddddd;
+}
+
+.warning {
+  border-bottom: 1px solid #000;
+  border-left: 1px solid #000; 
+  border-right: 1px solid #000;
+  padding:7px;
+  background-color:#f00;
+  font-weight: bold;
 }
 
 
