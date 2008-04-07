@@ -119,7 +119,7 @@ sub check_prereq {
 
     my %uses;
     my %prereq;
-    my $sth_uses=$dbh->prepare("select dist,in_dist,module from uses where $uses_sql");
+    my $sth_uses=$dbh->prepare("select dist,in_dist,module from uses where module !~ '^v?5'  AND $uses_sql");
     $sth_uses->execute;
     while (my ($dist,$in,$module)=$sth_uses->fetchrow_array) {
         if (defined $in) {

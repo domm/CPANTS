@@ -3,6 +3,7 @@
 #-----------------------------------------------------------------
 
 0.75-tobe
+    - do not include perl version numbers in prereq checks
     - renamed lots of error names to better work with frontend
     - some minor fixes in various scripts
 
