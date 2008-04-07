@@ -1,0 +1,13 @@
+<h1>Show all dists sorted by [% field  %]</h1>
+
+[% pager = list.pager %]
+[% nav_pager = INCLUDE 'widgets/pager' action='by/$field' %]
+[% nav_pager %]
+
+<table>
+<tr><td><b>Dist</b></td><td><b>[% field %]</b></td></tr>
+[% WHILE (d=list.next) %]
+<tr><td><a href="/dist/overview/[% d.dist %]">[% d.dist %]<a/></td><td>[% d.$field %]</td></tr>
+[% END %]
+</table>
+[% nav_pager %]

@@ -1,0 +1,9 @@
+<h1>Stats</h1>
+
+<ul>
+<li><a href="[% c.uri_for('/dist/by/size_packed') %]">biggest dists (packed)</a>
+<li><a href="[% c.uri_for('/dist/by/size_unpacked') %]">biggest dists (extracted)</a>
+</ul>
+
+
+

@@ -3,6 +3,7 @@
 #-----------------------------------------------------------------
 
 0.75-tobe
+    - added stats/by/...
     - show a big fat warning if a run is in progress
     - show error messages in kwalitee view
 

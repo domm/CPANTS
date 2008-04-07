@@ -132,8 +132,20 @@ sub get_dist : Private {
     return $dist;
 }
 
+sub by : Local {
+    my ( $self, $c, $fld ) = @_;
+    $c->stash->{field}=$fld;
 
-
+    $c->stash->{ list } = $c->model( 'DBIC::Dist' )->search(
+        {},
+        {
+            order_by => $fld . ' DESC',
+            page     => $c->request->param( 'page' ) || 1,
+            rows     => 40,
+        }
+    );
+}
+   
 
 
 # TODO move to Kwalitee

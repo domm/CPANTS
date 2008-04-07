@@ -47,7 +47,7 @@ document.getElementById('top').style.backgroundColor="#ff7300";
 [% FOREACH d IN item.dists( {}, { 'order_by' => 'dist' } ) %]
 [% kwal = d.kwalitee %]
 <tr>
-<td><a href="/dist/overview/[% d.dist %]">[% d.dist %]</td>
+<td><a href="/dist/overview/[% d.dist %]">[% d.dist %]<a/></td>
 <td align="center">[% kwal.kwalitee %]</td>
 
 [% FOREACH kw IN mck.core_indicator_names.sort %]
