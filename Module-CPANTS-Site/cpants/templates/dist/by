@@ -1,7 +1,7 @@
 <h1>Show all dists sorted by [% field  %]</h1>
 
 [% pager = list.pager %]
-[% nav_pager = INCLUDE 'widgets/pager' action='by/$field' %]
+[% nav_pager = INCLUDE 'widgets/pager' action=$field %]
 [% nav_pager %]
 
 <table>
