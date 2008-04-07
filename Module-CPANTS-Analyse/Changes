@@ -1,16 +1,19 @@
 #-----------------------------------------------------------------
 # Changes for Module::CPANTS::Analyse
 #-----------------------------------------------------------------
- 
+
+0.79  Tue Apr  8 01:25:12 CEST 2008
+    * released at the Oslo QA Hackathon 2008
+    Gabor Szabo:
     - replace File::Find by File::Find::Rule
     - add no_large_files metrics
-
     - add fits_fedora_license metric that was inside the easily_repackageable_by_fedora metric
     - add is_experimental flag to some of the metrics
     - add aggregating key to metric to list the other metrics being aggregated
     - unhide some errors during testing
     - renamed some error fields
     - add metayml_declares_perl_version metric
+
 
 0.78    2008-04-06
     * released at the Oslo QA Hackathon 2008

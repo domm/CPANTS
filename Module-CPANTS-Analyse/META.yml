@@ -1,6 +1,6 @@
 ---
 name: Module-CPANTS-Analyse
-version: 0.78
+version: 0.79
 author:
   - 'Thomas Klausner, <domm@cpan.org>, http://domm.zsi.at'
   - |-
@@ -16,18 +16,21 @@ requires:
   Array::Diff: 0.04
   CPAN::DistnameInfo: 0.06
   Class::Accessor: 0.19
+  File::Find::Rule: 0
   IO::Capture: 0.05
   List::MoreUtils: 0
   Module::ExtractUse: 0.18
   Module::Pluggable: 2.96
   Pod::Simple::Checker: 2.02
+  Readonly: 0
+  Test::Warn: 0
   Test::YAML::Meta::Version: 0.06
   YAML::Syck: 0.95
   version: 0.73
 provides:
   Module::CPANTS::Analyse:
     file: lib/Module/CPANTS/Analyse.pm
-    version: 0.78
+    version: 0.79
   Module::CPANTS::Kwalitee:
     file: lib/Module/CPANTS/Kwalitee.pm
   Module::CPANTS::Kwalitee::BrokenInstaller:
