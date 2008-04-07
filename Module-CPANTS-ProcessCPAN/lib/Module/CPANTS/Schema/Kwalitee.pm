@@ -103,12 +103,16 @@ __PACKAGE__->add_columns(
   { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
   "easily_repackageable",
   { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
+  "fits_fedora_license",
+  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
+  "metayml_declares_perl_version",
+  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
 );
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-07 13:47:59
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:nygWjmk0WUWdeq1+1pHKTQ
+# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-07 17:51:56
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:JWj4wIx/zamqbLDm+9eyRQ
 
 __PACKAGE__->belongs_to("dist", "Module::CPANTS::Schema::Dist", { id => "dist" });
 
