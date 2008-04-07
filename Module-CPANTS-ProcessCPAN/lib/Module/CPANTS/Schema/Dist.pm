@@ -199,8 +199,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-07 18:54:52
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:nE9IxyrPVrx5xcyKOchyrQ
+# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-07 19:01:51
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:i2NE/e2yWHtXWa8wQUwxAA
 
 __PACKAGE__->belongs_to("run", "Module::CPANTS::Schema::Run", { id => "run" });
 __PACKAGE__->belongs_to("author", "Module::CPANTS::Schema::Author", { id => "author" });
