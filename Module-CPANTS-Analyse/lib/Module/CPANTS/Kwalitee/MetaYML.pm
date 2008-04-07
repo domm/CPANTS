@@ -28,7 +28,7 @@ sub analyse {
             $me->d->{metayml_is_parsable}=1;
         };
         if ($@) {
-            $me->d->{error}{metayml_parse}=$@;
+            $me->d->{error}{metayml_is_parsable}=$@;
         }
     }    
 }
@@ -41,7 +41,7 @@ sub kwalitee_indicators{
     return [
         {
             name=>'metayml_is_parsable',
-            error=>q{The META.yml file of this distributioncould not be parsed by the version of YAML.pm CPANTS is using. See 'metayml_parse' in the dist error view for more info.},
+            error=>q{The META.yml file of this distributioncould not be parsed by the version of YAML.pm CPANTS is using.},
             remedy=>q{If you don't have one, add a META.yml file. Else, upgrade your YAML generator so it produces valid YAML.},
             code=>sub { shift->{metayml_is_parsable} ? 1 : 0 }
         },
@@ -102,7 +102,8 @@ sub check_spec_conformance {
             push @errors,$e;
         }
         if (@errors) {
-            $d->{error}{metayml}.=$report_version.": ".join(" ",@errors)." ";
+            my $errorname='metayml_conforms_'.($check_current?'spec_current':'to_known_spec');
+            $d->{error}{$errorname}.=$report_version.": ".join(" ",@errors)." ";
             return 0;
         }
     }

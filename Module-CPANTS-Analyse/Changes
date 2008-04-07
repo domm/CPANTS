@@ -2,16 +2,20 @@
 # Changes for Module::CPANTS::Analyse
 #-----------------------------------------------------------------
 
-    - add fits_fedora_license metric that was inside the easily_repackageable_by_fedora metric
-    - add is_experimental and is_aggregate flags to some of the metrics
-    - unhide some errors during testing
+0.79-tobe
+    - renamed some error fields
 
-0.78-tobe
+
+0.78    2008-04-06
+    * released at the Oslo QA Hackathon 2008
     - very hacky workaround for problems with Meta.YML, version 
       objects, etc
     - moved has_version_in_each_file into MCK::Version & fixed a bug
       in it 
     Gabor Szabo:
+    - add fits_fedora_license metric that was inside the easily_repackageable_by_fedora metric
+    - add is_experimental and is_aggregate flags to some of the metrics
+    - unhide some errors during testing
     - add no_generated_files metric
     - add easily_repackageagble_by_fedora, easily_repackagable_by_debian
       and easily_repackageagble metric
