@@ -49,7 +49,7 @@ sub kwalitee_indicators {
   return [
     {
         name=>'has_version_in_each_file',
-        error=>q{This distribution has a .pm file without version number. (Using $match_version to match them)},
+        error=>qq{This distribution has a .pm file without version number. (Using $match_version to match them)},
         remedy=>q{Add a version number to each .pm file.},
         is_extra=>1,
         code=>sub {
