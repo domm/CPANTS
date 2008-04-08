@@ -134,3 +134,8 @@ Moose and MooseX turn on strict, so count Moose[X] as use_strict
 - Export the kwalitee of each distro in a csv file like so it can be easily integrated into
   other web sites such as the search engines.
 
+- Create a hierarchical report (aka CPANDepth) showing all the dependencies
+  their kwalitee, their age, their license (the name of the license from META.yml for now)
+
+
+
