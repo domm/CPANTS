@@ -2,6 +2,11 @@
 # Changes for Module::CPANTS::Site
 #-----------------------------------------------------------------
 
+
+0.76-tobe
+    - added by/*_kwalitee to stats (requested by Tux)
+
+
 0.75    Tue Apr  8 01:22:24 CEST 2008
     * released at the Oslo QA Hackathon 2008
     - added stats/by/...

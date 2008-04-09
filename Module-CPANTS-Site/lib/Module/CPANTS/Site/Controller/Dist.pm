@@ -132,18 +132,54 @@ sub get_dist : Private {
     return $dist;
 }
 
+my %bys=( 
+    size_packed     => 'size_packed DESC',
+    size_unpacked   => 'size_unpacked DESC',
+    files           => 'files DESC',
+    age             => {
+        order_by=>'released',
+        show_field=>'released',
+    },
+    absolute_kwalitee  => { 
+        join=>'kwalitee',
+        prefetch=>'kwalitee',
+        order_by=>'kwalitee.kwalitee desc',
+        '+select' => [ 'kwalitee.kwalitee' ],
+        '+as'     => [ 'kwalitee' ],
+        show_field=>'kwalitee',
+    },
+    core_kwalitee    =>  { 
+        join=>'kwalitee',
+        prefetch=>'kwalitee',
+        order_by=>'kwalitee.rel_core_kw desc',
+        '+select' => [ 'kwalitee.rel_core_kw' ],
+        '+as'     => [ 'kwalitee' ],
+        show_field=>'kwalitee',
+    },
+
+);
+
 sub by : Local {
     my ( $self, $c, $fld ) = @_;
-    $c->stash->{field}=$fld;
-    my $order='DESC';
-    if ($fld eq 'released') {
-        $order='';
-        $c->stash->{template}='dist/by_date';
+    my $by=$bys{$fld} || die "No such page: stats/by/$fld";
+    my $title=$fld;
+    my @order;
+    if (ref($by) eq 'HASH') {
+        $fld=$by->{show_field} if $by->{show_field};
+        @order=%$by;
+        $c->stash->{no_format}=1;
     }
+    else {
+        @order=(order_by=>$by);
+    }
+    $c->stash->{template}='dist/by_date' if $fld eq 'released';
+    $c->stash->{field}=$fld;
+    $c->stash->{title}=$title;
+    
     $c->stash->{ list } = $c->model( 'DBIC::Dist' )->search(
         {},
         {
-            order_by => $fld . ' '.$order,
+            @order,
             page     => $c->request->param( 'page' ) || 1,
             rows     => 40,
         }
