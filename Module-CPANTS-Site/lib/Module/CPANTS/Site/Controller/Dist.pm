@@ -133,17 +133,17 @@ sub get_dist : Private {
 }
 
 my %bys=( 
-    size_packed     => 'size_packed DESC',
-    size_unpacked   => 'size_unpacked DESC',
-    files           => 'files DESC',
+    size_packed     => 'size_packed DESC,dist',
+    size_unpacked   => 'size_unpacked DESC,dist',
+    files           => 'files DESC,dist',
     age             => {
-        order_by=>'released',
+        order_by=>'released,dist',
         show_field=>'released',
     },
     absolute_kwalitee  => { 
         join=>'kwalitee',
         prefetch=>'kwalitee',
-        order_by=>'kwalitee.kwalitee desc',
+        order_by=>'kwalitee.kwalitee desc,me.dist',
         '+select' => [ 'kwalitee.kwalitee' ],
         '+as'     => [ 'kwalitee' ],
         show_field=>'kwalitee',
@@ -151,7 +151,7 @@ my %bys=(
     core_kwalitee    =>  { 
         join=>'kwalitee',
         prefetch=>'kwalitee',
-        order_by=>'kwalitee.rel_core_kw desc',
+        order_by=>'kwalitee.rel_core_kw desc,me.dist',
         '+select' => [ 'kwalitee.rel_core_kw' ],
         '+as'     => [ 'kwalitee' ],
         show_field=>'kwalitee',
