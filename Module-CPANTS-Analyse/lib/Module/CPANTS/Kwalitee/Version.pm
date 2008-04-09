@@ -12,7 +12,7 @@ sub order { 100 }
 # Analyse
 ##################################################################
 
-my $match_version = qr/\A\s*   (?:our)?  \s*  \$VERSION \s*=\s*    (['"]?)([^; ]+)\1   \s*;\s*\z/x;
+my $match_version = qr/\$VERSION/;
 
 sub analyse {
     my $class=shift;
@@ -26,7 +26,7 @@ sub analyse {
         if (open my $fh, '<', catfile($distdir, $module->{file})) {
             while (my $line = <$fh>) {
                 if ($line =~ $match_version) {
-                    $version = $2;  
+                    $version = $line;  
                     last;
                 }
             }

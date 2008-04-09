@@ -2,6 +2,7 @@ use Test::More tests => 16;
 
 use Module::CPANTS::Analyse;
 use File::Spec::Functions;
+use Data::Dumper;
 my $a=Module::CPANTS::Analyse->new({
     dist=>'t/eg/AFS-2.4.0.tar.gz',
     _dont_cleanup=>$ENV{DONT_CLEANUP},
@@ -33,3 +34,4 @@ ok(!$d->{metayml_conforms_spec_1_0},'metayml_conforms_spec_1_0');
 ok(!$d->{metayml_conforms_known_spec},'metayml_conforms_known_spec');
 ok(!$d->{metayml_conforms_spec_current},'metayml_conforms_spec_current');
 
+diag(Dumper $d);

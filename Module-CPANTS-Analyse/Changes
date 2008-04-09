@@ -2,6 +2,8 @@
 # Changes for Module::CPANTS::Analyse
 #-----------------------------------------------------------------
 
+    - simplify the way the VERSION number is looked up, keep the full version line
+
 0.79  Tue Apr  8 01:25:12 CEST 2008
     * released at the Oslo QA Hackathon 2008
     Gabor Szabo:
