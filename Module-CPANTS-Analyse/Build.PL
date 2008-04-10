@@ -21,6 +21,8 @@ my $build = Module::Build->new(
         'Test::Warn'                => '0',
         'File::Find::Rule'          => '0',
         'Readonly'                  => '0',
+        'Software::LicenseUtils'    => '0.002',
+        'File::Slurp'               => '0',
     },
     script_files=>[qw(bin/cpants_lint.pl)],
     create_makefile_pl=>'traditional',

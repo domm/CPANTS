@@ -14,7 +14,7 @@ sub order { 10 }
 # Analyse
 ##################################################################
 
-Readonly::Scalar my $large_file => 100_000;
+Readonly::Scalar my $large_file => 200_000;
 
 my %generated_db_files;
 

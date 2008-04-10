@@ -3,6 +3,7 @@
 #-----------------------------------------------------------------
 
     - simplify the way the VERSION number is looked up, keep the full version line
+    - increase the no_large_files limit to 200_000
 
 0.79  Tue Apr  8 01:25:12 CEST 2008
     * released at the Oslo QA Hackathon 2008
