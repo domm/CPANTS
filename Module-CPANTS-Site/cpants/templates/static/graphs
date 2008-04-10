@@ -1,5 +1,11 @@
 <h1>Graphs</h1>
 
+
+<h3>Kwalitee Overview</h3>
+
+<p><img src="/static/kwalitee_overview.png"></p>
+
+
 <h3>Kwalitee Distribution</h3>
 
 <p><img src="/static/kwalitee_distribution.png"></p>

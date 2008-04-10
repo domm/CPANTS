@@ -4,6 +4,7 @@
 
 
 0.76-tobe
+    - added kwalitee_overview.png
     - added by/*_kwalitee to stats (requested by Tux)
 
 
