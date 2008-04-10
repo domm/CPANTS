@@ -67,6 +67,7 @@ foreach (
         sql=>'select abs_kw,count(abs_kw) as cnt from kwalitee group by abs_kw order by abs_kw',
         lablex=>'Kwalitee',
         labley=>'Distributions',
+        width=>800,
     },
     {
         title=>'Active PAUSE IDs',
