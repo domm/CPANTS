@@ -8,7 +8,7 @@
 [% FOREACH c IN mck.core_indicator_names %]
 [% class = item.$c ? 'ok' : 'not_ok' %]
 <tr>
-    <td class="[% class %]"><b>[% c %]</b></td>
+    <td class="[% class %]"><b><a name="[%c%]"></a>[% c %]</b></td>
      <td class="[% class %]"  align="center">
 [% IF item.$c %]
     ok</td></tr>
@@ -27,7 +27,7 @@
 [% FOREACH c IN mck.optional_indicator_names %]
 [% class = item.$c ? 'ok' : 'opt_not_ok' %]
 <tr>
-    <td class="[% class %]"><b>[% c %]</b></td>
+    <td class="[% class %]"><b><a name="[%c%]"></a>[% c %]</b></td>
      <td class="[% class %]" align="center">
 [% IF item.$c %]
    ok</td></tr>

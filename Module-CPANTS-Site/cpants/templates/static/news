@@ -1,6 +1,38 @@
 <h2>News</h2>
 
 <dl>
+
+
+<dt>2008-04-09: QA Hackathon Achievements</dt>
+<dd>
+<ul><li> added a lot of new metrics:
+<ul><li> no_generated_files
+</li><li> has_tests_in_t_dir
+</li><li> no_stdin_for_prompting
+</li><li> no_large_files
+</li><li> metayml_declares_perl_version
+</li><li> has_version_in_each_file
+</li><li> fits_fedora_license
+</li><li> easily_repackageable
+</li><li> easily_repackageable_by_debian
+</li><li> easily_repackageable_by_fedora
+</li></ul>
+</li><li> add support for aggegregated and experimental metrics
+</li><li> start to integrate Testing Best Practices
+</li><li> fixed lots of bugs in prereq_matches_use and build_prereq_matches_use
+</li><li> mark core and dual-life distributions
+</li><li> added a page with various <a href="http://cpants.perl.org/stats.html">stats</a> to the website
+</li><li> added a JSON view of 'Prerequisites' page
+</li><li> various small and not so small improvements all over the place
+</li><li> collected tons of further ideas and feedback&nbsp;:-)
+</li></ul>
+</dd>
+
+<dt>2008-04-05: QA Hackathon</dt>
+<dd>We hack on CPANTS, so things might break this weekend...</dd>
+
+
+
 <dt>2008-03-31: Preparing for the QA Hackathon</dt>
 <dd><p>
 This weekend, I'm participating in the <a

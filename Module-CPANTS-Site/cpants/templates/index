@@ -60,22 +60,6 @@ go ahead and subscribe!
 </p>
 </dd>
 
-<dt>2008-01-14: up again</dt>
-<dd>After a very long downtime caused by a combination of Christmas and me
-changing jobs, CPANTS will be soon back up to regular (daily) updates. I'm
-currently in the middle of setting things up on a new server provided by <a
-href="http://vienna.pm.org">Vienna.pm</a>. cpants.perl.org already points to
-the new server.<br>
-Thanks for your patience, and sorry for any inconveniences...
-</dd>
-
-
-<dt>2007-11-07: better data</dt>
-<dd>
-I fixed a few bugs and generated new data (which took a bit more than 6 hours). But nothing fancy...
-</dd>
-
-
 </dl>
 
 <a href="/news.html">Not news anymore...</a>
