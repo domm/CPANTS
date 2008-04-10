@@ -24,12 +24,24 @@
 
 <p>If you want to discuss Kwalitee indicators or suggest new ones, please use the <a href="http://lists.cpan.org/showlist.cgi?name=perl-qa">perl-qa</a> list.</p>
 
+[% as_hash = mck.get_indicators_hash %]
+
 <dl>
 [% FOREACH k IN mck.get_indicators %]
-<dt>[% k.name %] [% k.fake %] [% IF k.is_extra %](optional)[% END%]
+
+<dt><a name="[% k.name %]"></a>[% k.name %] [% k.fake %]
+[% IF k.is_extra || k.aggregating || k.is_experimental %]
+(
+[% IF k.is_extra %] optional [% END%]
+[% IF k.aggregating %] aggregating [% END%]
+[% IF k.is_extra %] experimental [% END%]
+)
+[% END %]
  </dt>
 <dd>
-[% IF k.is_extra %]This metric is optional.<br>[% END%]
+[% IF k.aggregating %]
+<b>Aggregate of:</b> [% k.aggregating.join(', ') %]<br>
+[% END %]
 <b>Shortcoming:</b> [% k.error %]<br>
 <b>Remedy:</b> [% k.remedy %]<br>
 <b>Defined in:</b> [% k.defined_in %]<br>
