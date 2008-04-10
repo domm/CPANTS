@@ -34,4 +34,4 @@ ok(!$d->{metayml_conforms_spec_1_0},'metayml_conforms_spec_1_0');
 ok(!$d->{metayml_conforms_known_spec},'metayml_conforms_known_spec');
 ok(!$d->{metayml_conforms_spec_current},'metayml_conforms_spec_current');
 
-diag(Dumper $d);
+#diag(Dumper $d);

@@ -2,6 +2,8 @@ use Test::More tests => 18;
 
 use Module::CPANTS::Analyse;
 use File::Spec::Functions;
+use Test::Deep;
+
 my $a=Module::CPANTS::Analyse->new({
     dist=>'t/eg/Acme-DonMartin-0.06.tar.gz',
     _dont_cleanup=>$ENV{DONT_CLEANUP},
@@ -77,7 +79,7 @@ is_deeply($kw, $expected_kwalitee, 'metrics are as expected');
 
 is $a->d->{size_packed}, 7736, 'size_packed';
 is $a->d->{size_unpacked}, 14805, 'size_unpacked';
-is_deeply $a->d->{files_array}, [
+cmp_bag $a->d->{files_array}, [
           'MANIFEST',
           'META.yml',
           'DonMartin.pm',
