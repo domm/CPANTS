@@ -19,8 +19,8 @@ my $DBH=$mcp->db->storage->dbh;
 my $now=localtime();
 my @bar_defaults=(
     bar_spacing     => 8,
-    shadow_depth    => 4,
-    shadowclr       => 'dred',
+#    shadow_depth    => 4,
+#    shadowclr       => 'dred',
     transparent     => 0,
     show_values=>1,
 );

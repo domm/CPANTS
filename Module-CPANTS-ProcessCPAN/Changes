@@ -2,6 +2,10 @@
 # Changes for Module::CPANTS::ProcessCPAN
 #-----------------------------------------------------------------
 
+0.76-tobe
+    - added kwalitee_overview to graphs
+
+
 0.75    Tue Apr  8 01:20:03 CEST 2008
     * released at the Oslo QA Hackathon 2008
     - fixed Test::Pod* problem in build_requires
