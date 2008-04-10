@@ -34,7 +34,7 @@ my @bar_defaults=(
     my $mck=Module::CPANTS::Kwalitee->new;
     my @metrics=$mck->get_indicators;
     my $total_dists=$DBH->selectrow_array("select count(*) from kwalitee");
-    foreach (@metrics) {
+    foreach (sort {$a->{name} cmp $b->{name}} @metrics) {
         my $m=$_->{name};
         my $ok=$DBH->selectrow_array("select count(*) from kwalitee where $m=1 group by $m") || 0;
         push(@ok,$ok);
@@ -50,10 +50,11 @@ my @bar_defaults=(
 		title=>"Kwalitee Overview ($now)",
         x_labels_vertical=>1,
 		'y_max_value'=>$total_dists,
+        dclrs=>[qw(green red)],
     );
 
-    my $gd=$graph->plot([\@lable,\@fail,\@ok]) || die $graph->error;
-    my $outfile=catfile($outpath,"foo.png");
+    my $gd=$graph->plot([\@lable,\@ok,\@fail]) || die $graph->error;
+    my $outfile=catfile($outpath,"kwalitee_overview.png");
     open(IMG, ">",$outfile) or die "$outfile: $!";
     binmode IMG;
     print IMG $gd->png;
