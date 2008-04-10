@@ -84,6 +84,7 @@ foreach (
         lablex=>'Dists',
         labley=>'Authors',
         width=>800,
+    bar_spacing     => 2,
     },
     {
         title=>'Dists released per year',
