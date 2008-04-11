@@ -1,5 +1,6 @@
 use Test::More;
 use Test::NoWarnings;
+use Test::Deep;
 
 use Module::CPANTS::Analyse;
 use File::Spec::Functions;
@@ -97,7 +98,7 @@ my @tests = (
            'metayml_conforms_to_known_spec' => 0
         },
         error => {
-            'has_version_in_each_file' => [
+            'has_version_in_each_file' => bag (
                                     'lib/Pipe/Tube/Say.pm',
                                     'lib/Pipe/Tube/Map.pm',
                                     'lib/Pipe/Tube/Cat.pm',
@@ -112,7 +113,7 @@ my @tests = (
                                     'lib/Pipe/Tube.pm',
                                     'lib/Pipe/Tube/Chomp.pm',
                                     'lib/Pipe/Tube/Tuple.pm'
-                                  ],
+                                  ),
             'easily_repackageable' => 'easily_repackageable_by_fedora',
             'easily_repackageable_by_fedora' => 'fits_fedora_license',
             'metayml_conforms_spec_current'  => ['1.3', 'Expected a map structure from YAML string or file [Validation: 1.3]'],
@@ -241,7 +242,7 @@ foreach my $t (@tests) {
     my $kw=$a->d->{kwalitee};
     is_deeply($kw, $t->{kwalitee}, "kwalitee of $t->{dist}")
         or diag(Dumper $kw);
-    is_deeply($d->{error}, $t->{error}, "error of $t->{dist}")
+    cmp_deeply($d->{error}, $t->{error}, "error of $t->{dist}")
         or diag(Dumper $d->{error});
     #diag(Dumper $d);
 }
