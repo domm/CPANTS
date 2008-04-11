@@ -41,11 +41,11 @@ sub analyse {
         }
         else {
             $me->d->{manifest_matches_dist}=0;
-            my $error=
-                'MANIFEST ('.@manifest.') does not match dist ('.@files."):\n"
-                ."Missing in MANIFEST: ".join(', ',@{$diff->added})
-                ."\nMissing in Dist: " . join(', ',@{$diff->deleted});
-            $me->d->{error}{manifest_matches_dist}=$error;
+            my @error = ( 
+                'MANIFEST ('.@manifest.') does not match dist ('.@files."):",
+                "Missing in MANIFEST: ".join(', ',@{$diff->added}), 
+                "Missing in Dist: " . join(', ',@{$diff->deleted}));
+            $me->d->{error}{manifest_matches_dist} = \@error;
         }
     }
     else {

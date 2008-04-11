@@ -26,6 +26,7 @@ my $build = Module::Build->new(
     build_requires => {
         'Test::Deep'                => '0',
         'Test::Warn'                => '0',
+        'Test::NoWarnings'          => '0',
     }, 
     script_files=>[qw(bin/cpants_lint.pl)],
     create_makefile_pl=>'traditional',

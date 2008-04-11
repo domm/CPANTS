@@ -5,6 +5,8 @@
     - simplify the way the VERSION number is looked up, keep the full version line
     - increase the no_large_files limit to 200_000
     - some unit test fixes thanks to Tux
+    - some of {error} fields are now ARRAY refs instead of strings
+    - more detailed unit tests
 
 0.79  Tue Apr  8 01:25:12 CEST 2008
     * released at the Oslo QA Hackathon 2008

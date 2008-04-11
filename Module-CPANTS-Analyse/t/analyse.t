@@ -1,4 +1,5 @@
 use Test::More;
+use Test::NoWarnings;
 
 use Module::CPANTS::Analyse;
 use File::Spec::Functions;
@@ -49,7 +50,9 @@ my @tests = (
            'fits_fedora_license' => 1,
            'has_proper_version' => 1,
            'metayml_conforms_to_known_spec' => 1
-         },
+        },
+        error => {
+        },
     },
     {
         dist =>  't/eg/Pipe-0.03.tar.gz',
@@ -92,6 +95,33 @@ my @tests = (
            'fits_fedora_license' => 0,
            'has_proper_version' => 1,
            'metayml_conforms_to_known_spec' => 0
+        },
+        error => {
+            'has_version_in_each_file' => [
+                                    'lib/Pipe/Tube/Say.pm',
+                                    'lib/Pipe/Tube/Map.pm',
+                                    'lib/Pipe/Tube/Cat.pm',
+                                    'lib/Pipe/Tube/Glob.pm',
+                                    'lib/Pipe/Tube/Sort.pm',
+                                    'lib/Pipe/Tube/Uniq.pm',
+                                    'lib/Pipe/Tube/Find.pm',
+                                    'lib/Pipe/Tube/Grep.pm',
+                                    'lib/Pipe/Tube/Split.pm',
+                                    'lib/Pipe/Tube/Print.pm',
+                                    'lib/Pipe/Tube/For.pm',
+                                    'lib/Pipe/Tube.pm',
+                                    'lib/Pipe/Tube/Chomp.pm',
+                                    'lib/Pipe/Tube/Tuple.pm'
+                                  ],
+            'easily_repackageable' => 'easily_repackageable_by_fedora',
+            'easily_repackageable_by_fedora' => 'fits_fedora_license',
+            'metayml_conforms_spec_current'  => ['1.3', 'Expected a map structure from YAML string or file [Validation: 1.3]'],
+            'metayml_conforms_to_known_spec' => ['1.0', 'Expected a map structure from YAML string or file [Validation: 1.0]'],
+            'manifest_matches_dist' => [
+                                        'MANIFEST (27) does not match dist (26):',
+                                        'Missing in MANIFEST: ',
+                                        'Missing in Dist: META.yml'
+                                      ]
         },
     },
     {
@@ -136,10 +166,64 @@ my @tests = (
            'has_proper_version' => 1,
            'metayml_conforms_to_known_spec' => 1
          },
+        error => {
+           'metayml_conforms_spec_current' => [
+                                                '1.3',
+                                                'Missing mandatory field, \'version\' (meta-spec -> version) [Validation: 1.3]',
+                                                'Missing mandatory field, \'url\' (meta-spec -> url) [Validation: 1.3]',
+                                                'Expected a list structure (author) [Validation: 1.3]'
+                                              ]
+
+        },
+    },
+    {
+        dist => 't/eg/App-Wack-0.05.tar.gz',
+        kwalitee => {
+           'extracts_nicely' => 1,
+           'has_buildtool' => 1,
+           'has_readme' => 1,
+           'manifest_matches_dist' => 1,
+           'metayml_declares_perl_version' => 0,
+           'has_example' => 0,
+           'has_test_pod_coverage' => 1,
+           'metayml_is_parsable' => 1,
+           'proper_libs' => 1,
+           'has_changelog' => 1,
+           'no_pod_errors' => 1,
+           'use_strict' => 1,
+           'kwalitee' => 35,
+           'no_stdin_for_prompting' => 1,
+           'has_test_pod' => 1,
+           'easily_repackageable' => 1,
+           'easily_repackageable_by_fedora' => 1,
+           'has_tests' => 1,
+           'easily_repackageable_by_debian' => 1,
+           'has_manifest' => 1,
+           'no_symlinks' => 1,
+           'has_version' => 1,
+           'extractable' => 1,
+           'buildtool_not_executable' => 1,
+           'has_working_buildtool' => 1,
+           'metayml_has_license' => 1,
+           'has_humanreadable_license' => 1,
+           'no_generated_files' => 1,
+           'has_meta_yml' => 1,
+           'metayml_conforms_spec_current' => 1,
+           'use_warnings' => 1,
+           'no_large_files' => 1,
+           'no_cpants_errors' => 1,
+           'has_tests_in_t_dir' => 1,
+           'has_version_in_each_file' => 1,
+           'fits_fedora_license' => 1,
+           'has_proper_version' => 1,
+           'metayml_conforms_to_known_spec' => 1
+        },
+        error => {
+        },
     },
 );
 
-plan tests => 2 * @tests;
+plan tests => 1 + 3 * @tests;
 
 foreach my $t (@tests) {
     my $a=Module::CPANTS::Analyse->new({
@@ -157,7 +241,8 @@ foreach my $t (@tests) {
     my $kw=$a->d->{kwalitee};
     is_deeply($kw, $t->{kwalitee}, "kwalitee of $t->{dist}")
         or diag(Dumper $kw);
+    is_deeply($d->{error}, $t->{error}, "error of $t->{dist}")
+        or diag(Dumper $d->{error});
+    #diag(Dumper $d);
 }
-
-
 

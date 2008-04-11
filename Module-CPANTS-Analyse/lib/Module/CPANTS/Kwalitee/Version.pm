@@ -63,10 +63,10 @@ sub kwalitee_indicators {
                 return 1;
             }
             else {
-               my @errors = map { $_ }
+                my @errors = map { $_ }
                     grep { ! defined $d->{versions}{$_} }
                     keys %{ $d->{versions} };
-                $d->{error}{has_version_in_each_file} = join ", ", @errors;
+                $d->{error}{has_version_in_each_file} = \@errors;
                 return 0;
             }
         },

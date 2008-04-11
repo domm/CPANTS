@@ -40,9 +40,6 @@ sub analyse {
         $errors=~s/[^\w\d\s]+/ /g;
         $me->d->{error}{no_pod_errors}=$errors;
     }
-    else {
-        $me->d->{error}{no_pod_errors}=$pod_errors;
-    }
 }
 
 
