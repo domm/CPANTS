@@ -7,6 +7,8 @@
     - some unit test fixes thanks to Tux
     - some of {error} fields are now ARRAY refs instead of strings
     - more detailed unit tests
+    - add LICENCE to the list of special files (not only LICENSE)
+    - collect the license information of each file using Software::LicenseUtils
 
 0.79  Tue Apr  8 01:25:12 CEST 2008
     * released at the Oslo QA Hackathon 2008

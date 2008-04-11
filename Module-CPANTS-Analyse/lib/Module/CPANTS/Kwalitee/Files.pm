@@ -7,6 +7,8 @@ use File::stat;
 use File::Basename;
 use Data::Dumper;
 use Readonly;
+use Software::LicenseUtils;
+use File::Slurp            qw(slurp);
 
 sub order { 10 }
 
@@ -32,6 +34,11 @@ sub analyse {
     foreach my $name (@files) { 
         $files{$name}{size} += -s catfile($distdir, $name) || 0;
         $size += $files{$name}{size};
+
+        if ($name =~ /\.(pl|pm|pod)$/) {
+            my $text = slurp($fn);
+            $files{$name}{license} = Software::LicenseUtils->guess_license_from_pm($text);
+        }
     }
     #die Dumper \%files;
     $me->d->{size_unpacked}=$size;
@@ -61,7 +68,7 @@ sub analyse {
 
     # find special files
     my %reqfiles;
-    my @special_files=(qw(Makefile.PL Build.PL META.yml SIGNATURE MANIFEST NINJA test.pl LICENSE));
+    my @special_files=(qw(Makefile.PL Build.PL META.yml SIGNATURE MANIFEST NINJA test.pl LICENSE LICENCE));
     map_filenames($me, \@special_files, \@files);
     my @generated_files=qw(Build Makefile _build blib pm_to_blib); # files that should not...
     %generated_db_files=map_filenames($me, \@generated_files, \@files);
