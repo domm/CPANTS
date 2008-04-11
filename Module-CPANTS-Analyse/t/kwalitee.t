@@ -3,14 +3,15 @@ use Test::Deep;
 
 use Module::CPANTS::Kwalitee;
 
-my $METRICS = 40;
+my $METRICS = 42;
+my $OPTIONAL = 17;
 
 plan tests => 7 + 2 * $METRICS;
 
 my $k=Module::CPANTS::Kwalitee->new({});
 
-is($k->available_kwalitee,25,'available kwalitee');
-is($k->total_kwalitee, $METRICS,'total kwalitee');
+is($k->available_kwalitee, $METRICS-$OPTIONAL, 'available kwalitee');
+is($k->total_kwalitee, $METRICS, 'total kwalitee');
 
 
 my $ind=$k->get_indicators_hash;
@@ -24,12 +25,12 @@ is(ref($ind->{use_strict}),'HASH','hash element');
 
 {
     my @all=$k->core_indicator_names;
-    is(@all,25,'number of core indicators');
+    is(@all, $METRICS-$OPTIONAL, 'number of core indicators');
 }
 
 {
     my @all=$k->optional_indicator_names;
-    is(@all,15,'number of optional indicators');
+    is(@all, $OPTIONAL,'number of optional indicators');
 }
 
 

@@ -31,15 +31,30 @@ sub analyse {
 
     my $size = 0;
     my %files;
+    my %licenses;
     foreach my $name (@files) { 
-        $files{$name}{size} += -s catfile($distdir, $name) || 0;
+        my $path = catfile($distdir, $name);
+        $files{$name}{size} += -s $path || 0;
         $size += $files{$name}{size};
 
         if ($name =~ /\.(pl|pm|pod)$/) {
-            my $text = slurp($fn);
-            $files{$name}{license} = Software::LicenseUtils->guess_license_from_pm($text);
+            my $text = slurp($path);
+            my $license = Software::LicenseUtils->guess_license_from_pm($text);
+            if ($license) {
+                $licenses{$license} = $name;
+                $files{$name}{license} = $license;
+            }
         }
     }
+    if (%licenses) {
+        $me->d->{licenses} = \%licenses;
+        if (keys %licenses == 1) {
+            my ($type) = keys %licenses;
+            $me->d->{license_type} = $type;
+            $me->d->{license_file} = $licenses{$type};
+        }
+    }
+
     #die Dumper \%files;
     $me->d->{size_unpacked}=$size;
 

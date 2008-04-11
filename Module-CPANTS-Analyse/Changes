@@ -9,6 +9,8 @@
     - more detailed unit tests
     - add LICENCE to the list of special files (not only LICENSE)
     - collect the license information of each file using Software::LicenseUtils
+    - add has_separate_license_file metric
+    - add has_license_in_source_file metric
 
 0.79  Tue Apr  8 01:25:12 CEST 2008
     * released at the Oslo QA Hackathon 2008

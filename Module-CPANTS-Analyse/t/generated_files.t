@@ -52,7 +52,9 @@ my $expected = {
            'has_version_in_each_file' => 1,
            'fits_fedora_license' => 0,
            'has_proper_version' => 1,
-           'metayml_conforms_to_known_spec' => 0
+           'metayml_conforms_to_known_spec' => 0,
+           'has_separate_license_file' => 0,
+           'has_license_in_source_file' => 0,
          };
 
 is_deeply($kw, $expected, 'kwalitee fits');

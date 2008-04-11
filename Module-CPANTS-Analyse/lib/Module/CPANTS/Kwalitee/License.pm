@@ -27,8 +27,10 @@ sub analyse {
     my $files=$me->d->{files_array};
 
     # check if there's a LICEN[CS]E file
-    if (grep {/^LICEN[CS]E$/} @$files) {
+    if (my ($file) = grep {/^LICEN[CS]E$/} @$files) {
         $me->d->{license}="defined in ./LICEN[CS]E";
+        $me->d->{external_license_file}=$file;
+        #$me->d->{license_from_external_license_file} = Software::LicenseUtils->licens_text(slurp());
         return;
     }
 
@@ -62,6 +64,42 @@ sub kwalitee_indicators{
             error=>q{This distribution does not have a license defined in the documentation or in a file called LICENSE},
             remedy=>q{Add a section called 'LICENSE' to the documentation, or add a file named LICENSE to the distribution.},
             code=>sub { shift->{license} ? 1 : 0 }
+        },
+        {
+            name=>'has_separate_license_file',
+            error=>q{This distribution does not have a LICENSE or LICENCE file in its root directory.},
+            remedy=>q{This is not a critical issue. Currently mainly informative for the CPANTS authors. It might be removed later.},
+            is_extra=>1,
+            is_experimental=>1,
+            code=>sub { shift->{external_license_file} ? 1 : 0 }
+        },
+#        {
+#            name=>'has_known_license_in_external_license_file',
+#            error=>q{This distribution has a LICENSE or LICENCE file in its root directory but the license in it was not recognized by CPANTS.},
+#            remedy=>q{Either CPANTS needs to be fixed or your LICENSE file.},
+#            is_extra=>1,
+#            is_experimental=>1,
+#            code=>sub { 
+#                my $d = shift;
+#                return 1 if not $d->{external_license_file};
+#                return $d->{license_from_external_license_file} ? 1 : 0;
+#            },
+#        },
+        {
+            name=>'has_license_in_source_file',
+            error=>q{Does not have license information in any of its source files},
+            remedy=>q{Add =head1 LICENSE and the text of the license to the main module in your code.},
+            is_extra=>1,
+            is_experimental=>1,
+            code=>sub {
+                my $d = shift;
+                # data collected in File.pm
+                return 0 if not $d->{licenses};
+                return 1 if $d->{license_type};
+                $d->{error}{has_license_in_source_file} = "Seemingly conflicting licenses in files: "
+                    . join ", ", map {"$_ : $->{licenses}{$_}"} keys %{ $d->{licenses} };
+                return 0;
+            }
         },
         {
             name=>'fits_fedora_license',
@@ -122,6 +160,28 @@ Returns the Kwalitee Indicators datastructure.
 
 
 =back
+
+=head2 License information
+
+Pleaces wher the licens information is taken from:
+
+Has a LICENSE file   file_license 1|0
+
+Content of LICENSE file matches License X from Software::License
+
+License in META.yml
+
+License in META.yml matches one of the known licenses
+
+License in source files recognized by Software::LicenseUtils
+For each file keep where is was it recognized.
+
+Has license or copyright entry in pod (that might not be recognized by Software::LicenseUtils)
+
+# has_license
+
+=cut
+
 
 =head1 SEE ALSO
 
