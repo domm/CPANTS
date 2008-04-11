@@ -75,6 +75,7 @@ my $expected_kwalitee =  {
            'no_large_files' => 1,
            'has_separate_license_file' => 0,
            'has_license_in_source_file' => 0,
+           'metayml_has_provides'=>0,
          };
 
 is_deeply($kw, $expected_kwalitee, 'metrics are as expected');

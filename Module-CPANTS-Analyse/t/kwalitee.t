@@ -3,8 +3,8 @@ use Test::Deep;
 
 use Module::CPANTS::Kwalitee;
 
-my $METRICS = 42;
-my $OPTIONAL = 17;
+my $METRICS = 43;
+my $OPTIONAL = 18;
 
 plan tests => 7 + 2 * $METRICS;
 

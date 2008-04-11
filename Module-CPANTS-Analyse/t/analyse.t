@@ -53,6 +53,7 @@ my @tests = (
            'metayml_conforms_to_known_spec' => 1,
            'has_separate_license_file' => 0,
            'has_license_in_source_file' => 1,
+           'metayml_has_provides'=>0,
         },
         error => {
         },
@@ -100,6 +101,7 @@ my @tests = (
            'metayml_conforms_to_known_spec' => 0,
            'has_separate_license_file' => 0,
            'has_license_in_source_file' => 1,
+           'metayml_has_provides'=>0,
         },
         error => {
             'has_version_in_each_file' => bag (
@@ -172,6 +174,7 @@ my @tests = (
            'metayml_conforms_to_known_spec' => 1,
            'has_separate_license_file' => 0,
            'has_license_in_source_file' => 1,
+           'metayml_has_provides'=>0,
          },
         error => {
            'metayml_conforms_spec_current' => [
@@ -198,7 +201,7 @@ my @tests = (
            'has_changelog' => 1,
            'no_pod_errors' => 1,
            'use_strict' => 1,
-           'kwalitee' => 36,
+           'kwalitee' => 37,
            'no_stdin_for_prompting' => 1,
            'has_test_pod' => 1,
            'easily_repackageable' => 1,
@@ -226,6 +229,7 @@ my @tests = (
            'metayml_conforms_to_known_spec' => 1,
            'has_separate_license_file' => 0,
            'has_license_in_source_file' => 1,
+           'metayml_has_provides'=>1,
         },
         error => {
         },

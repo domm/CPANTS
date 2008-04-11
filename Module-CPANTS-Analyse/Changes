@@ -2,6 +2,9 @@
 # Changes for Module::CPANTS::Analyse
 #-----------------------------------------------------------------
 
+    domm:
+    - add metayml_has_provides metric
+    Gabor Szabo:
     - simplify the way the VERSION number is looked up, keep the full version line
     - increase the no_large_files limit to 200_000
     - some unit test fixes thanks to Tux
@@ -11,6 +14,7 @@
     - collect the license information of each file using Software::LicenseUtils
     - add has_separate_license_file metric
     - add has_license_in_source_file metric
+
 
 0.79  Tue Apr  8 01:25:12 CEST 2008
     * released at the Oslo QA Hackathon 2008

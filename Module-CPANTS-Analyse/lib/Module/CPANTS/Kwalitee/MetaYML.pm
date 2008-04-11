@@ -55,6 +55,17 @@ sub kwalitee_indicators{
                 ($yaml->{license} and $yaml->{license} ne 'unknown') ? 1 : 0 }
         },
         {
+            name=>'metayml_has_provides',
+            is_experimental=>1,
+            error=>q{This distribution does not have a list of provided modules defined in META.yml.},
+            remedy=>q{Add all modules contained in this distribution to the META.yml field 'provides'. Module::Build does this automatically for you.},
+            code=>sub { 
+                my $d=shift;
+                return 1 if $d->{meta_yml} && $d->{meta_yml}{provides};
+                return 0;
+            },
+        },
+        {
             name=>'metayml_conforms_to_known_spec',
             error=>q{META.yml does not conform to any recognised META.yml Spec. See 'metayml' in the dist error view for more info.},
             remedy=>q{Take a look at the META.yml Spec at http://module-build.sourceforge.net/META-spec-current.html and change your META.yml accordingly},

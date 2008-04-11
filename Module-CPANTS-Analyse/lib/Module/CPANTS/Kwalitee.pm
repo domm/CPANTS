@@ -24,7 +24,6 @@ sub new {
     return $me;
 }
 
-
 sub get_indicators {
     my $self=shift;
     
@@ -69,7 +68,7 @@ sub available_kwalitee {
 
     my $available;
     foreach my $g ($self->get_indicators) {
-        $available++ unless $g->{is_extra};
+        $available++ unless $g->{is_extra} || $g->{is_experimental};
     }
     $self->_available($available);
 }
@@ -91,13 +90,13 @@ sub all_indicator_names {
 
 sub core_indicator_names {
     my $self=shift;
-    my @all=map { $_->{name} } grep { !$_->{is_extra} } $self->get_indicators;
+    my @all=map { $_->{name} } grep { !$_->{is_extra} && !$_->{is_experimental} } $self->get_indicators;
     return wantarray ? @all : \@all;
 }
 
 sub optional_indicator_names {
     my $self=shift;
-    my @all=map { $_->{name} } grep { $_->{is_extra} } $self->get_indicators;
+    my @all=map { $_->{name} } grep { $_->{is_extra} || $_->{is_experimental} } $self->get_indicators;
     return wantarray ? @all : \@all;
 }
 
