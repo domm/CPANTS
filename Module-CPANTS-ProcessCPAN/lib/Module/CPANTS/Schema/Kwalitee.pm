@@ -109,12 +109,18 @@ __PACKAGE__->add_columns(
   { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
   "no_large_files",
   { data_type => "integer", default_value => undef, is_nullable => 1, size => 4 },
+  "has_separate_license_file",
+  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
+  "metayml_has_provides",
+  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
+  "has_license_in_source_file",
+  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
 );
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-08 01:45:59
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:z/9aamFWEGG61MSw9jUKyw
+# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-12 10:37:25
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ndmrRQ00HMgCZAFJxUdKxg
 
 __PACKAGE__->belongs_to("dist", "Module::CPANTS::Schema::Dist", { id => "dist" });
 

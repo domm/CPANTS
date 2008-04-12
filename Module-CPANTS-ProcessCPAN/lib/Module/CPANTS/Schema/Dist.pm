@@ -195,12 +195,47 @@ __PACKAGE__->add_columns(
   { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
   "is_core",
   { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
+  "external_license_file",
+  {
+    data_type => "text",
+    default_value => undef,
+    is_nullable => 1,
+    size => undef,
+  },
+  "file_licence",
+  {
+    data_type => "text",
+    default_value => undef,
+    is_nullable => 1,
+    size => undef,
+  },
+  "licence_file",
+  {
+    data_type => "text",
+    default_value => undef,
+    is_nullable => 1,
+    size => undef,
+  },
+  "license_file",
+  {
+    data_type => "text",
+    default_value => undef,
+    is_nullable => 1,
+    size => undef,
+  },
+  "license_type",
+  {
+    data_type => "text",
+    default_value => undef,
+    is_nullable => 1,
+    size => undef,
+  },
 );
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-08 01:45:59
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:NA83LzZhNrSQZPxdZVkI2Q
+# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-12 10:37:25
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ifYQKkEE8YkCXndarKEuug
 
 __PACKAGE__->belongs_to("run", "Module::CPANTS::Schema::Run", { id => "run" });
 __PACKAGE__->belongs_to("author", "Module::CPANTS::Schema::Author", { id => "author" });

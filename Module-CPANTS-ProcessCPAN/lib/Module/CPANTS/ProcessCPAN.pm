@@ -135,6 +135,9 @@ sub process_yaml {
         next;
     }
 
+    #use Data::Dumper;
+    #print Dumper $data;
+
     # remove data that references other tables;
     my $kwalitee    = delete $data->{kwalitee};
     my $modules     = delete $data->{modules};
@@ -143,6 +146,8 @@ sub process_yaml {
     my $author      = delete $data->{author};
     my $error       = delete $data->{error};
     my $versions    = delete $data->{versions};
+    my $licenses    = delete $data->{licenses};
+    # TODO store licenses & versions
     foreach (qw(files_array files_hash dirs_array meta_yml)) {
         delete $data->{$_};
     }
@@ -189,6 +194,7 @@ sub process_yaml {
             $db->resultset('Uses')->find_or_create($u);
         }
         while (my ($k,$v)=each %$error) {
+            $v = join(', ',@$v) if ref($v) eq 'ARRAY';
             $db_error->$k($v);
         }
         $db_error->update;
