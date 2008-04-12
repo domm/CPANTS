@@ -19,6 +19,7 @@ my $build = Module::CPANTS::MyBuild->new(
         'Module::CPANTS::ProcessCPAN'      => '0.70',
         'Catalyst::Model::DBIC::Schema'    => '0.16',
         'Catalyst::View::TT'               => '0.23',
+        'Catalyst::View::JSON'             => '0.23',
         'Catalyst::Plugin::ConfigLoader'   => '0.11', 
         'Catalyst::Plugin::Static::Simple' => '0.14',
         'version'                          => '0.73', 

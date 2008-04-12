@@ -9,6 +9,7 @@
     ['metadata',    'Metadata'],
     ['provides',    'Modules provided'],
     ['errors',      'Errors'],
+    ['json',        'JSON'],
 ] %]
 [% "<b>" IF c.action.name == navitem.0 %]
 <a href="/dist/[% navitem.0 %]/[% dist.dist %]">[% navitem.1 %]</a>

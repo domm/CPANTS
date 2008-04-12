@@ -1,0 +1,12 @@
+[% INCLUDE 'dist/intro' %]
+<h2>JSON Views</h2>
+<p>This allows you to get a JSON view of the data in these views</p>
+<table>
+<tr>
+<td valign="top"><b>
+<a href="[% c.uri_for('/json/dist/dependencies',dist.dist) %]">dependencies</a></b></td>
+<td>Shows things that depends on this module, and things this module depends on</td>
+</tr>
+<tr>
+</tr>
+</table>

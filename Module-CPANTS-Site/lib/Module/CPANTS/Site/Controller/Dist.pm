@@ -32,7 +32,7 @@ sub search : Local {
 # for backward compat / google
 sub view : Path {
     my ( $self, $c, $distname ) = @_;
-    $c->res->redirect('/dist/overview/'.$distname);
+    $c->res->redirect($c->uri_for('overview',$distname));
 }   
 
 sub overview : Local {
@@ -49,44 +49,15 @@ sub kwalitee : Local {
 sub prereq : Local {
     my ( $self, $c, $distname ) = @_;
     my $dist = $c->forward('get_dist',[ $distname ]);
-    $c->stash->{ prereqs } = $dist->search_related(
-        'prereq',
-        { is_prereq => 1},
-        {
-            order_by => 'me.in_dist,me.requires',
-            prefetch => [ qw( dist ) ],
-        }
-    );
-    $c->stash->{ build_prereqs } = $dist->search_related(
-        'prereq',
-        { is_build_prereq => 1},
-        {
-            order_by => 'me.in_dist,me.requires',
-            prefetch => [ qw( dist ) ],
-        }
-    );
-    $c->stash->{ optional_prereqs } = $dist->search_related(
-        'prereq',
-        { is_optional_prereq => 1},
-        {
-            order_by => 'me.in_dist,me.requires',
-            prefetch => [ qw( dist ) ],
-        }
-    );
-
+    $c->stash->{ prereqs } = $dist->get_prereqs();
+    $c->stash->{ build_prereqs } = $dist->get_build_prereqs();
+    $c->stash->{ optional_prereqs } = $dist->get_optional_prereqs();
 }
 
 sub used_by : Local {
     my ( $self, $c, $distname ) = @_;
     my $dist = $c->forward('get_dist',[ $distname ]);
-    $c->stash->{ used_by } = $dist->search_related(
-        'requiring',
-        { },
-        {
-            order_by => 'dist.dist',
-            prefetch => [ qw( dist ) ],
-        }
-    );
+    $c->stash->{ used_by } = $dist->used_by;
 }
 
 sub metadata : Local {
@@ -112,50 +83,51 @@ sub get_dist : Private {
         $c->detach( 'search' );
     }
 
-    my $dist;
-    if ( $distname =~ /^\d+$/ ) {
-        $dist = $c->model( 'DBIC::Dist' )->find( $distname );
-    } else {
-        $dist = $c->model( 'DBIC::Dist' )->search( { dist => $distname } )->first;
-
-        if( !$dist ) {
+    my $dist = $c->model('DBIC::Dist')->get_dist($distname);
+    if( !$dist ) {
         # TODO
         #my @mod=Module::CPAN->search(module=>$distname_colons);
         #if (@mod == 1) {
         #    return $c->res->redirect("/dist/".$mod[0]->dist->dist_without_version);
         #}
-            $c->stash->{ template } = 'dist/search';
-            $c->detach( 'search', [ $distname ] );
-        }
+        $c->stash->{ template } = 'dist/search';
+        $c->detach( 'search', [ $distname ] );
     }
+
     $c->stash->{dist} = $dist;
     return $dist;
 }
 
+sub json : Local Args(1) {
+my ($self,$c,$distname) = @_;
+$c->forward('get_dist',[ $distname ]);
+}
+
+# FIXME: All this crud should be movied into the model.
 my %bys=( 
-    size_packed     => 'size_packed DESC,dist',
-    size_unpacked   => 'size_unpacked DESC,dist',
-    files           => 'files DESC,dist',
-    age             => {
-        order_by=>'released,dist',
-        show_field=>'released',
-    },
-    absolute_kwalitee  => { 
-        join=>'kwalitee',
-        prefetch=>'kwalitee',
-        order_by=>'kwalitee.kwalitee desc,me.dist',
-        '+select' => [ 'kwalitee.kwalitee' ],
-        '+as'     => [ 'kwalitee' ],
-        show_field=>'kwalitee',
-    },
-    core_kwalitee    =>  { 
-        join=>'kwalitee',
-        prefetch=>'kwalitee',
-        order_by=>'kwalitee.rel_core_kw desc,me.dist',
-        '+select' => [ 'kwalitee.rel_core_kw' ],
-        '+as'     => [ 'kwalitee' ],
-        show_field=>'kwalitee',
-    },
+size_packed     => 'size_packed DESC,dist',
+size_unpacked   => 'size_unpacked DESC,dist',
+files           => 'files DESC,dist',
+age             => {
+    order_by=>'released,dist',
+    show_field=>'released',
+},
+absolute_kwalitee  => { 
+    join=>'kwalitee',
+    prefetch=>'kwalitee',
+    order_by=>'kwalitee.kwalitee desc,me.dist',
+    '+select' => [ 'kwalitee.kwalitee' ],
+    '+as'     => [ 'kwalitee' ],
+    show_field=>'kwalitee',
+},
+core_kwalitee    =>  { 
+    join=>'kwalitee',
+    prefetch=>'kwalitee',
+    order_by=>'kwalitee.rel_core_kw desc,me.dist',
+    '+select' => [ 'kwalitee.rel_core_kw' ],
+    '+as'     => [ 'kwalitee' ],
+    show_field=>'kwalitee',
+},
 
 );
 
@@ -190,7 +162,7 @@ sub by_required : Local {
     my ( $self, $c, $fld ) = @_;
     $c->stash->{field}=$fld;
     $c->stash->{template}='dist/by';
-
+    
     $c->stash->{ list } = $c->model( 'DBIC::Dist' )->search_related(
         'requiring',
         { 'requiring.in_dist'=> { '>'=>'0' } },
@@ -205,6 +177,7 @@ sub by_required : Local {
 
 
 }
+
 
 
 # TODO move to Kwalitee
