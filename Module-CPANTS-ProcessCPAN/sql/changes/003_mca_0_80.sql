@@ -7,4 +7,5 @@ alter table dist add licence_file text;
 alter table dist add license_file text;
 alter table dist add file_license text;
 alter table dist add license_type text;
+alter table error add has_license_in_source_file text;
 

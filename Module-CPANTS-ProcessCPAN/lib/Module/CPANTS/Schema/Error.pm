@@ -122,12 +122,19 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     size => undef,
   },
+  "has_license_in_source_file",
+  {
+    data_type => "text",
+    default_value => undef,
+    is_nullable => 1,
+    size => undef,
+  },
 );
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-12 10:37:25
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:+M1lY555ADFHRXGOK0co+A
+# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-12 11:22:03
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ix0VQZuG4FVKH2tNa5ONNw
 
 __PACKAGE__->belongs_to("dist", "Module::CPANTS::Schema::Dist", { id => "dist" });
 
