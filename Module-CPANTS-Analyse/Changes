@@ -2,6 +2,7 @@
 # Changes for Module::CPANTS::Analyse
 #-----------------------------------------------------------------
 
+0.80   Sat Apr 12 10:53:40 CEST 2008
     domm:
     - add metayml_has_provides metric
     Gabor Szabo:
