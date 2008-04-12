@@ -4,6 +4,7 @@
 
 0.76-tobe
     - added kwalitee_overview to graphs
+    - adapted db & schema for new metrics
 
 
 0.75    Tue Apr  8 01:20:03 CEST 2008
