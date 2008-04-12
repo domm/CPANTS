@@ -39,8 +39,8 @@ sub analyse {
 
         if ($name =~ /\.(pl|pm|pod)$/) {
             my $text = slurp($path);
-            my $license = Software::LicenseUtils->guess_license_from_pm($text);
-            if ($license) {
+            my (@possible_licenses) = Software::LicenseUtils->guess_license_from_pod($text);
+            foreach my $license (@possible_licenses) {
                 $licenses{$license} = $name;
                 $files{$name}{license} = $license;
             }

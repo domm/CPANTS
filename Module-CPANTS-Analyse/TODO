@@ -28,6 +28,9 @@ Moose and MooseX turn on strict, so count Moose[X] as use_strict
 - no_old_open_bugs  (older than a year?)
 
 
+license_is_actual might be a good addition, like "copyright 2001-2002" is rather outdated
+
+
 - Signature checking ?
 - has_rating ?
 - relation of subs to lines of code ?

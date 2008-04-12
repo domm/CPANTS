@@ -20,7 +20,7 @@ my $build = Module::Build->new(
         'List::MoreUtils'           => '0',
         'File::Find::Rule'          => '0',
         'Readonly'                  => '0',
-        'Software::License'         => '0.002',
+        'Software::License'         => '0.003',
         'File::Slurp'               => '0',
     },
     build_requires => {
