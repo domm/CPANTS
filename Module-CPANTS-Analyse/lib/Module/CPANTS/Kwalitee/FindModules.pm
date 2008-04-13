@@ -2,6 +2,7 @@ package Module::CPANTS::Kwalitee::FindModules;
 use warnings;
 use strict;
 use Data::Dumper;
+use File::Spec::Functions;
 sub order { 30 }
 
 ##################################################################
@@ -12,70 +13,80 @@ sub analyse {
     my $class=shift;
     my $me=shift;
     my $files=$me->d->{files_array};
-   
-    my @modules_basedir=grep {/^[^\/]+\.pm$/} @$files;
-    if (@modules_basedir) {
-        my $namespace=$me->d->{dist} || die 'unknown namespace '.Dumper($me);
-        
-        # try to guess the namespace
-        if ($namespace=~/-/) {
-            # multi-level namespace
-            $namespace=~s/-[^-]+$/-/;    # remove last part of name
-            $namespace=~s/-/::/g;
-        }
-        
-        # single level namespace (e.g. 'threads')
-        else {
-            $namespace='';    
-        }
-        foreach my $file (@modules_basedir) {
-            my $module=$namespace.$file;
-            $module=~s/\.pm$//;
-            push(@{$me->d->{modules}},
-                {
-                    module=>$module,
-                    file=>$file,
-                    in_basedir=>1,
-                    in_lib=>0,
-                });
+  
+    if ($me->d->{meta_yml} && $me->d->{meta_yml}{provides}) {
+        my $provides = $me->d->{meta_yml}{provides};
+        while (my ($module,$data)=each %$provides) {
+            my $file=$data->{file};
+            my $found={
+                module=>$module,
+                file=>$data->{file},
+                in_basedir=>0,
+                in_lib=>0,
+            };
+            my $loc;
+            if ($file=~/^lib\W/) {
+                $found->{in_lib}=1;
+            }
+            elsif ($file!=/\//) {
+                $found->{in_basedir}=1;
+            }
+            
+            push(@{$me->d->{modules}},$found);
         }
     }
-
-    if ($me->d->{dir_lib} == 1) {
-        my @modules_path;
+    else {
+        my %in_basedir= map {$_=>1} grep {/^[^\/]+\.pm$/} @$files;
+        
         foreach my $file (@$files) {
-            next unless $file=~m|^lib/(.*)\.pm$|;
-            my $module=$1;
-            $module=~s|/|::|g;
-            push (@{$me->d->{modules}},
-                {
+            next unless $file=~/\.pm$/;
+            next if $file=~m{^x?t/};
+            next if $file=~m{^test/};
+            next if $file=~m/^(bin|scripts?|ex|eg|examples?|samples?|demos?)\/\w/i;
+            next if $file=~m{^inc/};   # skip Module::Install stuff
+
+            # proper file in lib/
+            if ($file=~m|^lib/(.*)\.pm$|) {
+                my $module=$1;
+                $module=~s|/|::|g;
+                push (@{$me->d->{modules}},{
                     module=>$module,
                     file=>$file,
                     in_basedir=>0,
                     in_lib=>1,
                 });
-        }
-    }
-
-    if (!@modules_basedir && !$me->d->{dir_lib}) {
-        my @modules_path;
-        foreach my $file (@$files) {
-            next unless $file=~/\.pm$/;
-            next if $file=~m{/x?t/};
-            next if $file=~m{/test/};
-            next if $file=~m{/inc/};   # skip Module::Install stuff
-            $file=~m|(.*)\.pm$|;
-            my $module=$1;
-            $module=~s|^[a-z]+/||;  # remove lowercase prefixes which most likely are not part of the distname (but something like 'src/')
-            $module=~s|/|::|g;
-
-            push(@{$me->d->{modules}},
-                {
-                    module=>$module,
-                    file=>$file,
-                    in_basedir=>0,
-                    in_lib=>0,
-                });
+            }
+            else {
+                # open file and find first package
+                my $module;
+                my $max_lines_to_look_at=666;
+                open (my $fh,"<",catfile($me->distdir,$file)) || die "__PACKAGE__: Cannot open $file to find package declaration: $!";
+                while (my $line = <$fh>) {
+                    next if $line =~/^\s*#/; # ignore comments
+                    if ($line =~/^\s*package\s*(.*?)\s*;/) {
+                        $module=$1;
+                        last;
+                    }
+                    last if $line =~/^__(DATA|END)__/;
+                    $max_lines_to_look_at--;
+                    last unless $max_lines_to_look_at;
+                }
+                # try to guess from filename
+                unless ($module) {
+                    $file=~m|(.*)\.pm$|;
+                    $module=$1;
+                    $module=~s|^[a-z]+/||;  # remove lowercase prefixes which most likely are not part of the distname (but something like 'src/')
+                    $module=~s|/|::|g;
+                }
+                if ($module) {
+                    push(@{$me->d->{modules}}, {
+                        module=>$module,
+                        file=>$file,
+                        in_basedir=> $in_basedir{$file} ? 1 : 0,
+                        in_lib=>0,
+                    });
+                }
+            }
         }
     }
     

@@ -12,7 +12,7 @@ use IO::Capture::Stdout;
 use IO::Capture::Stderr;
 use YAML::Syck qw(LoadFile);
 
-use version; our $VERSION=version->new('0.80');
+use version; our $VERSION=version->new('0.81');
 
 use Module::Pluggable search_path=>['Module::CPANTS::Kwalitee'];
 
@@ -157,7 +157,7 @@ Module::CPANTS::Analyse - Generate Kwalitee ratings for a distribution
     
     use Module::CPANTS::Analyse;
 
-    my $analyser=Module::CPANTS::Analyse({
+    my $analyser=Module::CPANTS::Analyse->new({
         dist=>'path/to/Foo-Bar-1.42.tgz',
     });
     $analyser->unpack;

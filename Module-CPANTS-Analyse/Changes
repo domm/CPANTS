@@ -2,6 +2,14 @@
 # Changes for Module::CPANTS::Analyse
 #-----------------------------------------------------------------
 
+0.81
+    - made FindModules smarter (domm):
+      If available, use META.yml 'provides'. If not, look for 'package'
+      statements in files.
+      It now also finds stuff like Tk::Widget and App::Ack
+    - upgrade to Software::License 0.003 (Gabor)
+
+
 0.80   Sat Apr 12 10:53:40 CEST 2008
     domm:
     - add metayml_has_provides metric
