@@ -3,6 +3,7 @@
 #-----------------------------------------------------------------
 
 0.81
+    - fixed doc bug in SYNOPSIS (reported by ADAMOWSKI as RT#34773)
     - made FindModules smarter (domm):
       If available, use META.yml 'provides'. If not, look for 'package'
       statements in files.
