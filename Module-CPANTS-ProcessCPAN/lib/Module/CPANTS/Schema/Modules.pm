@@ -47,5 +47,4 @@ __PACKAGE__->set_primary_key("id");
 __PACKAGE__->belongs_to("dist", "Module::CPANTS::Schema::Dist", { id => "dist" });
 
 
-# You can replace this text with custom content, and it will be preserved on regeneration
 1;

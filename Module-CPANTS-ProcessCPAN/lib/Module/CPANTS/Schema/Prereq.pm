@@ -49,6 +49,9 @@ __PACKAGE__->set_primary_key("id");
 __PACKAGE__->belongs_to("in_dist", "Module::CPANTS::Schema::Dist", { id => "in_dist" });
 __PACKAGE__->belongs_to("dist", "Module::CPANTS::Schema::Dist", { id => "dist" });
 
+sub as_hashref {
+    my $self=shift;
+    return { requires => $self->requires, version=>$self->version };
+}
 
-# You can replace this text with custom content, and it will be preserved on regeneration
 1;

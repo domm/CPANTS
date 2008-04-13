@@ -5,7 +5,7 @@ use warnings;
 
 use base 'DBIx::Class';
 
-__PACKAGE__->load_components("InflateColumn", "PK", "Core");
+__PACKAGE__->load_components("ResultSetManager "InflateColumn", "PK", "Core");
 __PACKAGE__->table("dist");
 __PACKAGE__->add_columns(
   "id",
@@ -280,6 +280,71 @@ __PACKAGE__->has_many(
   { "foreign.in_dist" => "self.id" },
 );
 
+
+sub get_dist : ResultSet {
+    my ($self,$distname) = @_;
+    if ( $distname =~ /^\d+$/ ) {
+        return $self->find( $distname );
+    } else {
+        return $self->find( { dist => $distname } );
+    }
+}
+
+sub get_prereqs {
+    my $self=shift;
+    return $self->search_related(
+        'prereq',
+        { is_prereq => 1},
+        {
+            order_by => 'me.in_dist,me.requires',
+            prefetch => [ qw( dist ) ],
+        }
+    );
+}
+
+sub get_build_prereqs {
+    my $self=shift;
+    return $self->search_related(
+        'prereq',
+        { is_build_prereq => 1},
+        {
+            order_by => 'me.in_dist,me.requires',
+            prefetch => [ qw( dist ) ],
+        }
+    );
+}
+
+sub get_optional_prereqs {
+    my $self=shift;
+    $self->search_related(
+        'prereq',
+        { is_optional_prereq => 1},
+        {
+            order_by => 'me.in_dist,me.requires',
+            prefetch => [ qw( dist ) ],
+        }
+    );
+}
+
+sub used_by {
+    my $self=shift;
+    return $self->search_related(
+        'requiring',
+        { },
+        {
+            order_by => 'dist.dist',
+            prefetch => [ qw( dist ) ],
+        }
+    );
+}
+
+sub as_hashref {
+    my $self=shift;
+    return {
+        dist=>$self->dist,
+        author=>$self->author->pauseid,
+    };≤
+}
 
 sub uses_in_code {
     return shift->search_related('uses',{in_code=>{'>=',1}},{order_by=>'module'});
