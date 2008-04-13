@@ -2,6 +2,10 @@
 # Changes for Module::CPANTS::ProcessCPAN
 #-----------------------------------------------------------------
 
+0.77-tobe
+    - fixed bug with is_extra/is_experimental in game rank calculation
+
+
 0.76   Sat Apr 12 10:53:53 CEST 2008
     - added kwalitee_overview to graphs
     - adapted db & schema for new metrics

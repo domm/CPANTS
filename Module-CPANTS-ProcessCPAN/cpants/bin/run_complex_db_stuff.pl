@@ -175,8 +175,9 @@ sub check_prereq {
     my $sth=$dbh->prepare("select id,".join(',',map {$_->{name} }@ind)." from kwalitee");
     $sth->execute;
 
-    my @extra=map {$_->{name}} grep {$_->{is_extra}} @ind;
-    my @core=map {$_->{name}} grep {!$_->{is_extra}} @ind;
+    # TODO replace with accessors from MCK
+    my @extra=map {$_->{name}} grep {$_->{is_extra} || $_->{is_experimental} } @ind;
+    my @core=map {$_->{name}} grep {!$_->{is_extra} && !$_->{is_experimental}} @ind;
    
     while (my $r=$sth->fetchrow_hashref) {
         my $id=$r->{id};

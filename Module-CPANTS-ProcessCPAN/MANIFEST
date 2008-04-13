@@ -28,6 +28,9 @@ Makefile.PL
 MANIFEST			This list of files
 META.yml
 README
+sql/changes/001_errors.sql
+sql/changes/002_fits_fedora_license.sql
+sql/changes/003_mca_0_80.sql
 sql/cpants.schema
 t/99_pod.t
 t/new.t
