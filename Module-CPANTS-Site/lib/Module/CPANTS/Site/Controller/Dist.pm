@@ -82,8 +82,8 @@ sub get_dist : Private {
         $c->stash->{ template } = 'dist/search';
         $c->detach( 'search' );
     }
-
-    my $dist = $c->model('DBIC::Dist')->get_dist($distname);
+    my $dist = $c->model( 'DBIC::Dist' )->search( { dist => $distname } )->first;
+    #my $dist = $c->model('DBIC::Dist')->get_dist($distname);
     if( !$dist ) {
         # TODO
         #my @mod=Module::CPAN->search(module=>$distname_colons);
