@@ -2,7 +2,7 @@
 # Changes for Module::CPANTS::Analyse
 #-----------------------------------------------------------------
 
-0.81
+0.81   Sun Apr 13 16:45:29 CEST 2008
     - fixed doc bug in SYNOPSIS (reported by ADAMOWSKI as RT#34773)
     - made FindModules smarter (domm):
       If available, use META.yml 'provides'. If not, look for 'package'
