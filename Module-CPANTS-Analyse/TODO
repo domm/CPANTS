@@ -140,5 +140,6 @@ license_is_actual might be a good addition, like "copyright 2001-2002" is rather
 - Create a hierarchical report (aka CPANDepth) showing all the dependencies
   their kwalitee, their age, their license (the name of the license from META.yml for now)
 
+- honor the META.yml key no_index. See RT#32777
 
 
