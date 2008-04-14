@@ -4,7 +4,9 @@
 
 
 0.76-tobe
-    - if only one dist is found, directly redirect to overview page
+    - added BindLex to various Controllers
+    - if only one dist/author is found, directly redirect to
+      overview page
     - search dist now case insensitive
     - actived JSON dist dependencies view (marcus.ramberg)
     - added kwalitee_overview.png

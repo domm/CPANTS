@@ -22,6 +22,7 @@ my $build = Module::CPANTS::MyBuild->new(
         'Catalyst::View::JSON'             => '0.23',
         'Catalyst::Plugin::ConfigLoader'   => '0.11', 
         'Catalyst::Plugin::Static::Simple' => '0.14',
+        'Catalyst::Controller::BindLex'    => '0.03',
         'version'                          => '0.73', 
         'Template::Plugin::Number::Format' => '1.02',
     },
