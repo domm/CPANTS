@@ -24,8 +24,6 @@
 
 [% USE Number.Format %]
 
-[% INCLUDE 'widgets/distlinks' IF dist %]
-
 [% IF cpants_is_analysing %]
 <div class="warning">
 CPANTS is currently analysing dists. Results might be inconsistent!

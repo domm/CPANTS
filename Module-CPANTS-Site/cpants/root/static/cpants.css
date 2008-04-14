@@ -92,15 +92,6 @@ pre {
 color: #fff;
 }
 
-.distlinks {
-	white-space: nowrap;
-  border-bottom: 1px solid #000;
-  border-left: 1px solid #000; 
-  border-right: 1px solid #000;
-  padding:7px;
-  background-color:#eee;
-}
-
 .grey { background-color:#ddd }
 .ok { background-color:#0f0 }
 .not_ok { background-color:#f00 }

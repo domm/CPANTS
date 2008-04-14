@@ -76,6 +76,11 @@ sub errors : Local {
     $c->forward('get_dist',[ $distname ]);
 }
 
+sub external : Local {
+    my ( $self, $c, $distname ) = @_;
+    $c->forward('get_dist',[ $distname ]);
+}
+
 sub get_dist : Private {
     my ( $self, $c, $distname ) = @_;
    

@@ -1,5 +1,6 @@
 <h1>[% dist.vname %] (<a href="/author/[% dist.author.pauseid %]">[% dist.author.pauseid %]</a>)</h1>
 
+
 <div class="distsubnav">
 [% FOREACH navitem IN [
     ['overview',    'Overview'],
@@ -10,6 +11,7 @@
     ['provides',    'Modules provided'],
     ['errors',      'Errors'],
     ['json',        'JSON'],
+    ['external',    'External'],
 ] %]
 [% "<b>" IF c.action.name == navitem.0 %]
 <a href="/dist/[% navitem.0 %]/[% dist.dist %]">[% navitem.1 %]</a>
