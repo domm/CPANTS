@@ -17,9 +17,9 @@ sub search : Local {
         
     # todo: ignore case in searches
     $c->stash->{ term } = $term;
-    $c->stash->{ list } = $c->model( 'DBIC::Dist' )->search(
+    my $list = $c->model( 'DBIC::Dist' )->search(
         {
-            dist => { LIKE => $term . '%' },
+            dist => { ILIKE => $term . '%' },
         },
         {
             order_by => 'dist ASC',
@@ -27,9 +27,16 @@ sub search : Local {
             rows     => 20,
         }
     );
+    if ($list == 1) {
+        $c->response->redirect($c->uri_for('/dist/overview',$list->first->dist));
+    }
+    else {
+        $c->stash->{ list } = $list;
+    }
 }
 
 # for backward compat / google
+
 sub view : Path {
     my ( $self, $c, $distname ) = @_;
     $c->res->redirect($c->uri_for('overview',$distname));
@@ -82,8 +89,8 @@ sub get_dist : Private {
         $c->stash->{ template } = 'dist/search';
         $c->detach( 'search' );
     }
-    my $dist = $c->model( 'DBIC::Dist' )->search( { dist => $distname } )->first;
-    #my $dist = $c->model('DBIC::Dist')->get_dist($distname);
+    
+    my $dist = $c->model('DBIC::Dist')->get_dist($distname);
     if( !$dist ) {
         # TODO
         #my @mod=Module::CPAN->search(module=>$distname_colons);
