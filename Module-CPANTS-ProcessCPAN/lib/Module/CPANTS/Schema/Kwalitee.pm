@@ -5,7 +5,7 @@ use warnings;
 
 use base 'DBIx::Class';
 
-__PACKAGE__->load_components("InflateColumn", "PK", "Core");
+__PACKAGE__->load_components("ResultSetManager", "InflateColumn", "PK", "Core");
 __PACKAGE__->table("kwalitee");
 __PACKAGE__->add_columns(
   "id",
@@ -119,8 +119,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-12 11:22:03
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Dy0hLws8ru1eiGoTQXgrxA
+# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-14 08:44:48
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:lV2mkx6Lm46gqjOtp3GnUw
 
 __PACKAGE__->belongs_to("dist", "Module::CPANTS::Schema::Dist", { id => "dist" });
 

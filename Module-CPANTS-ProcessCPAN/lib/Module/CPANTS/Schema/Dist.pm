@@ -5,7 +5,7 @@ use warnings;
 
 use base 'DBIx::Class';
 
-__PACKAGE__->load_components("ResultSetManager "InflateColumn", "PK", "Core");
+__PACKAGE__->load_components("ResultSetManager", "InflateColumn", "PK", "Core");
 __PACKAGE__->table("dist");
 __PACKAGE__->add_columns(
   "id",
@@ -234,8 +234,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-12 11:22:03
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:GMQ9s/oVVgW+0dxHKHubxw
+# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-14 08:44:48
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:D4PRQepz9gp1wdP1o+Af1Q
 
 __PACKAGE__->belongs_to("run", "Module::CPANTS::Schema::Run", { id => "run" });
 __PACKAGE__->belongs_to("author", "Module::CPANTS::Schema::Author", { id => "author" });
@@ -343,7 +343,7 @@ sub as_hashref {
     return {
         dist=>$self->dist,
         author=>$self->author->pauseid,
-    };≤
+    };
 }
 
 sub uses_in_code {

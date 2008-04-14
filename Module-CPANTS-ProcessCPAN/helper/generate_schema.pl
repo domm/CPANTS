@@ -17,7 +17,7 @@ make_schema_at(
     {
         dump_directory     => $dest,
         skip_relationships => 1,
-		components         => [qw/InflateColumn PK/],
+		components         => [qw/ResultSetManager InflateColumn PK/],
     },
     [$p->dsn],
 );

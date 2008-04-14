@@ -3,6 +3,10 @@
 #-----------------------------------------------------------------
 
 0.77-tobe
+    - added ResultSetManager to schema classes
+    - moved lots of model-related stuff from Module::CPANTS::Site
+      Controllers into Module::CPANTS::ExtractUse::Schema::*
+      (marcus.ramberg)
     - fixed bug with is_extra/is_experimental in game rank calculation
 
 
