@@ -230,12 +230,26 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     size => undef,
   },
+  "no_index",
+  {
+    data_type => "text",
+    default_value => undef,
+    is_nullable => 1,
+    size => undef,
+  },
+  "ignored_files_list",
+  {
+    data_type => "text",
+    default_value => undef,
+    is_nullable => 1,
+    size => undef,
+  },
 );
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-14 08:44:48
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:D4PRQepz9gp1wdP1o+Af1Q
+# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-14 21:11:46
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:OdFVnhy6T/2u/l14APbHxA
 
 __PACKAGE__->belongs_to("run", "Module::CPANTS::Schema::Run", { id => "run" });
 __PACKAGE__->belongs_to("author", "Module::CPANTS::Schema::Author", { id => "author" });

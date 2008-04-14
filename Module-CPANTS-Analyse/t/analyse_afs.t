@@ -17,8 +17,7 @@ my $d=$a->d;
 
 # some operating systems (win32) only report 383 files (maybe a problem with 
 # case-insensitive filenames)
-ok($d->{files} == 384 || $d->{files} == 383,'files');
-
+ok($d->{files} == 382 || $d->{files} == 381,'files');
 is($d->{size_packed},184395,'size_packed');
 is(ref($d->{modules}),'ARRAY','modules is ARRAY');
 is($d->{modules}[0]->{module},'AFS','module');

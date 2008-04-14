@@ -2,6 +2,12 @@
 # Changes for Module::CPANTS::Analyse
 #-----------------------------------------------------------------
 
+
+0.82-tobe
+    - honor META.yml key 'no_index'. Fixes RT#32777 and an IRC
+      complaint by BinGOs
+
+
 0.81   Sun Apr 13 16:45:29 CEST 2008
     - fixed doc bug in SYNOPSIS (reported by ADAMOWSKI as RT#34773)
     - made FindModules smarter (domm):

@@ -122,8 +122,23 @@ my @tests = (
                                   ),
             'easily_repackageable' => 'easily_repackageable_by_fedora',
             'easily_repackageable_by_fedora' => 'fits_fedora_license',
-            'metayml_conforms_spec_current'  => ['1.3', 'Expected a map structure from YAML string or file [Validation: 1.3]'],
-            'metayml_conforms_to_known_spec' => ['1.0', 'Expected a map structure from YAML string or file [Validation: 1.0]'],
+            'metayml_conforms_spec_current'  => ['1.3', 
+                'Missing mandatory field, \'author\' (author) [Validation: 1.3]',
+                'Missing mandatory field, \'generated_by\' (generated_by) [Validation: 1.3]',
+                'Missing mandatory field, \'version\' (version) [Validation: 1.3]',
+                                            'Missing mandatory field, \'name\' (name) [Validation: 1.3]',
+                                            'Missing mandatory field, \'license\' (license) [Validation: 1.3]',
+                                            'Missing mandatory field, \'abstract\' (abstract) [Validation: 1.3]',
+                                            'Missing mandatory field, \'version\' (meta-spec -> version) [Validation: 1.3]',
+                                            'Missing mandatory field, \'url\' (meta-spec -> url) [Validation: 1.3]'
+            ],
+            'metayml_conforms_to_known_spec' => ['1.0', 
+            'Missing mandatory field, \'generated_by\' (generated_by) [Validation: 1.0]',
+                                                 'Missing mandatory field, \'version\' (version) [Validation: 1.0]',
+                                                 'Missing mandatory field, \'name\' (name) [Validation: 1.0]',
+                                                 'Missing mandatory field, \'license\' (license) [Validation: 1.0]'
+
+            ],
             'manifest_matches_dist' => [
                                         'MANIFEST (27) does not match dist (26):',
                                         'Missing in MANIFEST: ',

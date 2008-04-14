@@ -3,6 +3,7 @@
 #-----------------------------------------------------------------
 
 0.77-tobe
+    - updated Schema to work with MCA 0.82
     - added ResultSetManager to schema classes
     - moved lots of model-related stuff from Module::CPANTS::Site
       Controllers into Module::CPANTS::ExtractUse::Schema::*

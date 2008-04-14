@@ -13,7 +13,7 @@ is($rv,undef,'unpack ok');
 $a->analyse;
 
 my $d=$a->d;
-is($d->{files},37,'files');
+is($d->{files},35,'files');
 is(@{$d->{modules}},2,'module');
 
 $a->calc_kwalitee;
@@ -24,7 +24,7 @@ my $expected_kwalitee = {
            'has_buildtool' => 1,
            'has_readme' => 1,
            'manifest_matches_dist' => 1,
-           'has_example' => 1,
+           'has_example' => 0,              # because it's in no_index
            'has_test_pod_coverage' => 1,
            'metayml_is_parsable' => 1,
            'easily_repackageable' => 1,
@@ -32,7 +32,7 @@ my $expected_kwalitee = {
            'has_changelog' => 1,
            'no_pod_errors' => 1,
            'use_strict' => 1,
-           'kwalitee' => 38,
+           'kwalitee' => 37,
            'has_test_pod' => 1,
            'has_tests' => 1,
            'easily_repackageable_by_debian' => 1,

@@ -34,8 +34,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-14 08:44:48
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:zYVkpI1Pfq7ARLdNLLpU1g
+# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-14 21:11:46
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:eElucO2Q8Z4Ky1ciq91txA
 
 __PACKAGE__->belongs_to("run", "Module::CPANTS::Schema::Run", { id => "run" });
 

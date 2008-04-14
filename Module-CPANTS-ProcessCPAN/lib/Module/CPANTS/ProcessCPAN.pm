@@ -148,7 +148,7 @@ sub process_yaml {
     my $versions    = delete $data->{versions};
     my $licenses    = delete $data->{licenses};
     # TODO store licenses & versions
-    foreach (qw(files_array files_hash dirs_array meta_yml)) {
+    foreach (qw(files_array ignored_files_array files_hash dirs_array meta_yml)) {
         delete $data->{$_};
     }
         
@@ -170,6 +170,19 @@ sub process_yaml {
         $db_error=$db->resultset('Error')->find_or_create({dist=>$db_dist->id});
     };
     print "DB ERROR: cannot create dist: $@" and return if $@; 
+
+    eval {
+        # purge errors from old runs
+        foreach my $col ($db_error->columns) {
+            next if $col eq 'id' || $col eq 'dist';
+    #        $db_error->$col(undef);
+        }
+    #    $db_error->update;
+    };
+    if ($@) {
+        die $@;
+        $db_error->cpants("purge errors: $@");
+    }
 
     # todo move to update authors..
     $me->make_author_history($db_dist->author);

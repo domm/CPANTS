@@ -29,8 +29,42 @@ sub analyse {
         };
         if ($@) {
             $me->d->{error}{metayml_is_parsable}=$@;
+            return;
         }
-    }    
+    }
+
+    if (my $no_index = $me->d->{meta_yml}->{no_index}) {
+        my @ignore;
+        foreach my $type (qw(file directory)) {
+            next unless $no_index->{$type};
+            foreach (@{$no_index->{$type}}) {
+                next if /^x?t/; # won't ignore t, xt
+                next if /^lib/; # and lib
+                push(@ignore,$_);
+            }
+        }
+        $me->d->{no_index}=join(';',@ignore);
+        my @old=@{$me->d->{files_array}};
+        my @new; my @ignored;
+        foreach my $file (@old) {
+            
+            # me wants smart match!!!!
+
+            if (grep { $file=~/^$_/ } @ignore) {
+                delete $me->d->{files_hash}{$file};
+                $me->d->{files}--;
+                push(@ignored,$file);
+            }
+            else {
+                push(@new,$file);
+            }
+        }
+        $me->d->{files_array}=\@new;
+        $me->d->{files_list}=join(';',@new);
+        $me->d->{ignored_files_array}=\@ignored;
+        $me->d->{ignored_files_list}=join(';',@ignored);
+    }
+
 }
 
 ##################################################################
