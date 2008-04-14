@@ -3,21 +3,18 @@ package Module::CPANTS::Site::Controller::Dist;
 use strict;
 use warnings;
 
-use base qw( Catalyst::Controller );
+use base qw( Catalyst::Controller::BindLex );
 
 sub search : Local {
-    my ( $self, $c, $term ) = @_;
-
-    $term ||= $c->req->param( 'dist' );
+    my ( $self, $c, $search ) = @_;
+    my $term : Stashed = $search || $c->req->param( 'dist' );
 
     return unless $term;
 
     $c->log->debug( "search dist for $term" ) if $c->debug;
     $term=~s/::/-/g;
         
-    # todo: ignore case in searches
-    $c->stash->{ term } = $term;
-    my $list = $c->model( 'DBIC::Dist' )->search(
+    my $list : Stashed = $c->model( 'DBIC::Dist' )->search(
         {
             dist => { ILIKE => $term . '%' },
         },
@@ -29,9 +26,6 @@ sub search : Local {
     );
     if ($list == 1) {
         $c->response->redirect($c->uri_for('/dist/overview',$list->first->dist));
-    }
-    else {
-        $c->stash->{ list } = $list;
     }
 }
 
@@ -50,7 +44,7 @@ sub overview : Local {
 sub kwalitee : Local {
     my ( $self, $c, $distname ) = @_;
     $c->forward('get_dist',[ $distname ]);
-    $c->stash->{ kwalitee_hash } = $c->model( 'Kwalitee' )->get_indicators_hash;
+    my $kwalitee_hash : Stashed = $c->model( 'Kwalitee' )->get_indicators_hash;
 }
 
 sub prereq : Local {
@@ -92,11 +86,6 @@ sub get_dist : Private {
     
     my $dist = $c->model('DBIC::Dist')->get_dist($distname);
     if( !$dist ) {
-        # TODO
-        #my @mod=Module::CPAN->search(module=>$distname_colons);
-        #if (@mod == 1) {
-        #    return $c->res->redirect("/dist/".$mod[0]->dist->dist_without_version);
-        #}
         $c->stash->{ template } = 'dist/search';
         $c->detach( 'search', [ $distname ] );
     }
