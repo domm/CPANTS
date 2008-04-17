@@ -16,7 +16,7 @@ sub search : Local {
         
     my $list : Stashed = $c->model( 'DBIC::Dist' )->search(
         {
-            dist => { ILIKE => $term . '%' },
+            dist => { ILIKE =>  '%' . $term . '%' },
         },
         {
             order_by => 'dist ASC',
