@@ -30,6 +30,7 @@ sub analyse {
 
     while (my ($mod,$cnt)=each%{$p->used}) {
         next if $skip{$mod};
+        next if $mod =~ /::$/;  # see RT#35092
         $uses{$mod}={
             module=>$mod,
             in_code=>$cnt,

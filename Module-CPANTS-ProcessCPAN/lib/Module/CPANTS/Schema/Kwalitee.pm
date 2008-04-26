@@ -17,8 +17,6 @@ __PACKAGE__->add_columns(
   },
   "dist",
   { data_type => "integer", default_value => undef, is_nullable => 1, size => 4 },
-  "run",
-  { data_type => "integer", default_value => undef, is_nullable => 1, size => 4 },
   "abs_kw",
   { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
   "abs_core_kw",
@@ -91,6 +89,8 @@ __PACKAGE__->add_columns(
   { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
   "no_generated_files",
   { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
+  "run",
+  { data_type => "integer", default_value => undef, is_nullable => 1, size => 4 },
   "has_version_in_each_file",
   { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
   "has_tests_in_t_dir",
@@ -111,16 +111,16 @@ __PACKAGE__->add_columns(
   { data_type => "integer", default_value => undef, is_nullable => 1, size => 4 },
   "has_separate_license_file",
   { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
-  "metayml_has_provides",
-  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
   "has_license_in_source_file",
+  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
+  "metayml_has_provides",
   { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
 );
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-14 21:11:46
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:DmZLhoMJxTdMJKacZ+7a4A
+# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-26 16:53:02
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:sZAS5Lxg+tfkhXKIBFmYKA
 
 __PACKAGE__->belongs_to("dist", "Module::CPANTS::Schema::Dist", { id => "dist" });
 

@@ -67,12 +67,7 @@ __PACKAGE__->add_columns(
     size => undef,
   },
   "no_generated_files",
-  {
-    data_type => "text",
-    default_value => undef,
-    is_nullable => 1,
-    size => undef,
-  },
+  { data_type => "text", default_value => 0, is_nullable => 0, size => undef },
   "has_version_in_each_file",
   {
     data_type => "text",
@@ -133,8 +128,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-14 21:11:46
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:CQ/M8kJv8fEpeZSdG/SJZA
+# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-26 16:53:02
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:4piFuWWUwzc4oOWWCVGMeA
 
 __PACKAGE__->belongs_to("dist", "Module::CPANTS::Schema::Dist", { id => "dist" });
 

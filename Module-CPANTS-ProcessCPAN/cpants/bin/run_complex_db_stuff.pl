@@ -217,10 +217,10 @@ sub check_prereq {
 # AUTHOR: num_dists, average
 {
     print "calc authors num_dists and average kwalitee\n";
-    my $sth=$dbh->prepare("select count(*) as num_dists,avg(kwalitee.rel_core_kw) as average,dist.author as id from dist,kwalitee where dist.id=kwalitee.dist group by author");
+    my $sth=$dbh->prepare("select count(*) as num_dists,avg(kwalitee.rel_core_kw) as average,avg(kwalitee.kwalitee) as absolute_average,dist.author as id from dist,kwalitee where dist.id=kwalitee.dist group by author");
     $sth->execute;
     while (my @r=$sth->fetchrow_array) {
-        $dbh->do("update author set num_dists=?,average_kwalitee=? where id=?",undef,@r);
+        $dbh->do("update author set num_dists=?,average_kwalitee=?,average_total_kwalitee=? where id=?",undef,@r);
     }
     $sth->finish;
     $dbh->do("update author set num_dists=0 where num_dists is null");

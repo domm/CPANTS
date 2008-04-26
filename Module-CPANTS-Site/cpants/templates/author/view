@@ -17,7 +17,7 @@ document.getElementById('top').style.backgroundColor="#ff7300";
 </tr>
 <tr>
     <td><b>Average Kwalitee</b></td>
-    <td>[% item.average_kwalitee %]</td>
+    <td>[% item.average_total_kwalitee %]</td>
 </tr>
 <tr>
     <td><b>Liga</b></td>
@@ -26,6 +26,10 @@ document.getElementById('top').style.backgroundColor="#ff7300";
 <tr>
     <td><b>Rank</td>
     <td>[% item.rank %]</td>
+</tr>
+<tr>
+    <td><b>CPANTS Game Kwalitee</b></td>
+    <td>[% item.average_kwalitee %]</td>
 </tr>
 </table>
 

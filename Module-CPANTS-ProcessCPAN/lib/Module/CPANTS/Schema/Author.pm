@@ -56,12 +56,14 @@ __PACKAGE__->add_columns(
   },
   "prev_rank",
   { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
+  "average_total_kwalitee",
+  { data_type => "numeric", default_value => 0, is_nullable => 1, size => "3,6" },
 );
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-14 21:11:46
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:0UMhkz2O3UZ7bQlrrAo4Fg
+# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-26 16:53:02
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:I1Qzgd30Y3O+yWrPSRmEXw
 
 __PACKAGE__->has_many(
   "dists",

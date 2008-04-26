@@ -17,8 +17,6 @@ __PACKAGE__->add_columns(
   },
   "run",
   { data_type => "integer", default_value => undef, is_nullable => 1, size => 4 },
-  "dist",
-  { data_type => "integer", default_value => undef, is_nullable => 1, size => 4 },
   "distname",
   {
     data_type => "text",
@@ -34,18 +32,15 @@ __PACKAGE__->add_columns(
     size => undef,
   },
   "kwalitee",
-  {
-    data_type => "numeric",
-    default_value => undef,
-    is_nullable => 1,
-    size => "3,6",
-  },
+  { data_type => "numeric", default_value => 0, is_nullable => 0, size => "3,6" },
+  "dist",
+  { data_type => "integer", default_value => undef, is_nullable => 1, size => 4 },
 );
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-14 21:11:46
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:soabFYFlc0BvkBdY7TZUAA
+# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-26 16:53:02
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:PuksNgb8wpw/YEcAOHnDqw
 
 __PACKAGE__->belongs_to("run", "Module::CPANTS::Schema::Run", { id => "run" });
 

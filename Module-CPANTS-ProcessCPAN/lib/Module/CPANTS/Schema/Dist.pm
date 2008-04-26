@@ -147,16 +147,6 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     size => undef,
   },
-  "file__build",
-  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
-  "file_build",
-  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
-  "file_makefile",
-  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
-  "file_blib",
-  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
-  "file_pm_to_blib",
-  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
   "dir_lib",
   { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
   "dir_t",
@@ -189,11 +179,21 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     size => undef,
   },
+  "is_core",
+  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
+  "file__build",
+  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
+  "file_build",
+  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
+  "file_makefile",
+  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
+  "file_blib",
+  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
+  "file_pm_to_blib",
+  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
   "stdin_in_makefile_pl",
   { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
   "stdin_in_build_pl",
-  { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
-  "is_core",
   { data_type => "integer", default_value => 0, is_nullable => 0, size => 4 },
   "external_license_file",
   {
@@ -248,8 +248,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-14 21:11:46
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:OdFVnhy6T/2u/l14APbHxA
+# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-04-26 16:53:02
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:WagQ4n50DYF7kLxvFprfiA
 
 __PACKAGE__->belongs_to("run", "Module::CPANTS::Schema::Run", { id => "run" });
 __PACKAGE__->belongs_to("author", "Module::CPANTS::Schema::Author", { id => "author" });
