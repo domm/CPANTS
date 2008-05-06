@@ -26,6 +26,13 @@
 
 [% as_hash = mck.get_indicators_hash %]
 
+
+<ul id="indicators">
+[% FOREACH k IN mck.get_indicators %]
+<li><a href="#[% k.name %]">[% k.name %]</a></li>
+[% END%]
+</ul>
+
 <dl>
 [% FOREACH k IN mck.get_indicators %]
 

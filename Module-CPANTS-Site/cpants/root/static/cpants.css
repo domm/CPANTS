@@ -98,3 +98,15 @@ color: #fff;
 .not_ok_light { background-color:#f99 }
 .opt_not_ok { background-color:#f80 }
 .opt_not_ok_light { background-color:#fd8 }
+
+ul#indicators li {
+ display: inline;
+}
+ul#indicators li:before {
+ content: ' | ';
+}
+ul#indicators li:first-child:before {
+ content: '';
+}
+
+
