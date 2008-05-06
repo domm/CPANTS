@@ -28,7 +28,7 @@ sub analyse {
             if ($file=~/^lib\W/) {
                 $found->{in_lib}=1;
             }
-            elsif ($file!=/\//) {
+            elsif ($file !~/\//) {
                 $found->{in_basedir}=1;
             }
             
