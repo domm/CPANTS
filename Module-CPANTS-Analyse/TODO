@@ -28,7 +28,10 @@ Moose and MooseX turn on strict, so count Moose[X] as use_strict
 - no_old_open_bugs  (older than a year?)
 
 
-license_is_actual might be a good addition, like "copyright 2001-2002" is rather outdated
+- license_is_actual might be a good addition, like "copyright 2001-2002" is rather outdated
+
+- add list of modules that fail the use_warnings to $d->{error}{use_warnings}
+- same for use_strict
 
 
 - Signature checking ?
