@@ -3,6 +3,7 @@ use warnings;
 use strict;
 use File::Spec::Functions qw(catfile);
 use Module::ExtractUse;
+use Data::Dumper;
 
 sub order { 100 }
 
@@ -87,12 +88,11 @@ sub kwalitee_indicators {
             name=>'use_warnings',
             error=>q{This distribution does not 'use warnings;' in all of its modules.},
             is_extra=>1,
-            remedy=>q{Add 'use warnings' to all modules.},
+            remedy=>q{Add 'use warnings' to all modules. (This will require perl > 5.6)},
             code=>sub {
                 my $d=shift;
                 my $modules=$d->{modules};
                 my $uses=$d->{uses};
-                use Data::Dumper;
                 return 0 unless $modules && $uses;
                 my ($warnings)=$uses->{'warnings'};
                 return 0 unless $warnings;
