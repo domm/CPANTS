@@ -56,6 +56,7 @@ my $expected = {
            'has_separate_license_file' => 0,
            'has_license_in_source_file' => 0,
            'metayml_has_provides'=>0,
+           'distributed_by_debian'=>0,
          };
 
 is_deeply($kw, $expected, 'kwalitee fits');

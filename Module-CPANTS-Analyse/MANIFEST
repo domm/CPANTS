@@ -13,6 +13,7 @@ lib/Module/CPANTS/Kwalitee.pm
 lib/Module/CPANTS/Kwalitee/BrokenInstaller.pm
 lib/Module/CPANTS/Kwalitee/CpantsErrors.pm
 lib/Module/CPANTS/Kwalitee/Distname.pm
+lib/Module/CPANTS/Kwalitee/Distros.pm
 lib/Module/CPANTS/Kwalitee/Files.pm
 lib/Module/CPANTS/Kwalitee/FindModules.pm
 lib/Module/CPANTS/Kwalitee/License.pm
@@ -28,7 +29,9 @@ lib/Module/CPANTS/Kwalitee/Version.pm
 t/00_load.t
 t/02_kwalitee.t
 t/03_plugins.t
-t/analyse.t
+t/05_testdir.t
+t/05_testfile.t
+t/10_analyse.t
 t/analyse_afs.t
 t/analyse_axkit_xsp_l10n.t
 t/analyse_devel_timer.t
@@ -39,8 +42,6 @@ t/calc.t
 t/calc_test_yaml_meta.t
 t/generated_files.t
 t/plugin_manifest.t
-t/testdir.t
-t/testfile.t
 t/unpack.t
 t/unpack_notextractable.t
 
@@ -60,6 +61,7 @@ t/eg/Text-CSV_XS-0.40.tgz
 t/eg/Pipe-0.03.tar.gz 
 t/eg/PPI-HTML-1.07.tar.gz
 t/eg/App-Wack-0.05.tar.gz
+t/eg/Debian_CPANTS.txt
 
 xt/99_critic.t
 xt/99_pod.t

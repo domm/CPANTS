@@ -3,8 +3,16 @@ use Test::NoWarnings;
 use Test::Deep;
 
 use Module::CPANTS::Analyse;
-use File::Spec::Functions;
-use Data::Dumper;
+#use File::Spec::Functions;
+use Data::Dumper    qw(Dumper);
+use File::Copy      qw(copy);
+use Module::CPANTS::Kwalitee::Distros;
+{
+    no warnings;
+    *Module::CPANTS::Kwalitee::Distros::mirror = sub {
+        copy 't/eg/Debian_CPANTS.txt', '.';
+    };
+}
 
 my @tests = (
 #    {
@@ -25,7 +33,7 @@ my @tests = (
            'has_changelog' => 1,
            'no_pod_errors' => 1,
            'use_strict' => 1,
-           'kwalitee' => 37,
+           'kwalitee' => 38,
            'no_stdin_for_prompting' => 1,
            'has_test_pod' => 1,
            'easily_repackageable' => 1,
@@ -54,6 +62,7 @@ my @tests = (
            'has_separate_license_file' => 0,
            'has_license_in_source_file' => 1,
            'metayml_has_provides'=>0,
+           'distributed_by_debian'=>1,
         },
         error => {
         },
@@ -73,7 +82,7 @@ my @tests = (
            'has_changelog' => 1,
            'no_pod_errors' => 1,
            'use_strict' => 1,
-           'kwalitee' => 25,
+           'kwalitee' => 26,
            'no_stdin_for_prompting' => 1,
            'has_test_pod' => 1,
            'easily_repackageable' => 0,
@@ -102,6 +111,7 @@ my @tests = (
            'has_separate_license_file' => 0,
            'has_license_in_source_file' => 1,
            'metayml_has_provides'=>0,
+           'distributed_by_debian'=>1,
         },
         error => {
             'has_version_in_each_file' => bag (
@@ -190,6 +200,7 @@ my @tests = (
            'has_separate_license_file' => 0,
            'has_license_in_source_file' => 1,
            'metayml_has_provides'=>0,
+           'distributed_by_debian'=>0,
          },
         error => {
            'metayml_conforms_spec_current' => [
@@ -245,6 +256,7 @@ my @tests = (
            'has_separate_license_file' => 0,
            'has_license_in_source_file' => 1,
            'metayml_has_provides'=>1,
+           'distributed_by_debian'=>0,
         },
         error => {
         },
@@ -267,7 +279,7 @@ foreach my $t (@tests) {
 
     my $d=$a->d;
     my $kw=$a->d->{kwalitee};
-    is_deeply($kw, $t->{kwalitee}, "kwalitee of $t->{dist}")
+    cmp_deeply($kw, $t->{kwalitee}, "kwalitee of $t->{dist}")
         or diag(Dumper $kw);
     cmp_deeply($d->{error}, $t->{error}, "error of $t->{dist}")
         or diag(Dumper $d->{error});
