@@ -16,6 +16,7 @@ sub analyse {
     my $class=shift;
     my $me=shift;
 
+    main::logger(__PACKAGE__ . "::analyse called");
     # check META.yml
     my $yaml=$me->d->{meta_yml};
     if ($yaml) {
