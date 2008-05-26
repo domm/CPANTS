@@ -19,4 +19,4 @@ debian_pkg, CPAN_dist, CPAN_vers, N_bugs, N_patches
 "libtie-ical-perl", "Tie-iCal", "0.13", "0", "0"
 "libtie-regexphash-perl", "Tie-RegexpHash", "0.15", "0", "0"
 "libtie-toobject-perl", "Tie-ToObject", "0.03", "0", "0"
-"libpipe-perl", "Pipe", "0.01", "2", "0"
+"libpipe-perl", "Pipe", "0.03", "2", "0"

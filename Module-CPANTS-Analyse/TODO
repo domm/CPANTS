@@ -64,8 +64,6 @@ Moose and MooseX turn on strict, so count Moose[X] as use_strict
   Some people will argue that when one of the files does not change, there is no
   need to change its version number. So this might not be a good metric.
 
-- no_bugs_in_debian
-- has_patches_in_debian
 - no_bugs_in_freebsd
 - has_patches_in_freebsd
   The Debian and FreeBSD ppl will provide the interface for this -probably a csv file
@@ -144,5 +142,8 @@ Moose and MooseX turn on strict, so count Moose[X] as use_strict
   their kwalitee, their age, their license (the name of the license from META.yml for now)
 
 - honor the META.yml key no_index. See RT#32777
+
+- Display the version of CPANTS used for indexing and show the date when the last update 
+  was executed. Maybe do so per distribution?
 
 

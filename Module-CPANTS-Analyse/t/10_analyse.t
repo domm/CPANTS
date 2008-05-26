@@ -33,7 +33,7 @@ my @tests = (
            'has_changelog' => 1,
            'no_pod_errors' => 1,
            'use_strict' => 1,
-           'kwalitee' => 38,
+           'kwalitee' => 39,
            'no_stdin_for_prompting' => 1,
            'has_test_pod' => 1,
            'easily_repackageable' => 1,
@@ -63,8 +63,14 @@ my @tests = (
            'has_license_in_source_file' => 1,
            'metayml_has_provides'=>0,
            'distributed_by_debian'=>1,
+           'latest_version_distributed_by_debian'=>0,
+           'has_no_bugs_reported_in_debian'=>1,
+           'has_no_patches_in_debian'=>0,
         },
         error => {
+            'latest_version_distributed_by_debian' =>
+                "Seen on CPAN: '0.40'. Reported by Debian: 'not-uploaded' See: <a href=http://packages.debian.org/src:libtext-csv-xs-perl>Basic homepage</a>",
+                'has_no_patches_in_debian' => 'Number of patches reported: 1. See: <a href=http://packages.debian.org/src:libtext-csv-xs-perl>Basic homepage</a>',
         },
     },
     {
@@ -82,7 +88,7 @@ my @tests = (
            'has_changelog' => 1,
            'no_pod_errors' => 1,
            'use_strict' => 1,
-           'kwalitee' => 26,
+           'kwalitee' => 28,
            'no_stdin_for_prompting' => 1,
            'has_test_pod' => 1,
            'easily_repackageable' => 0,
@@ -112,6 +118,9 @@ my @tests = (
            'has_license_in_source_file' => 1,
            'metayml_has_provides'=>0,
            'distributed_by_debian'=>1,
+           'latest_version_distributed_by_debian'=>1,
+           'has_no_bugs_reported_in_debian'=>0,
+           'has_no_patches_in_debian'=>1,
         },
         error => {
             'has_version_in_each_file' => bag (
@@ -153,7 +162,8 @@ my @tests = (
                                         'MANIFEST (27) does not match dist (26):',
                                         'Missing in MANIFEST: ',
                                         'Missing in Dist: META.yml'
-                                      ]
+                                      ],
+            'has_no_bugs_reported_in_debian' => 'Number of bugs reported: 2. See: <a href=http://packages.debian.org/src:libpipe-perl>Basic homepage</a>',
         },
     },
     {
@@ -201,6 +211,9 @@ my @tests = (
            'has_license_in_source_file' => 1,
            'metayml_has_provides'=>0,
            'distributed_by_debian'=>0,
+           'latest_version_distributed_by_debian'=>0,
+           'has_no_bugs_reported_in_debian'=>0,
+           'has_no_patches_in_debian'=>0,
          },
         error => {
            'metayml_conforms_spec_current' => [
@@ -208,8 +221,7 @@ my @tests = (
                                                 'Missing mandatory field, \'version\' (meta-spec -> version) [Validation: 1.3]',
                                                 'Missing mandatory field, \'url\' (meta-spec -> url) [Validation: 1.3]',
                                                 'Expected a list structure (author) [Validation: 1.3]'
-                                              ]
-
+                                              ],
         },
     },
     {
@@ -257,6 +269,9 @@ my @tests = (
            'has_license_in_source_file' => 1,
            'metayml_has_provides'=>1,
            'distributed_by_debian'=>0,
+           'latest_version_distributed_by_debian'=>0,
+           'has_no_bugs_reported_in_debian'=>0,
+           'has_no_patches_in_debian'=>0,
         },
         error => {
         },
