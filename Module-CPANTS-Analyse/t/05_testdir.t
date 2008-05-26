@@ -1,8 +1,9 @@
-use Test::More tests => 2;
+use Test::More tests => 3;
+use Test::NoWarnings;
 
 use Module::CPANTS::Analyse;
 
-my $a=Module::CPANTS::Analyse->new;
+my $a=Module::CPANTS::Analyse->new({dist => 'dummy'});
 my $td=$a->testdir;
 
 ok(-e $td,"testdir $td created");

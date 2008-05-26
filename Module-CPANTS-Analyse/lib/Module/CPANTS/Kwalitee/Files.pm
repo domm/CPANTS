@@ -58,9 +58,6 @@ sub analyse {
     #die Dumper \%files;
     $me->d->{size_unpacked}=$size;
 
-    $me->d->{files}=\%files;
-    $me->d->{dirs}=\@dirs;
-
     # find symlinks
     my @symlinks;
     foreach my $f (@dirs, @files) {

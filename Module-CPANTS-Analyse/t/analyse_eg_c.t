@@ -23,6 +23,6 @@ is(ref($d->{uses}),'HASH','uses is HASH');
 ok($d->{file_meta_yml},'has_yaml');
 ok($d->{metayml_is_parsable},'metayml_is_parsable');
 ok(!$d->{metayml_parse_error},'metayml_parse_error was not set');
-ok(!defined($d->{license}),'has no license');
+is($d->{license}, '', 'has no license');
 ok($d->{needs_compiler}, 'need compiler');
 

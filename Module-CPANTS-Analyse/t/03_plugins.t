@@ -1,9 +1,15 @@
-use Test::More tests => 7;
+use Test::More tests => 9;
 use Test::Deep;
+use Test::NoWarnings;
 
 use Module::CPANTS::Analyse;
 
-my $a=Module::CPANTS::Analyse->new({});
+eval {
+    my $an=Module::CPANTS::Analyse->new();
+};
+like($@, qr/need a dist/, 'exception');
+
+my $a=Module::CPANTS::Analyse->new({dist => 'dummy'});
 
 {
 	my @plugins=$a->plugins;

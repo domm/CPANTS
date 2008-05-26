@@ -34,6 +34,7 @@ sub new {
     $opts->{opts} ||= {};
     my $me=bless $opts,$class;
     $main::logging = 1 if $me->opts->{verbose};
+    Carp::croak("need a dist") if not defined $opts->{dist};
     main::logger("distro: $opts->{dist}");
 
     $me->mck(Module::CPANTS::Kwalitee->new);

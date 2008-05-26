@@ -1,4 +1,8 @@
-use Test::More tests => 3;
+use strict;
+use warnings;
+
+use Test::More tests => 4;
+use Test::NoWarnings;
 
 use Module::CPANTS::Analyse;
 use File::Basename;

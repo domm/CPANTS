@@ -1,12 +1,13 @@
 use Test::More;
 use Test::Deep;
+use Test::NoWarnings;
 
 use Module::CPANTS::Kwalitee;
 
 my $METRICS = 47;
 my $OPTIONAL = 22;
 
-plan tests => 7 + 2 * $METRICS;
+plan tests => 8 + 2 * $METRICS;
 
 my $k=Module::CPANTS::Kwalitee->new({});
 

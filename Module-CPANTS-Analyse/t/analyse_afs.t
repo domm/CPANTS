@@ -1,4 +1,8 @@
-use Test::More tests => 16;
+use strict;
+use warnings;
+
+use Test::More tests => 17;
+use Test::NoWarnings;
 
 use Module::CPANTS::Analyse;
 use File::Spec::Functions;
@@ -26,7 +30,7 @@ is(ref($d->{uses}),'HASH','uses is HASH');
 ok($d->{file_meta_yml},'has_yaml');
 ok($d->{metayml_is_parsable},'metayml_is_parsable');
 ok(!$d->{metayml_parse_error},'metayml_parse_error was not set');
-is($d->{license},'perl','has license');
+is($d->{license},' defined in META.yaml defined in POD','has license');
 ok($d->{needs_compiler}, 'needs compiler');
 ok(!$d->{metayml_has_license},'metayml_has_license');
 ok(!$d->{metayml_conforms_spec_1_0},'metayml_conforms_spec_1_0');
