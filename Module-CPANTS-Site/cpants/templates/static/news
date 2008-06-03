@@ -1,6 +1,21 @@
 <h2>News</h2>
 
 <dl>
+<dt>2008-06-03: Gabor added more metrics</dt>
+<dd>
+Gabor added yet more metrics:
+<ul>
+<li>uses_test_nowarnings
+<li>latest_version_distributed_by_debian
+<li>has_no_bugs_reported_in_debian
+<li>has_no_patches_in_debian
+<li>distributed_by_debian
+</ul>
+<p>
+I finally adapted the use_strict metric to also accept 'use Moose'
+</p>
+</dd>
+
 
 
 <dt>2008-04-09: QA Hackathon Achievements</dt>

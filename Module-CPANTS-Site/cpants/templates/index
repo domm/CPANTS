@@ -17,6 +17,22 @@
 
 <dl>
 
+<dt>2008-06-03: Gabor added more metrics</dt>
+<dd>
+Gabor added yet more metrics:
+<ul>
+<li>uses_test_nowarnings
+<li>latest_version_distributed_by_debian
+<li>has_no_bugs_reported_in_debian
+<li>has_no_patches_in_debian
+<li>distributed_by_debian
+</ul>
+<p>
+I finally adapted the use_strict metric to also accept 'use Moose'
+</p>
+</dd>
+
+
 <dt>2008-04-09: QA Hackathon Achievements</dt>
 <dd>
 <ul><li> added a lot of new metrics:
@@ -40,24 +56,6 @@
 </li><li> various small and not so small improvements all over the place
 </li><li> collected tons of further ideas and feedback&nbsp;:-)
 </li></ul>
-</dd>
-
-<dt>2008-04-05: QA Hackathon</dt>
-<dd>We hack on CPANTS, so things might break this weekend...</dd>
-
-<dt>2008-03-31: Preparing for the QA Hackathon</dt>
-<dd><p>
-This weekend, I'm participating in the <a
-href="http://perl-qa.hexten.net/wiki/index.php/Oslo_QA_Hackathon_2008">QA
-Hackathon</a> in Oslo. My journey there is sponsored by <a
-href="http://vienna.pm.org">Vienna.pm</a> - thanks!</p>
-<p>
-To prepare for the hacking, I finally set up a mailinglist for svn commit
-messages: <a
-href="http://lists.useperl.at/listinfo/cpants-commit">http://lists.useperl.at/listinfo/cpants-commit</a>.
-If you're interested in what is happening in the wonderfull world of CPANTS,
-go ahead and subscribe!
-</p>
 </dd>
 
 </dl>
