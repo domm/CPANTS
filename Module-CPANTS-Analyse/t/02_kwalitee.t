@@ -4,8 +4,8 @@ use Test::NoWarnings;
 
 use Module::CPANTS::Kwalitee;
 
-my $METRICS = 47;
-my $OPTIONAL = 22;
+my $METRICS = 48;
+my $OPTIONAL = 23;
 
 plan tests => 8 + 2 * $METRICS;
 

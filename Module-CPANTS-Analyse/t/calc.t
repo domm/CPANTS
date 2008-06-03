@@ -80,6 +80,7 @@ my $expected_kwalitee =  {
            'latest_version_distributed_by_debian'=>0,
            'has_no_bugs_reported_in_debian'=>0,
            'has_no_patches_in_debian'=>0,
+           'uses_test_nowarnings'=>0,
          };
 
 is_deeply($kw, $expected_kwalitee, 'metrics are as expected');

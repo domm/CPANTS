@@ -63,6 +63,7 @@ t/eg/PPI-HTML-1.07.tar.gz
 t/eg/App-Wack-0.05.tar.gz
 t/eg/Debian_CPANTS.txt
 t/eg/Term-Title-0.03.tar.gz
+t/eg/Parse-Fedora-Packages-0.02.tar.gz
 
 xt/99_critic.t
 xt/99_pod.t

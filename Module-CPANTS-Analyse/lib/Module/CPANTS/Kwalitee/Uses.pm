@@ -19,6 +19,7 @@ sub analyse {
     my $modules=$me->d->{modules};
     my $files=$me->d->{files_array};
     my @tests=grep {m|^x?t\b.*\.t|} @$files;
+    $me->d->{test_files} = \@tests;
 
     my %skip=map {$_->{module}=>1 } @$modules;
     my %uses;
@@ -121,6 +122,25 @@ sub kwalitee_indicators {
                 return 0;
             },
         },
+        {
+            name=>'uses_test_nowarnings',
+            error=>q{Doesn't use Test::NoWarnings in all the test files},
+            remedy=>q{Add Test::NoWarnings to each one of the .t files and increment the test count by 1.},
+            is_extra=>1,
+            is_experimental=>1,
+            code=>sub {
+                my $d=shift;
+                my $tests=$d->{test_files};
+                my @public_test_files = grep {/^t/} @$tests;
+                my $uses=$d->{uses};
+                return 0 unless $tests && $uses;
+                
+                my ($test_no_warnings)=$uses->{'Test::NoWarnings'};
+                return 0 unless $test_no_warnings;
+                return 1 if $test_no_warnings->{in_tests} >= @public_test_files;
+                return 0;
+            },
+        },
     ];
 }
 
@@ -165,6 +185,8 @@ Returns the Kwalitee Indicators datastructure.
 =item * has_test_pod
 
 =item * has_test_pod_coverage
+
+=item * uses_test_nowarnings
 
 =back
 
