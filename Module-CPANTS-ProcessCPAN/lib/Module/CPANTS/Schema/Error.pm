@@ -124,12 +124,33 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     size => undef,
   },
+  "has_no_patches_in_debian",
+  {
+    data_type => "text",
+    default_value => undef,
+    is_nullable => 1,
+    size => undef,
+  },
+  "latest_version_distributed_by_debian",
+  {
+    data_type => "text",
+    default_value => undef,
+    is_nullable => 1,
+    size => undef,
+  },
+  "has_no_bugs_reported_in_debian",
+  {
+    data_type => "text",
+    default_value => undef,
+    is_nullable => 1,
+    size => undef,
+  },
 );
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-06-03 22:31:29
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:YqutWzvzkWRr2RFQ7NvbIg
+# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-06-03 23:19:44
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:fsbF0avf0J6yhRHAGwvpyQ
 
 __PACKAGE__->belongs_to("dist", "Module::CPANTS::Schema::Dist", { id => "dist" });
 
