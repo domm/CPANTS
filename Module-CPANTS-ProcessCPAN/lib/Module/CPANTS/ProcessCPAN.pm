@@ -148,7 +148,7 @@ sub process_yaml {
     my $versions    = delete $data->{versions};
     my $licenses    = delete $data->{licenses};
     my $test_files  = delete $data->{test_files};
-    $data->{test_files_list} = join(';',@$test_files);
+    $data->{test_files_list} = join(';',@$test_files) if $test_files && ref($test_files) eq 'ARRAY';
 
     # TODO store licenses & versions
     foreach (qw(files_array ignored_files_array files_hash dirs_array meta_yml)) {
