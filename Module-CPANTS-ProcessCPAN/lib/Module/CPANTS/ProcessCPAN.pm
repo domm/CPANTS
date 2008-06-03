@@ -15,7 +15,7 @@ use FindBin;
 use File::Copy;
 use DateTime;
 
-use version; our $VERSION=version->new('0.76');
+use version; our $VERSION=version->new('0.77');
 
 __PACKAGE__->mk_accessors(qw(cpan lint force run prev_run _db _db_hist mck));
 
@@ -147,6 +147,9 @@ sub process_yaml {
     my $error       = delete $data->{error};
     my $versions    = delete $data->{versions};
     my $licenses    = delete $data->{licenses};
+    my $test_files  = delete $data->{test_files};
+    $data->{test_files_list} = join(';',@$test_files);
+
     # TODO store licenses & versions
     foreach (qw(files_array ignored_files_array files_hash dirs_array meta_yml)) {
         delete $data->{$_};
