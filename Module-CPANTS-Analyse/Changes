@@ -4,6 +4,8 @@
 
 
 0.82-tobe
+    - use Moose now counts for using strict
+    insert commits from gabor
     - honor META.yml key 'no_index'. Fixes RT#32777 and an IRC
       complaint by BinGOs
 

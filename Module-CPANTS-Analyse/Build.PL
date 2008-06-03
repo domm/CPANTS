@@ -22,6 +22,7 @@ my $build = Module::Build->new(
         'Readonly'                  => '0',
         'Software::License'         => '0.003',
         'File::Slurp'               => '0',
+        'Text::CSV_XS'              => '0.45',
     },
     build_requires => {
         'Test::Deep'                => '0',

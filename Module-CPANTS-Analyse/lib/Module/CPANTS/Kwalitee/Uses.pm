@@ -80,8 +80,13 @@ sub kwalitee_indicators {
                 return 0 unless $modules && $uses;
                 
                 my ($strict)=$uses->{'strict'};
+                my ($moose)=$uses->{'Moose'};
                 return 0 unless $strict;
-                return 1 if $strict->{in_code} >= @$modules;
+                my $total = $strict->{in_code};
+                if ($moose) {
+                    $total += $moose->{in_code};
+                }
+                return 1 if $total >= @$modules;
                 return 0;
             },
         },
