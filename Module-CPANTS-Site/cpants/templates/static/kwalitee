@@ -52,6 +52,7 @@
 <b>Shortcoming:</b> [% k.error %]<br>
 <b>Remedy:</b> [% k.remedy %]<br>
 <b>Defined in:</b> [% k.defined_in %]<br>
+<a href="/dist/complying?metric=[% k.name %]">Show complying dists</a> | 
 <a href="/dist/shortcoming?metric=[% k.name %]">Show failing dists</a>
 </dd>
 

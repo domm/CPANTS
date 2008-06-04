@@ -4,6 +4,7 @@
 
 
 0.76-tobe
+    - added dist/complying?metric
     - fixed RT#28116 reported by DAXIM
     - moved external links from navbar into subpage
     - added BindLex to various Controllers

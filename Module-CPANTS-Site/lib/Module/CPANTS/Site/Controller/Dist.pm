@@ -199,6 +199,24 @@ sub shortcoming : Local {
     );
 }
 
+sub complying : Local {
+    my ( $self, $c ) = @_;
+    my $sc = $c->req->param( 'metric' );
+
+    $c->stash->{ list } = $c->model( 'DBIC::Dist' )->search(
+        {
+            "kwalitee.$sc" => 1,
+        },
+        {
+            join     => [ qw( kwalitee ) ],
+            order_by => 'me.dist',
+            page     => $c->request->param( 'page' ) || 1,
+            rows     => 40,
+        }
+    );
+}
+
+
 sub clean_distname {
     my ( $self, $distname ) = @_;
     my $distname_colons = $distname;
