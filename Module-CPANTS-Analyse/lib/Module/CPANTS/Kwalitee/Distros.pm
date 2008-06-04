@@ -58,8 +58,8 @@ sub get_debian_data {
             #(my $dist = $h{CPAN_dist}) =~ s/-/::/g;
             #$debian{$dist} = \%h;
             $debian{ $h{CPAN_dist} } = \%h;
-        } else {
-            warn "Invalid row in Debian file:\n$row\n";
+        #} else {
+        #    warn "Invalid row in Debian file:\n$row\n";
         }
     }
     return \%debian;

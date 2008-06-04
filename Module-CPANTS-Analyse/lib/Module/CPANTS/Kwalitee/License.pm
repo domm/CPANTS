@@ -23,7 +23,7 @@ sub analyse {
     if ($yaml) {
         if ($yaml->{license} and $yaml->{license} ne 'unknown') {
             $me->d->{license_from_yaml} = $yaml->{license};
-            $me->d->{license} .= ' defined in META.yaml';
+            $me->d->{license} = $yaml->{license}.' defined in META.yaml';
         }
     }
     my $files=$me->d->{files_array};
@@ -36,19 +36,20 @@ sub analyse {
     }
 
     # check pod
-    if ( $me->d->{licenses} ) {
-        $me->d->{license_in_pod} = 1;
-        $me->d->{license} .= " defined in POD";
-    }
-    #foreach my $file (grep { /\.p(m|od)$/ } @$files ) {
-        #my $parser=Pod::Simple::TextContent->new;
-        #my $out;
-        #$parser->output_string($out);
-        #$parser->parse_file( catfile($me->distdir,$file) );
-        #if ($out=~/LICEN[CS]E/) {
-            #$me->d->{license}="defined in POD ($file)";
-        #}
+    #if ( $me->d->{licenses} ) {
+    #    $me->d->{license_in_pod} = 1;
+    #    $me->d->{license} .= " defined in POD";
     #}
+    foreach my $file (grep { /\.p(m|od)$/ } @$files ) {
+        my $parser=Pod::Simple::TextContent->new;
+        my $out;
+        $parser->output_string($out);
+        $parser->parse_file( catfile($me->distdir,$file) );
+        if ($out=~/LICEN[CS]E/) {
+            $me->d->{license_in_pod} = 1;
+            $me->d->{license}="defined in POD ($file)";
+        }
+    }
     
     return;
 }
@@ -101,6 +102,7 @@ sub kwalitee_indicators{
             code=>sub {
                 my $d = shift;
                 # data collected in File.pm
+                
                 return 0 if not $d->{licenses};
                 return 1 if $d->{license_type};
                 $d->{error}{has_license_in_source_file} = "Seemingly conflicting licenses in files: "

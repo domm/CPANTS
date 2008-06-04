@@ -46,6 +46,7 @@ sub analyse {
             }
         }
     }
+
     if (%licenses) {
         $me->d->{licenses} = \%licenses;
         if (keys %licenses == 1) {
