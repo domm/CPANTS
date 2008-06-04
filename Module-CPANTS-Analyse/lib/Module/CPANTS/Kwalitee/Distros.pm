@@ -75,7 +75,7 @@ sub kwalitee_indicators{
     return [
          {
             name=>'distributed_by_debian',
-            error=>qq{The module is distributed by Debian},
+            error=>qq{The module is not distributed by Debian},
             remedy=>q{Make your package easily repackagable by Debian and convince the Debian-Perl team to package your module},
             is_extra=>1,
             is_experimental=>1,
@@ -87,7 +87,7 @@ sub kwalitee_indicators{
          },
          {
             name=>'latest_version_distributed_by_debian',
-            error=>qq{The version distributed by Debian is the latest from CPAN},
+            error=>qq{The version distributed by Debian is NOT the latest from CPAN},
             remedy=>q{Give the Debian-Perl people some time to repackage your module. After that talk to the to see if
 there is a problem with the latest version?},
             is_extra=>1,
@@ -109,7 +109,7 @@ there is a problem with the latest version?},
          },
          {
             name=>'has_no_bugs_reported_in_debian',
-            error=>qq{There is no open bug reported in Debian},
+            error=>qq{There is a bug reported in Debian},
             remedy=>q{Give the Debian-Perl people some time to repackage your module. After that talk to the to see if
 there is a problem with the latest version?},
             is_extra=>1,
@@ -131,7 +131,7 @@ there is a problem with the latest version?},
          },
          {
             name=>'has_no_patches_in_debian',
-            error=>qq{There is no patch in Debian},
+            error=>qq{There is a patch in Debian},
             remedy=>q{Go to the Debian repository apply their patch to the version maintained on CPAN and ask the Debian
 team to upgrde.},
             is_extra=>1,
