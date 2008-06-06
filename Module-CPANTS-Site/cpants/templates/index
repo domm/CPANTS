@@ -17,6 +17,11 @@
 
 <dl>
 
+<dt>2008-06-06: Experimental metric handling<dt>
+<dd>
+From now on, experimental metrics will not be displayed per default. We do not want people who play the CPANTS game to add stuff to their dist which might turn out to be a bad idea. So from now on, all experimental metrics will not be considered when calculating any scores. If you want to see them anyway, click on the 'Here be dragons' link (if you dare!).
+</dd>
+
 <dt>2008-06-03: Gabor added more metrics</dt>
 <dd>
 Gabor added yet more metrics:
