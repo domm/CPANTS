@@ -83,7 +83,7 @@ sub external : Local {
 
 sub get_dist : Private {
     my ( $self, $c, $distname ) = @_;
-   
+
     unless( $distname ) {
         $c->stash->{ template } = 'dist/search';
         $c->detach( 'search' );

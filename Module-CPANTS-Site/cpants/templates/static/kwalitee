@@ -18,7 +18,7 @@
   
 <p>Schwern decided to cleverly avoid this problem by not testing for quality but for Kwalitee: It looks like quality, it sounds like quality, but it's not quite quality.</p>
 
-<h3>Current Kwalitee Indicators</h3>
+<h3>Kwalitee Indicators Overview</h3>
 
 <p><b>Available Kwalitee: [% mck.available_kwalitee %] (including optional metrics: [% mck.total_kwalitee %])</b></p>
 
@@ -27,24 +27,38 @@
 [% as_hash = mck.get_indicators_hash %]
 
 
+<p><b>Core Indicators</b></p>
 <ul id="indicators">
-[% FOREACH k IN mck.get_indicators %]
+[% FOREACH k IN mck.get_indicators('core').sort('name') %]
 <li><a href="#[% k.name %]">[% k.name %]</a></li>
 [% END%]
 </ul>
 
-<dl>
-[% FOREACH k IN mck.get_indicators %]
+<p><b>Optional Indicators</b></p>
+<ul id="indicators">
+[% FOREACH k IN mck.get_indicators('optional').sort('name') %]
+<li><a href="#[% k.name %]">[% k.name %]</a></li>
+[% END%]
+</ul>
 
-<dt><a name="[% k.name %]"></a>[% k.name %] [% k.fake %]
-[% IF k.is_extra || k.aggregating || k.is_experimental %]
-(
-[% IF k.is_extra %] optional [% END%]
-[% IF k.aggregating %] aggregating [% END%]
-[% IF k.is_extra %] experimental [% END%]
-)
+[% IF show_experimental %]
+<p><b>Experimental Indicators</b></p>
+<ul id="indicators">
+[% FOREACH k IN mck.get_indicators('experimental').sort('name') %]
+<li><a href="#[% k.name %]">[% k.name %]</a></li>
+[% END%]
+</ul>
+
 [% END %]
- </dt>
+
+<h3>Kwalitee Indicators</h3>
+
+<h4>Core Indicators</h4>
+
+<dl>
+[% FOREACH k IN mck.get_indicators('core').sort('name') %]
+
+<dt><a name="[% k.name %]"></a>[% k.name %] [% k.fake %] </dt>
 <dd>
 [% IF k.aggregating %]
 <b>Aggregate of:</b> [% k.aggregating.join(', ') %]<br>
@@ -56,8 +70,46 @@
 <a href="/dist/shortcoming?metric=[% k.name %]">Show failing dists</a>
 </dd>
 
-[% END%]
+[% END %]
 </dl>
 
+<h4>Optional Indicators</h4>
+<dl>
+[% FOREACH k IN mck.get_indicators('optional').sort('name') %]
 
+<dt><a name="[% k.name %]"></a>[% k.name %] [% k.fake %]</dt>
+<dd>
+[% IF k.aggregating %]
+<b>Aggregate of:</b> [% k.aggregating.join(', ') %]<br>
+[% END %]
+<b>Shortcoming:</b> [% k.error %]<br>
+<b>Remedy:</b> [% k.remedy %]<br>
+<b>Defined in:</b> [% k.defined_in %]<br>
+<a href="/dist/complying?metric=[% k.name %]">Show complying dists</a> | 
+<a href="/dist/shortcoming?metric=[% k.name %]">Show failing dists</a>
+</dd>
+
+[% END %]
+</dl>
+
+[% IF show_experimental %]
+<h4>Experimental Indicators</h4>
+<dl>
+[% FOREACH k IN mck.get_indicators('experimental').sort('name') %]
+
+<dt><a name="[% k.name %]"></a>[% k.name %] [% k.fake %]</dt>
+<dd>
+[% IF k.aggregating %]
+<b>Aggregate of:</b> [% k.aggregating.join(', ') %]<br>
+[% END %]
+<b>Shortcoming:</b> [% k.error %]<br>
+<b>Remedy:</b> [% k.remedy %]<br>
+<b>Defined in:</b> [% k.defined_in %]<br>
+<a href="/dist/complying?metric=[% k.name %]">Show complying dists</a> | 
+<a href="/dist/shortcoming?metric=[% k.name %]">Show failing dists</a>
+</dd>
+
+[% END %]
+</dl>
+[% END %]
 

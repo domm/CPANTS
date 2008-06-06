@@ -18,6 +18,12 @@ sub index : Private {
     $c->stash->{ template } = 'index';
 }
 
+sub auto : Private {
+    my ($self, $c) = @_;
+    $c->stash->{show_experimental} = $c->session->{show_experimental};
+    return 1;
+}
+
 sub static_html : Regex('^([a-z_0-9]+)\.html$') {
     my ( $self, $c ) = @_;
     my $file = $c->req->captures->[ 0 ];
@@ -28,6 +34,27 @@ sub static_html : Regex('^([a-z_0-9]+)\.html$') {
     $c->detach( 'default' ) unless -e $c->path_to( @path );
 
     $c->stash->{ template } = join( '/', @path[ 1, 2 ] );
+}
+
+sub toggle_experimental : Local {
+    my ($self, $c) = @_;
+
+    my $old = $c->session->{show_experimental} || undef;
+    if ($old) {
+        $c->session->{show_experimental}=undef;
+    }
+    else {
+        $c->session->{show_experimental}=1;
+    }
+    
+    $c->stash->{is_redirect}=1;
+    $c->res->redirect('/show_experimental');
+    $c->detach;
+    
+}
+sub show_experimental : Local {
+    my ($self, $c) = @_;
+    $c->response->headers->header('Cache-Control'=>'no-cache');
 }
 
 1;

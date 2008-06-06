@@ -176,7 +176,7 @@ sub check_prereq {
     $sth->execute;
 
     # TODO replace with accessors from MCK
-    my @extra=map {$_->{name}} grep {$_->{is_extra} || $_->{is_experimental} } @ind;
+    my @extra=map {$_->{name}} grep {$_->{is_extra}} @ind;
     my @core=map {$_->{name}} grep {!$_->{is_extra} && !$_->{is_experimental}} @ind;
    
     while (my $r=$sth->fetchrow_hashref) {

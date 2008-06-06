@@ -51,7 +51,7 @@ sub kwalitee_indicators {
         name=>'has_version_in_each_file',
         error=>qq{This distribution has a .pm file without version number. (Using $match_version to match them)},
         remedy=>q{Add a version number to each .pm file.},
-        is_extra=>1,
+        is_experimental=>1,
         code=>sub {
             my $d=shift;
             #use Data::Dumper;

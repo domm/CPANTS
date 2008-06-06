@@ -45,7 +45,12 @@ document.getElementById('top').style.backgroundColor="#ff7300";
 [% FOREACH kw IN mck.optional_indicator_names.sort %]
 <td style="text"><a title="[% kw %]" href="/kwalitee/shortcoming?name=[% kw %]">#</a></td>
 [% END %]
-
+[% IF show_experimental %]
+<td></td>
+[% FOREACH kw IN mck.experimental_indicator_names.sort %]
+<td style="text"><a title="[% kw %]" href="/kwalitee/shortcoming?name=[% kw %]">#</a></td>
+[% END %]
+[% END %]
 
 </tr>
 [% FOREACH d IN item.dists( {}, { 'order_by' => 'dist' } ) %]
@@ -60,6 +65,12 @@ document.getElementById('top').style.backgroundColor="#ff7300";
 <td></td>
 [% FOREACH kw IN mck.optional_indicator_names.sort %]
 <td class="[% kwal.$kw ? 'ok' : 'opt_not_ok' %]" align="center" title="[% kw %]"><a href="/dist/kwalitee/[% d.dist %]#[% kw %]">[% kwal.$kw ? '+' : '~' %]</a></td>
+[% END %]
+[% IF show_experimental %]
+<td></td>
+[% FOREACH kw IN mck.experimental_indicator_names.sort %]
+<td class="[% kwal.$kw ? 'ok' : 'exp_not_ok' %]" align="center" title="[% kw %]"><a href="/dist/kwalitee/[% d.dist %]#[% kw %]">[% kwal.$kw ? '+' : '?' %]</a></td>
+[% END %]
 [% END %]
 
 </tr>

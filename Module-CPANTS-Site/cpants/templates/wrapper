@@ -19,7 +19,7 @@
 <a href='/dist/search'>Distributions</a> | 
 <a href='/author/search'>Authors</a> 
 &nbsp; &nbsp; || &nbsp; &nbsp;
-<span style="color:#f00">ALPHA VERSION - Hic sunt dracones!</span>
+<span style="color:#f00"><a href="/toggle_experimental" class="dragon">[% IF show_experimental %]pugnate draconis[% ELSE %]Hic sunt dracones[% END %]!</a></span>
 </div>
 
 [% USE Number.Format %]
@@ -31,7 +31,6 @@ CPANTS is currently analysing dists. Results might be inconsistent!
 [% END %]
 
 <div class="content">
-
 
 [% content %]
 </div>

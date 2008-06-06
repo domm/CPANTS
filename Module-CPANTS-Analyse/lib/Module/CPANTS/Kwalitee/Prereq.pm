@@ -132,7 +132,7 @@ sub kwalitee_indicators{
                 return 0;               
             },
             needs_db=>1,
-            is_extra=>1,
+            is_experimental=>1,
         },
         
     ];

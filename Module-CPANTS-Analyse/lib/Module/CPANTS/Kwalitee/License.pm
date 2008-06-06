@@ -77,7 +77,6 @@ sub kwalitee_indicators{
             name=>'has_separate_license_file',
             error=>q{This distribution does not have a LICENSE or LICENCE file in its root directory.},
             remedy=>q{This is not a critical issue. Currently mainly informative for the CPANTS authors. It might be removed later.},
-            is_extra=>1,
             is_experimental=>1,
             code=>sub { shift->{external_license_file} ? 1 : 0 }
         },
@@ -85,7 +84,6 @@ sub kwalitee_indicators{
 #            name=>'has_known_license_in_external_license_file',
 #            error=>q{This distribution has a LICENSE or LICENCE file in its root directory but the license in it was not recognized by CPANTS.},
 #            remedy=>q{Either CPANTS needs to be fixed or your LICENSE file.},
-#            is_extra=>1,
 #            is_experimental=>1,
 #            code=>sub { 
 #                my $d = shift;
@@ -97,7 +95,6 @@ sub kwalitee_indicators{
             name=>'has_license_in_source_file',
             error=>q{Does not have license information in any of its source files},
             remedy=>q{Add =head1 LICENSE and the text of the license to the main module in your code.},
-            is_extra=>1,
             is_experimental=>1,
             code=>sub {
                 my $d = shift;
@@ -114,7 +111,6 @@ sub kwalitee_indicators{
             name=>'fits_fedora_license',
             error=>qq{Fits the licensing requirements of Fedora ($fedora_licenses).},
             remedy=>q{Replace the license or convince Fedora to accept this license as well.},
-            is_extra=>1,
             is_experimental=>1,
             code=>sub { 
                 my $d=shift;

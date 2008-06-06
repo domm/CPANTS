@@ -77,7 +77,6 @@ sub kwalitee_indicators{
             name=>'distributed_by_debian',
             error=>qq{The module is not distributed by Debian},
             remedy=>q{Make your package easily repackagable by Debian and convince the Debian-Perl team to package your module},
-            is_extra=>1,
             is_experimental=>1,
             code=> sub {
                     my $d = shift;
@@ -90,7 +89,6 @@ sub kwalitee_indicators{
             error=>qq{The version distributed by Debian is NOT the latest from CPAN},
             remedy=>q{Give the Debian-Perl people some time to repackage your module. After that talk to the to see if
 there is a problem with the latest version?},
-            is_extra=>1,
             is_experimental=>1,
             code=> sub {
                     my $d = shift;
@@ -112,7 +110,6 @@ there is a problem with the latest version?},
             error=>qq{There is a bug reported in Debian},
             remedy=>q{Give the Debian-Perl people some time to repackage your module. After that talk to the to see if
 there is a problem with the latest version?},
-            is_extra=>1,
             is_experimental=>1,
             code=> sub {
                     my $d = shift;
@@ -134,7 +131,6 @@ there is a problem with the latest version?},
             error=>qq{There is a patch in Debian},
             remedy=>q{Go to the Debian repository apply their patch to the version maintained on CPAN and ask the Debian
 team to upgrde.},
-            is_extra=>1,
             is_experimental=>1,
             code=> sub {
                     my $d = shift;

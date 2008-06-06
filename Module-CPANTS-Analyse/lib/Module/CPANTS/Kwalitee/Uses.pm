@@ -131,7 +131,6 @@ sub kwalitee_indicators {
             name=>'uses_test_nowarnings',
             error=>q{Doesn't use Test::NoWarnings in all the test files},
             remedy=>q{Add Test::NoWarnings to each one of the .t files and increment the test count by 1.},
-            is_extra=>1,
             is_experimental=>1,
             code=>sub {
                 my $d=shift;

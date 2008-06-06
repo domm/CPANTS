@@ -11,7 +11,7 @@ use Cwd;
 use Pod::Usage;
 
 my %opts;
-GetOptions(\%opts,qw(help|? man dump no_capture! verbose! yaml to_file dir=s ));
+GetOptions(\%opts,qw(help|? man dump no_capture! verbose! yaml to_file dir=s experimental!));
 pod2usage(1) if $opts{help};
 pod2usage(-exitstatus => 0, -verbose => 2) if $opts{man};
 
@@ -50,7 +50,7 @@ else {
     } else {
     
         # build up lists of failed metrics
-        my (@core_failure,@opt_failure);
+        my (@core_failure,@opt_failure,@exp_failure);
         my ($core_kw,$opt_kw)=(0,0);
         my $kwl=$mca->d->{kwalitee};
         
@@ -67,7 +67,14 @@ else {
                 } else {
                     push(@opt_failure,"* ".$ind->{name}."\n".$ind->{remedy});
                 }
-            } else {
+            }
+            elsif ($ind->{is_experimental}) {
+                next unless $opts{experimental};
+                if (!$kwl->{$ind->{name}}) {
+                    push(@exp_failure,"* ".$ind->{name}."\n".$ind->{remedy});
+                }
+            }
+            else {
                 if ($kwl->{$ind->{name}}) {
                     $core_kw++;
                 } else {
@@ -98,6 +105,10 @@ else {
             if (@opt_failure) {
                 $output.="\nFailed optional Kwalitee tests and\nwhat you can do to solve them:\n\n";
                 $output.=join ("\n\n",@opt_failure,'');
+            }
+            if (@exp_failure) {
+                $output.="\nFailed experimental Kwalitee tests and\nwhat you can do to solve them:\n\n";
+                $output.=join ("\n\n",@exp_failure,'');
             }
         }
     }

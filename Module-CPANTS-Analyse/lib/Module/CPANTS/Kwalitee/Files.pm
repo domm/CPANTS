@@ -290,7 +290,6 @@ sub kwalitee_indicators {
         name=>'no_large_files',
         error=>qq{This distribution has at least one file larger than $large_file bytes)},
         remedy=>q{No remedy for that.},
-        is_extra=>1,
         is_experimental=>1,
         code=>sub {
             my $d=shift;

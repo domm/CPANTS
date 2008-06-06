@@ -1,0 +1,7 @@
+<h1>Show experimental metrics</h1>
+
+<p>Some metrics are marked as <b>experimental</b>. Experimental metrics are not used to calculate kwalitee, but they might be turned into proper metrics later.</p>
+
+<p>Your state: <b>[% c.session.show_experimental ? "Show" : "Hide" %] experimental metrics</b></p>
+
+<p><a href="/toggle_experimental">Toggle state</a></p>

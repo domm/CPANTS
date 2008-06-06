@@ -4,7 +4,11 @@ use strict;
 use warnings;
 use Module::CPANTS::ProcessCPAN::ConfigData;
 use File::Spec::Functions;
-use Catalyst qw(Static::Simple );
+use Catalyst qw(Static::Simple
+    Session
+    Session::Store::File
+    Session::State::Cookie
+);
 
 my $home=Module::CPANTS::ProcessCPAN::ConfigData->config('home');
 my $db_user=Module::CPANTS::ProcessCPAN::ConfigData->config('db_user');

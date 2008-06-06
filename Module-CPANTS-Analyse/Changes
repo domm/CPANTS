@@ -4,8 +4,9 @@
 
 
 0.82-tobe
+    - fixed experimental metrics
     - use Moose now counts for using strict
-    insert commits from gabor
+    - lots of commits from Gabor
     - honor META.yml key 'no_index'. Fixes RT#32777 and an IRC
       complaint by BinGOs
 

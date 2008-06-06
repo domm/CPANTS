@@ -20,24 +20,32 @@ sub new {
     }
     my @generators=sort { $generators{$a} <=> $generators{$b} } keys %generators;
     $me->generators(\@generators);
-
+    $me->_gencache({});
     return $me;
 }
 
 sub get_indicators {
     my $self=shift;
+    my $type = shift || 'all';
     
+    $type='is_extra' if $type eq 'optional';
+    $type='is_experimental' if $type eq 'experimental';
+
     my $indicators;
-    if ($self->_gencache) {
-        $indicators=$self->_gencache;
+    if ($self->_gencache->{$type}) {
+        $indicators=$self->_gencache->{$type};
     } else {
         foreach my $gen (@{$self->generators}) {
             foreach my $ind (@{$gen->kwalitee_indicators}) {
-                $ind->{defined_in}=$gen;
-                push(@$indicators,$ind); 
+                if ($type eq 'all'
+                    || ($type eq 'core' && !$ind->{is_extra} && !$ind->{is_experimental}) 
+                    || $ind->{$type}) {
+                    $ind->{defined_in}=$gen;
+                    push(@$indicators,$ind); 
+                }
             }
         }
-        $self->_gencache($indicators);
+        $self->_gencache->{$type}=$indicators;
     }
     return wantarray ? @$indicators : $indicators;
 }
@@ -79,7 +87,12 @@ sub total_kwalitee {
     my $mem=$self->_total;
     return $mem if $mem;
     
-    $self->_total(scalar @{$self->get_indicators});
+    my $available;
+    foreach my $g ($self->get_indicators) {
+        $available++ unless $g->{is_experimental};
+    }
+
+    $self->_total($available);
 }
 
 sub all_indicator_names {
@@ -96,7 +109,13 @@ sub core_indicator_names {
 
 sub optional_indicator_names {
     my $self=shift;
-    my @all=map { $_->{name} } grep { $_->{is_extra} || $_->{is_experimental} } $self->get_indicators;
+    my @all=map { $_->{name} } grep { $_->{is_extra} } $self->get_indicators;
+    return wantarray ? @all : \@all;
+}
+
+sub experimental_indicator_names {
+    my $self=shift;
+    my @all=map { $_->{name} } grep { $_->{is_experimental} } $self->get_indicators;
     return wantarray ? @all : \@all;
 }
 
