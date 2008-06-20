@@ -1,217 +1,946 @@
+--
+-- PostgreSQL database dump
+--
 
-CREATE TABLE run (
-  id serial PRIMARY KEY,
-  mcanalyse_version text,
-  mcprocess_version text,
-  available_kwalitee integer not null default 0,
-  total_kwalitee integer not null default 0,
-  date timestamp default now()
-);
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = off;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET escape_string_warning = off;
+
+--
+-- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON SCHEMA public IS 'Standard public schema';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: author; Type: TABLE; Schema: public; Owner: cpants; Tablespace: 
+--
 
 CREATE TABLE author (
-  id SERIAL PRIMARY KEY,
-  pauseid text,
-  name text,
-  email text,
-  average_kwalitee numeric(6,3),
-  num_dists integer not null default 0,
-  rank integer not null default 0,
-  prev_av_kw numeric(6,3),
-  prev_rank integer not null default 0
+    id integer NOT NULL,
+    pauseid text,
+    name text,
+    email text,
+    average_kwalitee numeric(6,3),
+    num_dists integer DEFAULT 0 NOT NULL,
+    rank integer DEFAULT 0 NOT NULL,
+    prev_av_kw numeric(6,3),
+    prev_rank integer DEFAULT 0 NOT NULL,
+    average_total_kwalitee numeric(6,3) DEFAULT 0
 );
 
+
+ALTER TABLE public.author OWNER TO cpants;
+
+--
+-- Name: author_id_seq; Type: SEQUENCE; Schema: public; Owner: cpants
+--
+
+CREATE SEQUENCE author_id_seq
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.author_id_seq OWNER TO cpants;
+
+--
+-- Name: author_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: cpants
+--
+
+ALTER SEQUENCE author_id_seq OWNED BY author.id;
+
+
+--
+-- Name: dist; Type: TABLE; Schema: public; Owner: cpants; Tablespace: 
+--
 
 CREATE TABLE dist (
-  id SERIAL PRIMARY KEY,
-  run integer references run(id),
-  dist text,
-  package text,
-  vname text,
-  author integer references author(id),
-  version text,
-  version_major text,
-  version_minor text,
-  extension text,
-  extractable integer not null default 0,
-  extracts_nicely integer not null default 0,
-  size_packed integer not null default 0,
-  size_unpacked integer not null default 0,
-  released timestamp without time zone,
-  files integer not null default 0,
-  files_list text,
-  dirs integer not null default 0,
-  dirs_list text,
-  symlinks integer not null default 0,
-  symlinks_list text,
-  bad_permissions integer not null default 0,
-  bad_permissions_list text,
-  file_makefile_pl integer not null default 0,
-  file_build_pl integer not null default 0,
-  file_readme text,
-  file_manifest integer not null default 0,
-  file_meta_yml integer not null default 0,
-  file_signature integer not null default 0,
-  file_ninja integer not null default 0,
-  file_test_pl integer not null default 0,
-  file_changelog text,
-  file__build integer not null default 0,
-  file_build integer not null default 0,
-  file_makefile integer not null default 0,
-  file_blib integer not null default 0,
-  file_pm_to_blib integer not null default 0,
-  dir_lib integer not null default 0,
-  dir_t integer not null default 0,
-  dir_xt integer not null default 0,
-  broken_module_install text not null default 0,
-  manifest_matches_dist integer not null default 0,
-  buildfile_executable integer not null default 0,
-  license text,
-  metayml_is_parsable integer not null default 0,
-  file_license integer not null default 0,
-  needs_compiler integer not null default 0,
-  got_prereq_from text,
-  stdin_in_makefile_pl integer not null default 0,
-  stdin_in_build_pl integer not null default 0,
-  is_core integer not null default 0
+    id integer NOT NULL,
+    run integer,
+    dist text,
+    package text,
+    vname text,
+    author integer,
+    version text,
+    version_major text,
+    version_minor text,
+    extension text,
+    extractable integer DEFAULT 0 NOT NULL,
+    extracts_nicely integer DEFAULT 0 NOT NULL,
+    size_packed integer DEFAULT 0 NOT NULL,
+    size_unpacked integer DEFAULT 0 NOT NULL,
+    released timestamp without time zone,
+    files integer DEFAULT 0 NOT NULL,
+    files_list text,
+    dirs integer DEFAULT 0 NOT NULL,
+    dirs_list text,
+    symlinks integer DEFAULT 0 NOT NULL,
+    symlinks_list text,
+    bad_permissions integer DEFAULT 0 NOT NULL,
+    bad_permissions_list text,
+    file_makefile_pl integer DEFAULT 0 NOT NULL,
+    file_build_pl integer DEFAULT 0 NOT NULL,
+    file_readme text,
+    file_manifest integer DEFAULT 0 NOT NULL,
+    file_meta_yml integer DEFAULT 0 NOT NULL,
+    file_signature integer DEFAULT 0 NOT NULL,
+    file_ninja integer DEFAULT 0 NOT NULL,
+    file_test_pl integer DEFAULT 0 NOT NULL,
+    file_changelog text,
+    dir_lib integer DEFAULT 0 NOT NULL,
+    dir_t integer DEFAULT 0 NOT NULL,
+    dir_xt integer DEFAULT 0 NOT NULL,
+    broken_module_install text DEFAULT 0 NOT NULL,
+    manifest_matches_dist integer DEFAULT 0 NOT NULL,
+    buildfile_executable integer DEFAULT 0 NOT NULL,
+    license text,
+    metayml_is_parsable integer DEFAULT 0 NOT NULL,
+    file_license integer DEFAULT 0 NOT NULL,
+    needs_compiler integer DEFAULT 0 NOT NULL,
+    got_prereq_from text,
+    is_core integer DEFAULT 0 NOT NULL,
+    file__build integer DEFAULT 0 NOT NULL,
+    file_build integer DEFAULT 0 NOT NULL,
+    file_makefile integer DEFAULT 0 NOT NULL,
+    file_blib integer DEFAULT 0 NOT NULL,
+    file_pm_to_blib integer DEFAULT 0 NOT NULL,
+    stdin_in_makefile_pl integer DEFAULT 0 NOT NULL,
+    stdin_in_build_pl integer DEFAULT 0 NOT NULL,
+    external_license_file text,
+    file_licence text,
+    licence_file text,
+    license_file text,
+    license_type text,
+    no_index text,
+    ignored_files_list text,
+    license_in_pod integer DEFAULT 0 NOT NULL,
+    license_from_yaml text,
+    license_from_external_license_file text,
+    test_files_list text
 );
 
-create table error (
-  id SERIAL PRIMARY KEY,
-  dist integer references dist(id) on delete cascade,
-  prereq text,
-  build_prereq text,
-  manifest_matches_dist text,
-  metayml text,
-  cpants text,
-  pod integer not null default 0,
-  pod_message text,
-  metayml_parse text,
-  no_generated_files text,
-  has_version_in_each_file text,
-  no_stdin_for_prompting text
+
+ALTER TABLE public.dist OWNER TO cpants;
+
+--
+-- Name: dist_id_seq; Type: SEQUENCE; Schema: public; Owner: cpants
+--
+
+CREATE SEQUENCE dist_id_seq
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.dist_id_seq OWNER TO cpants;
+
+--
+-- Name: dist_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: cpants
+--
+
+ALTER SEQUENCE dist_id_seq OWNED BY dist.id;
+
+
+--
+-- Name: error; Type: TABLE; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE TABLE error (
+    id integer NOT NULL,
+    dist integer,
+    prereq_matches_use text,
+    build_prereq_matches_use text,
+    manifest_matches_dist text,
+    metayml_conforms_to_known_spec text,
+    cpants text,
+    no_pod_errors text,
+    metayml_is_parsable text,
+    no_generated_files text DEFAULT 0 NOT NULL,
+    has_version_in_each_file text,
+    no_stdin_for_prompting text,
+    easily_repackageable_by_fedora text,
+    easily_repackageable_by_debian text,
+    easily_repackageable text,
+    metayml_conforms_spec_current text,
+    no_large_files text,
+    has_license_in_source_file text,
+    has_no_patches_in_debian text,
+    latest_version_distributed_by_debian text,
+    has_no_bugs_reported_in_debian text
 );
 
-CREATE TABLE kwalitee (
-  id SERIAL PRIMARY KEY,
-  dist integer references dist(id) on delete cascade,
-  run integer references run(id),
-  
-  abs_kw integer not null default 0,
-  abs_core_kw integer not null default 0,
-  kwalitee numeric(6,3) not null default 0,
-  rel_core_kw numeric(6,3) not null default 0,
 
-  extractable integer not null default 0,
-  extracts_nicely integer not null default 0,
-  has_version integer not null default 0,
-  has_proper_version integer not null default 0,
-  no_cpants_errors integer not null default 0,
-  has_readme integer not null default 0,
-  has_manifest integer not null default 0,
-  has_meta_yml integer not null default 0,
-  has_buildtool integer not null default 0,
-  has_changelog integer not null default 0,
-  no_symlinks integer not null default 0,
-  has_tests integer not null default 0,
-  proper_libs integer not null default 0,
-  is_prereq integer not null default 0,
-  use_strict integer not null default 0,
-  use_warnings integer not null default 0,
-  has_test_pod integer not null default 0,
-  has_test_pod_coverage integer not null default 0,
-  no_pod_errors integer not null default 0,
-  has_working_buildtool integer not null default 0,
-  manifest_matches_dist integer not null default 0,
-  has_example integer not null default 0,
-  buildtool_not_executable integer not null default 0,
-  has_humanreadable_license integer not null default 0,
-  metayml_is_parsable integer not null default 0,
-  metayml_conforms_spec_current integer not null default 0,
-  metayml_has_license integer not null default 0,
-  metayml_conforms_to_known_spec integer not null default 0,
-  has_license integer not null default 0,
-  prereq_matches_use integer not null default 0,
-  build_prereq_matches_use integer not null default 0,
-  no_generated_files integer not null default 0,
-  has_version_in_each_file integer not null default 0,
-  has_tests_in_t_dir integer not null default 0,
-  no_stdin_for_prompting integer not null default 0,
-  easily_repackageable_by_fedora integer not null default 0,
-  easily_repackageable_by_debian integer not null default 0,
-  easily_repackageable integer not null default 0
+ALTER TABLE public.error OWNER TO cpants;
 
-);
+--
+-- Name: error_id_seq; Type: SEQUENCE; Schema: public; Owner: cpants
+--
 
-CREATE TABLE modules (
-  id SERIAL PRIMARY KEY,
-  dist integer references dist(id) on delete cascade,
-  module text,
-  file text,
-  in_lib integer not null default 0,
-  in_basedir integer not null default 0,
-  is_core integer not null default 0
-);
-CREATE TABLE prereq (
-  id SERIAL PRIMARY KEY,
-  dist integer references dist(id) on delete cascade,
-  requires text,
-  version text,
-  in_dist integer,
-  is_prereq integer not null default 0,
-  is_build_prereq integer not null default 0,
-  is_optional_prereq integer not null default 0
-);
-CREATE TABLE uses (
-  id SERIAL PRIMARY KEY,
-  dist integer references dist(id) on delete cascade,
-  module text,
-  in_dist integer,
-  in_code integer not null default 0,
-  in_tests integer not null default 0
-);
-CREATE INDEX auth_av ON author (average_kwalitee);
-CREATE INDEX auth_num ON author (num_dists);
-CREATE INDEX auth_pav ON author (prev_av_kw);
-CREATE INDEX auth_prank ON author (prev_rank);
-CREATE INDEX auth_rank ON author (rank);
-CREATE UNIQUE INDEX author_pauseid_key ON author (pauseid);
-CREATE INDEX dist_auth ON dist (author);
-CREATE UNIQUE INDEX dist_dist_key ON dist (dist);
-CREATE UNIQUE INDEX dist_package_key ON dist (package);
-CREATE UNIQUE INDEX dist_vname_key ON dist (vname);
-CREATE INDEX modules_basedir ON modules (in_basedir);
-CREATE INDEX modules_dist ON modules (dist);
-CREATE INDEX modules_lib ON modules (in_lib);
-CREATE INDEX modules_core ON modules (is_core);
-CREATE INDEX prereq_dist ON prereq (dist);
-CREATE INDEX prereq_in_dist ON prereq (in_dist);
-CREATE INDEX prereq_requires ON prereq (requires);
-CREATE INDEX prereq_is_req ON prereq (is_prereq);
-CREATE INDEX prereq_is_buildred ON prereq (is_build_prereq);
-CREATE INDEX prereq_is_optreq ON prereq (is_optional_prereq);
-CREATE INDEX uses_dist ON uses (dist);
-CREATE INDEX uses_in_code ON uses (in_code);
-CREATE INDEX uses_in_dist ON uses (in_dist);
-CREATE INDEX uses_in_tests ON uses (in_tests);
-CREATE INDEX uses_module ON uses (module);
+CREATE SEQUENCE error_id_seq
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
 
+
+ALTER TABLE public.error_id_seq OWNER TO cpants;
+
+--
+-- Name: error_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: cpants
+--
+
+ALTER SEQUENCE error_id_seq OWNED BY error.id;
+
+
+--
+-- Name: history_author; Type: TABLE; Schema: public; Owner: cpants; Tablespace: 
+--
 
 CREATE TABLE history_author (
-  id SERIAL PRIMARY KEY,
-  run integer references run(id),
-  author integer references author(id),
-  average_kwalitee numeric,
-  num_dists integer,
-  rank integer
+    id integer NOT NULL,
+    run integer,
+    author integer,
+    average_kwalitee numeric,
+    num_dists integer,
+    rank integer
 );
+
+
+ALTER TABLE public.history_author OWNER TO cpants;
+
+--
+-- Name: history_author_id_seq; Type: SEQUENCE; Schema: public; Owner: cpants
+--
+
+CREATE SEQUENCE history_author_id_seq
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.history_author_id_seq OWNER TO cpants;
+
+--
+-- Name: history_author_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: cpants
+--
+
+ALTER SEQUENCE history_author_id_seq OWNED BY history_author.id;
+
+
+--
+-- Name: history_dist; Type: TABLE; Schema: public; Owner: cpants; Tablespace: 
+--
 
 CREATE TABLE history_dist (
-  id SERIAL PRIMARY KEY,
-  run integer references run (id),
-  dist integer references dist(id) on delete set null,
-  distname text,
-  version text,
-  kwalitee numeric(6,3)
+    id integer NOT NULL,
+    run integer,
+    distname text,
+    version text,
+    kwalitee numeric(6,3) DEFAULT 0 NOT NULL,
+    dist integer
 );
 
+
+ALTER TABLE public.history_dist OWNER TO cpants;
+
+--
+-- Name: history_dist_id_seq; Type: SEQUENCE; Schema: public; Owner: cpants
+--
+
+CREATE SEQUENCE history_dist_id_seq
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.history_dist_id_seq OWNER TO cpants;
+
+--
+-- Name: history_dist_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: cpants
+--
+
+ALTER SEQUENCE history_dist_id_seq OWNED BY history_dist.id;
+
+
+--
+-- Name: kwalitee; Type: TABLE; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE TABLE kwalitee (
+    id integer NOT NULL,
+    dist integer,
+    abs_kw integer DEFAULT 0 NOT NULL,
+    abs_core_kw integer DEFAULT 0 NOT NULL,
+    kwalitee numeric(6,3) DEFAULT 0 NOT NULL,
+    rel_core_kw numeric(6,3) DEFAULT 0 NOT NULL,
+    extractable integer DEFAULT 0 NOT NULL,
+    extracts_nicely integer DEFAULT 0 NOT NULL,
+    has_version integer DEFAULT 0 NOT NULL,
+    has_proper_version integer DEFAULT 0 NOT NULL,
+    no_cpants_errors integer DEFAULT 0 NOT NULL,
+    has_readme integer DEFAULT 0 NOT NULL,
+    has_manifest integer DEFAULT 0 NOT NULL,
+    has_meta_yml integer DEFAULT 0 NOT NULL,
+    has_buildtool integer DEFAULT 0 NOT NULL,
+    has_changelog integer DEFAULT 0 NOT NULL,
+    no_symlinks integer DEFAULT 0 NOT NULL,
+    has_tests integer DEFAULT 0 NOT NULL,
+    proper_libs integer DEFAULT 0 NOT NULL,
+    is_prereq integer DEFAULT 0 NOT NULL,
+    use_strict integer DEFAULT 0 NOT NULL,
+    use_warnings integer DEFAULT 0 NOT NULL,
+    has_test_pod integer DEFAULT 0 NOT NULL,
+    has_test_pod_coverage integer DEFAULT 0 NOT NULL,
+    no_pod_errors integer DEFAULT 0 NOT NULL,
+    has_working_buildtool integer DEFAULT 0 NOT NULL,
+    manifest_matches_dist integer DEFAULT 0 NOT NULL,
+    has_example integer DEFAULT 0 NOT NULL,
+    buildtool_not_executable integer DEFAULT 0 NOT NULL,
+    has_humanreadable_license integer DEFAULT 0 NOT NULL,
+    metayml_is_parsable integer DEFAULT 0 NOT NULL,
+    metayml_conforms_spec_current integer DEFAULT 0 NOT NULL,
+    metayml_has_license integer DEFAULT 0 NOT NULL,
+    metayml_conforms_to_known_spec integer DEFAULT 0 NOT NULL,
+    has_license integer DEFAULT 0 NOT NULL,
+    prereq_matches_use integer DEFAULT 0 NOT NULL,
+    build_prereq_matches_use integer DEFAULT 0 NOT NULL,
+    no_generated_files integer DEFAULT 0 NOT NULL,
+    run integer,
+    has_version_in_each_file integer DEFAULT 0 NOT NULL,
+    has_tests_in_t_dir integer DEFAULT 0 NOT NULL,
+    no_stdin_for_prompting integer DEFAULT 0 NOT NULL,
+    easily_repackageable_by_fedora integer DEFAULT 0 NOT NULL,
+    easily_repackageable_by_debian integer DEFAULT 0 NOT NULL,
+    easily_repackageable integer DEFAULT 0 NOT NULL,
+    fits_fedora_license integer DEFAULT 0 NOT NULL,
+    metayml_declares_perl_version integer DEFAULT 0 NOT NULL,
+    no_large_files integer,
+    has_separate_license_file integer DEFAULT 0 NOT NULL,
+    has_license_in_source_file integer DEFAULT 0 NOT NULL,
+    metayml_has_provides integer DEFAULT 0 NOT NULL,
+    uses_test_nowarnings integer DEFAULT 0 NOT NULL,
+    latest_version_distributed_by_debian integer DEFAULT 0 NOT NULL,
+    has_no_bugs_reported_in_debian integer DEFAULT 0 NOT NULL,
+    has_no_patches_in_debian integer DEFAULT 0 NOT NULL,
+    distributed_by_debian integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE public.kwalitee OWNER TO cpants;
+
+--
+-- Name: kwalitee_id_seq; Type: SEQUENCE; Schema: public; Owner: cpants
+--
+
+CREATE SEQUENCE kwalitee_id_seq
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.kwalitee_id_seq OWNER TO cpants;
+
+--
+-- Name: kwalitee_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: cpants
+--
+
+ALTER SEQUENCE kwalitee_id_seq OWNED BY kwalitee.id;
+
+
+--
+-- Name: modules; Type: TABLE; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE TABLE modules (
+    id integer NOT NULL,
+    dist integer,
+    module text,
+    file text,
+    in_lib integer DEFAULT 0 NOT NULL,
+    in_basedir integer DEFAULT 0 NOT NULL,
+    is_core integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE public.modules OWNER TO cpants;
+
+--
+-- Name: modules_id_seq; Type: SEQUENCE; Schema: public; Owner: cpants
+--
+
+CREATE SEQUENCE modules_id_seq
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.modules_id_seq OWNER TO cpants;
+
+--
+-- Name: modules_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: cpants
+--
+
+ALTER SEQUENCE modules_id_seq OWNED BY modules.id;
+
+
+--
+-- Name: prereq; Type: TABLE; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE TABLE prereq (
+    id integer NOT NULL,
+    dist integer,
+    requires text,
+    version text,
+    in_dist integer,
+    is_prereq integer DEFAULT 0 NOT NULL,
+    is_build_prereq integer DEFAULT 0 NOT NULL,
+    is_optional_prereq integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE public.prereq OWNER TO cpants;
+
+--
+-- Name: prereq_id_seq; Type: SEQUENCE; Schema: public; Owner: cpants
+--
+
+CREATE SEQUENCE prereq_id_seq
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.prereq_id_seq OWNER TO cpants;
+
+--
+-- Name: prereq_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: cpants
+--
+
+ALTER SEQUENCE prereq_id_seq OWNED BY prereq.id;
+
+
+--
+-- Name: run; Type: TABLE; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE TABLE run (
+    id integer NOT NULL,
+    mcanalyse_version text,
+    mcprocess_version text,
+    available_kwalitee integer DEFAULT 0 NOT NULL,
+    total_kwalitee integer DEFAULT 0 NOT NULL,
+    date timestamp without time zone DEFAULT now()
+);
+
+
+ALTER TABLE public.run OWNER TO cpants;
+
+--
+-- Name: run_id_seq; Type: SEQUENCE; Schema: public; Owner: cpants
+--
+
+CREATE SEQUENCE run_id_seq
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.run_id_seq OWNER TO cpants;
+
+--
+-- Name: run_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: cpants
+--
+
+ALTER SEQUENCE run_id_seq OWNED BY run.id;
+
+
+--
+-- Name: uses; Type: TABLE; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE TABLE uses (
+    id integer NOT NULL,
+    dist integer,
+    module text,
+    in_dist integer,
+    in_code integer DEFAULT 0 NOT NULL,
+    in_tests integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE public.uses OWNER TO cpants;
+
+--
+-- Name: uses_id_seq; Type: SEQUENCE; Schema: public; Owner: cpants
+--
+
+CREATE SEQUENCE uses_id_seq
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.uses_id_seq OWNER TO cpants;
+
+--
+-- Name: uses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: cpants
+--
+
+ALTER SEQUENCE uses_id_seq OWNED BY uses.id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: cpants
+--
+
+ALTER TABLE author ALTER COLUMN id SET DEFAULT nextval('author_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: cpants
+--
+
+ALTER TABLE dist ALTER COLUMN id SET DEFAULT nextval('dist_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: cpants
+--
+
+ALTER TABLE error ALTER COLUMN id SET DEFAULT nextval('error_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: cpants
+--
+
+ALTER TABLE history_author ALTER COLUMN id SET DEFAULT nextval('history_author_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: cpants
+--
+
+ALTER TABLE history_dist ALTER COLUMN id SET DEFAULT nextval('history_dist_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: cpants
+--
+
+ALTER TABLE kwalitee ALTER COLUMN id SET DEFAULT nextval('kwalitee_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: cpants
+--
+
+ALTER TABLE modules ALTER COLUMN id SET DEFAULT nextval('modules_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: cpants
+--
+
+ALTER TABLE prereq ALTER COLUMN id SET DEFAULT nextval('prereq_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: cpants
+--
+
+ALTER TABLE run ALTER COLUMN id SET DEFAULT nextval('run_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: cpants
+--
+
+ALTER TABLE uses ALTER COLUMN id SET DEFAULT nextval('uses_id_seq'::regclass);
+
+
+--
+-- Name: author_pkey; Type: CONSTRAINT; Schema: public; Owner: cpants; Tablespace: 
+--
+
+ALTER TABLE ONLY author
+    ADD CONSTRAINT author_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dist_pkey; Type: CONSTRAINT; Schema: public; Owner: cpants; Tablespace: 
+--
+
+ALTER TABLE ONLY dist
+    ADD CONSTRAINT dist_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: error_pkey; Type: CONSTRAINT; Schema: public; Owner: cpants; Tablespace: 
+--
+
+ALTER TABLE ONLY error
+    ADD CONSTRAINT error_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: history_author_pkey; Type: CONSTRAINT; Schema: public; Owner: cpants; Tablespace: 
+--
+
+ALTER TABLE ONLY history_author
+    ADD CONSTRAINT history_author_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: history_dist_pkey; Type: CONSTRAINT; Schema: public; Owner: cpants; Tablespace: 
+--
+
+ALTER TABLE ONLY history_dist
+    ADD CONSTRAINT history_dist_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: kwalitee_pkey; Type: CONSTRAINT; Schema: public; Owner: cpants; Tablespace: 
+--
+
+ALTER TABLE ONLY kwalitee
+    ADD CONSTRAINT kwalitee_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: modules_pkey; Type: CONSTRAINT; Schema: public; Owner: cpants; Tablespace: 
+--
+
+ALTER TABLE ONLY modules
+    ADD CONSTRAINT modules_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: prereq_pkey; Type: CONSTRAINT; Schema: public; Owner: cpants; Tablespace: 
+--
+
+ALTER TABLE ONLY prereq
+    ADD CONSTRAINT prereq_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: run_pkey; Type: CONSTRAINT; Schema: public; Owner: cpants; Tablespace: 
+--
+
+ALTER TABLE ONLY run
+    ADD CONSTRAINT run_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: uses_pkey; Type: CONSTRAINT; Schema: public; Owner: cpants; Tablespace: 
+--
+
+ALTER TABLE ONLY uses
+    ADD CONSTRAINT uses_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_av; Type: INDEX; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE INDEX auth_av ON author USING btree (average_kwalitee);
+
+
+--
+-- Name: auth_num; Type: INDEX; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE INDEX auth_num ON author USING btree (num_dists);
+
+
+--
+-- Name: auth_pav; Type: INDEX; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE INDEX auth_pav ON author USING btree (prev_av_kw);
+
+
+--
+-- Name: auth_prank; Type: INDEX; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE INDEX auth_prank ON author USING btree (prev_rank);
+
+
+--
+-- Name: auth_rank; Type: INDEX; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE INDEX auth_rank ON author USING btree (rank);
+
+
+--
+-- Name: author_pauseid_key; Type: INDEX; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE UNIQUE INDEX author_pauseid_key ON author USING btree (pauseid);
+
+
+--
+-- Name: dist_auth; Type: INDEX; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE INDEX dist_auth ON dist USING btree (author);
+
+
+--
+-- Name: dist_dist_key; Type: INDEX; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE UNIQUE INDEX dist_dist_key ON dist USING btree (dist);
+
+
+--
+-- Name: dist_package_key; Type: INDEX; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE UNIQUE INDEX dist_package_key ON dist USING btree (package);
+
+
+--
+-- Name: dist_vname_key; Type: INDEX; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE UNIQUE INDEX dist_vname_key ON dist USING btree (vname);
+
+
+--
+-- Name: modules_basedir; Type: INDEX; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE INDEX modules_basedir ON modules USING btree (in_basedir);
+
+
+--
+-- Name: modules_core; Type: INDEX; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE INDEX modules_core ON modules USING btree (is_core);
+
+
+--
+-- Name: modules_dist; Type: INDEX; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE INDEX modules_dist ON modules USING btree (dist);
+
+
+--
+-- Name: modules_lib; Type: INDEX; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE INDEX modules_lib ON modules USING btree (in_lib);
+
+
+--
+-- Name: prereq_dist; Type: INDEX; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE INDEX prereq_dist ON prereq USING btree (dist);
+
+
+--
+-- Name: prereq_in_dist; Type: INDEX; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE INDEX prereq_in_dist ON prereq USING btree (in_dist);
+
+
+--
+-- Name: prereq_is_buildred; Type: INDEX; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE INDEX prereq_is_buildred ON prereq USING btree (is_build_prereq);
+
+
+--
+-- Name: prereq_is_optreq; Type: INDEX; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE INDEX prereq_is_optreq ON prereq USING btree (is_optional_prereq);
+
+
+--
+-- Name: prereq_is_req; Type: INDEX; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE INDEX prereq_is_req ON prereq USING btree (is_prereq);
+
+
+--
+-- Name: prereq_requires; Type: INDEX; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE INDEX prereq_requires ON prereq USING btree (requires);
+
+
+--
+-- Name: uses_dist; Type: INDEX; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE INDEX uses_dist ON uses USING btree (dist);
+
+
+--
+-- Name: uses_in_code; Type: INDEX; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE INDEX uses_in_code ON uses USING btree (in_code);
+
+
+--
+-- Name: uses_in_dist; Type: INDEX; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE INDEX uses_in_dist ON uses USING btree (in_dist);
+
+
+--
+-- Name: uses_in_tests; Type: INDEX; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE INDEX uses_in_tests ON uses USING btree (in_tests);
+
+
+--
+-- Name: uses_module; Type: INDEX; Schema: public; Owner: cpants; Tablespace: 
+--
+
+CREATE INDEX uses_module ON uses USING btree (module);
+
+
+--
+-- Name: dist_author_fkey; Type: FK CONSTRAINT; Schema: public; Owner: cpants
+--
+
+ALTER TABLE ONLY dist
+    ADD CONSTRAINT dist_author_fkey FOREIGN KEY (author) REFERENCES author(id);
+
+
+--
+-- Name: dist_run_fkey; Type: FK CONSTRAINT; Schema: public; Owner: cpants
+--
+
+ALTER TABLE ONLY dist
+    ADD CONSTRAINT dist_run_fkey FOREIGN KEY (run) REFERENCES run(id);
+
+
+--
+-- Name: error_dist_fkey; Type: FK CONSTRAINT; Schema: public; Owner: cpants
+--
+
+ALTER TABLE ONLY error
+    ADD CONSTRAINT error_dist_fkey FOREIGN KEY (dist) REFERENCES dist(id) ON DELETE CASCADE;
+
+
+--
+-- Name: history_author_author_fkey; Type: FK CONSTRAINT; Schema: public; Owner: cpants
+--
+
+ALTER TABLE ONLY history_author
+    ADD CONSTRAINT history_author_author_fkey FOREIGN KEY (author) REFERENCES author(id);
+
+
+--
+-- Name: history_author_run_fkey; Type: FK CONSTRAINT; Schema: public; Owner: cpants
+--
+
+ALTER TABLE ONLY history_author
+    ADD CONSTRAINT history_author_run_fkey FOREIGN KEY (run) REFERENCES run(id);
+
+
+--
+-- Name: history_dist_dist_fkey; Type: FK CONSTRAINT; Schema: public; Owner: cpants
+--
+
+ALTER TABLE ONLY history_dist
+    ADD CONSTRAINT history_dist_dist_fkey FOREIGN KEY (dist) REFERENCES dist(id) ON DELETE SET NULL;
+
+
+--
+-- Name: history_dist_run_fkey; Type: FK CONSTRAINT; Schema: public; Owner: cpants
+--
+
+ALTER TABLE ONLY history_dist
+    ADD CONSTRAINT history_dist_run_fkey FOREIGN KEY (run) REFERENCES run(id);
+
+
+--
+-- Name: kwalitee_dist_fkey; Type: FK CONSTRAINT; Schema: public; Owner: cpants
+--
+
+ALTER TABLE ONLY kwalitee
+    ADD CONSTRAINT kwalitee_dist_fkey FOREIGN KEY (dist) REFERENCES dist(id) ON DELETE CASCADE;
+
+
+--
+-- Name: kwalitee_run_fkey; Type: FK CONSTRAINT; Schema: public; Owner: cpants
+--
+
+ALTER TABLE ONLY kwalitee
+    ADD CONSTRAINT kwalitee_run_fkey FOREIGN KEY (run) REFERENCES run(id);
+
+
+--
+-- Name: modules_dist_fkey; Type: FK CONSTRAINT; Schema: public; Owner: cpants
+--
+
+ALTER TABLE ONLY modules
+    ADD CONSTRAINT modules_dist_fkey FOREIGN KEY (dist) REFERENCES dist(id) ON DELETE CASCADE;
+
+
+--
+-- Name: prereq_dist_fkey; Type: FK CONSTRAINT; Schema: public; Owner: cpants
+--
+
+ALTER TABLE ONLY prereq
+    ADD CONSTRAINT prereq_dist_fkey FOREIGN KEY (dist) REFERENCES dist(id) ON DELETE CASCADE;
+
+
+--
+-- Name: uses_dist_fkey; Type: FK CONSTRAINT; Schema: public; Owner: cpants
+--
+
+ALTER TABLE ONLY uses
+    ADD CONSTRAINT uses_dist_fkey FOREIGN KEY (dist) REFERENCES dist(id) ON DELETE CASCADE;
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
 

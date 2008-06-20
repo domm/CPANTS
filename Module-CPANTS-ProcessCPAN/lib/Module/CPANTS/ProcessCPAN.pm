@@ -347,7 +347,98 @@ Module::CPANTS::ProcessCPAN - Generate Kwalitee ratings for the whole CPAN
   
 =head1 DESCRIPTION
 
-Run CPANTS on the whole of CPAN. Includes a DBIx::Class based DB abstraction layer. More docs soon...
+Run CPANTS on the whole of CPAN. Includes a DBIx::Class based DB 
+abstraction layer. More docs soon...
+
+=head2 How to set up a local CPANTS processor
+
+=head3 Prereqs
+
+=over
+
+=item * A PostgreSQL DB named C<cpants>
+
+=item * A local CPAN mirror (eg one mirrored with CPAN::Mini)
+
+=item * All the prereqs of Module::CPANTS::Analyse & 
+Module::CPANTS::ProcessCPAN
+
+=back
+
+=head3 Set up the DB
+
+You can find the current schema of the CPANTS DB in 
+F<sql/cpants.schema>. Use this schema to set up a Postgres DB:
+
+  psql cpants < sql/cpants.schema
+
+You will also need to set up an account in the DB. If you don't know 
+how to do that, read the postgres docs...
+
+=head3 Install Module::CPANTS::ProcessCPAN
+
+When you install Module::CPANTS::ProcessCPAN the Build script will ask 
+you some questions where to install the app to:
+
+  Please specify the CPANTS home directory: [/home/domm/cpants ]
+
+  Postgres DB user: [cpants ]
+
+  Postgres DB password: [cpants ]
+
+After installing the code with C<sudo ./Build install> you have to 
+install the app into the CPANTS home directory you specified earlier:
+
+  ./Build install_cpants
+
+This will set up the needed directories and scripts. Please note that 
+if you install Module::CPANTS::Site (the Catalyst-based web frontend), 
+    it will re-use the CPANTS home dir and install the cat app into 
+    the same location.
+
+=head3 Running CPANTS
+
+Change into the CPANTS home dir. There you will find a dir C<bin> 
+containing various scripts. You can either call each script on it's 
+own (usefull if your working on one step of the process), or call the 
+wrapper script C<bin/run.pl>. C<run.pl> calls all scripts in the 
+correct order and with the needed parameters.
+
+C<run.pl> itself takes theses parameters:
+
+=over
+
+=item * --cpan
+
+Required
+
+This is the path to the root of the local cpan mirror
+
+=item * --lint
+
+Required
+
+The path to the C<cpants_lint.pl> script that's comming with 
+Module::CPANTS::Analyse. If you're in the middle of developing new 
+features (or more likely fixing bugs...) you can point this to the dev 
+version in your Module::CPANTS::Analyse repo (C<--lint 
+../Module-CPANTS-Analyse/bin/cpants_lint.pl>)
+
+=item * --force 
+
+Optional
+
+Test B<all> dists, not only those that have been uploaded since the last run. Please note that this usually takes aprox an hour...
+
+=back
+
+=head3 Testing only a subset of CPAN
+
+During development of new features it's very annoying to wait for an 
+hour until you uncover the next bug. Therefore it pays off to set up a 
+slim local CPAN mirror. I wrote CPAN::Mini::FromList to set up such a 
+mirror.
+
 
 =head1 WEBSITE
 
