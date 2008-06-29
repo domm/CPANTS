@@ -4,6 +4,9 @@ NAME
 DESCRIPTION
     This module is part of the beta CPANTS project.
     http://cpants.perl.org
+
+SETUP
+    See the pod in lib/Module/CPANTS/ProcessCPAN.pm
     
 AUTHOR
     Thomas Klausner, <domm@cpan.org>
