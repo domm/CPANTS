@@ -25,7 +25,7 @@ is($d->{prereq}->[0]{requires},'Test::More','prereq');
 ok($d->{file_meta_yml},'has_yaml');
 ok($d->{metayml_is_parsable},'metayml_is_parsable');
 ok(!$d->{metayml_parse_error},'metayml_parse_error was not set');
-is($d->{license},' defined in META.yaml defined in POD','license');
+like($d->{license},qr/defined in POD/,'license');
 ok(!$d->{needs_compiler}, 'does not need compiler');
 ok($d->{dir_xt},'dir_xt');
 

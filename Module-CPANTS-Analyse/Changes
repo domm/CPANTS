@@ -3,7 +3,8 @@
 #-----------------------------------------------------------------
 
 
-0.82-tobe
+0.82
+    - update META.yml spec to 1.4
     - fixed experimental metrics
     - use Moose now counts for using strict
     - lots of commits from Gabor

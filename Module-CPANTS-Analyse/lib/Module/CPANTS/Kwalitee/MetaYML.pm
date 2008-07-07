@@ -7,7 +7,7 @@ use Test::YAML::Meta::Version;
 
 sub order { 20 }
 
-my $CURRENT_SPEC = '1.3';
+my $CURRENT_SPEC = '1.4';
 
 ##################################################################
 # Analyse

@@ -30,7 +30,7 @@ is(ref($d->{uses}),'HASH','uses is HASH');
 ok($d->{file_meta_yml},'has_yaml');
 ok($d->{metayml_is_parsable},'metayml_is_parsable');
 ok(!$d->{metayml_parse_error},'metayml_parse_error was not set');
-is($d->{license},' defined in META.yaml defined in POD','has license');
+is($d->{license},'perl defined in META.yaml','has license');
 ok($d->{needs_compiler}, 'needs compiler');
 ok(!$d->{metayml_has_license},'metayml_has_license');
 ok(!$d->{metayml_conforms_spec_1_0},'metayml_conforms_spec_1_0');

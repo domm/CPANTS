@@ -28,7 +28,7 @@ is(ref($d->{uses}),'HASH','uses is HASH');
 is($d->{uses}{'Test::More'}{in_tests},6,'uses');
 ok($d->{file_meta_yml},'has_yaml');
 ok($d->{metayml_is_parsable},'metayml_is_parsable');
-is($d->{license},' defined in META.yaml defined in LICENSE','LICENSE');
+is($d->{license},'perl defined in META.yaml defined in LICENSE','LICENSE');
 ok(!$d->{needs_compiler}, 'does not need compiler');
 
 
