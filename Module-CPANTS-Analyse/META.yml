@@ -1,6 +1,6 @@
 ---
 name: Module-CPANTS-Analyse
-version: 0.81
+version: 0.82
 author:
   - 'Thomas Klausner, <domm@cpan.org>, http://domm.zsi.at'
   - |-
@@ -25,7 +25,8 @@ requires:
   Pod::Simple::Checker: 2.02
   Readonly: 0
   Software::License: 0.003
-  Test::YAML::Meta::Version: 0.06
+  Test::YAML::Meta::Version: 0.11
+  Text::CSV_XS: 0.45
   YAML::Syck: 0.95
   version: 0.73
 build_requires:
@@ -35,7 +36,7 @@ build_requires:
 provides:
   Module::CPANTS::Analyse:
     file: lib/Module/CPANTS/Analyse.pm
-    version: 0.81
+    version: 0.82
   Module::CPANTS::Kwalitee:
     file: lib/Module/CPANTS/Kwalitee.pm
   Module::CPANTS::Kwalitee::BrokenInstaller:
@@ -44,6 +45,8 @@ provides:
     file: lib/Module/CPANTS/Kwalitee/CpantsErrors.pm
   Module::CPANTS::Kwalitee::Distname:
     file: lib/Module/CPANTS/Kwalitee/Distname.pm
+  Module::CPANTS::Kwalitee::Distros:
+    file: lib/Module/CPANTS/Kwalitee/Distros.pm
   Module::CPANTS::Kwalitee::Files:
     file: lib/Module/CPANTS/Kwalitee/Files.pm
   Module::CPANTS::Kwalitee::FindModules:

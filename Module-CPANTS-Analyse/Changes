@@ -3,7 +3,7 @@
 #-----------------------------------------------------------------
 
 
-0.82
+0.82	2008-07-08 10:23:30
     - update META.yml spec to 1.4
     - fixed experimental metrics
     - use Moose now counts for using strict

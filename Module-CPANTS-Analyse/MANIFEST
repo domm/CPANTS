@@ -21,7 +21,6 @@ lib/Module/CPANTS/Kwalitee/Version.pm
 Makefile.PL
 MANIFEST			This list of files
 META.yml
-newmetrics
 README
 t/00_load.t
 t/02_kwalitee.t
