@@ -178,9 +178,9 @@ sub process_yaml {
         # purge errors from old runs
         foreach my $col ($db_error->columns) {
             next if $col eq 'id' || $col eq 'dist';
-    #        $db_error->$col(undef);
+            $db_error->$col('');
         }
-    #    $db_error->update;
+        $db_error->update;
     };
     if ($@) {
         die $@;
