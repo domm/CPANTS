@@ -3,7 +3,7 @@
 #-----------------------------------------------------------------
 
 
-0.76-tobe
+0.76 	2008-08-10 13:14:15
     - handle experimental metrics
     - added dist/complying?metric
     - fixed RT#28116 reported by DAXIM
