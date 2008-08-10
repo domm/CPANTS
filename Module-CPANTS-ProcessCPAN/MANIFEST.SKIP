@@ -46,3 +46,4 @@ t/db_1.t
 \B\._
 # Avoid archives of this distribution
 \bModule-CPANTS-ProcessCPAN-[\d\.\_]+
+Debian_CPANTS.txt

@@ -2,7 +2,12 @@
 # Changes for Module::CPANTS::ProcessCPAN
 #-----------------------------------------------------------------
 
-0.77-tobe
+0.77	2008-08-10 13:10:56
+    - added docs on how to set up a CPANTS analyser
+    - Experimental Metric handling
+    - fixed error if there are no test_files
+    - calculate real average kwalitee
+    - fixed deletion of old errors
     - updated Schema to work with MCA 0.82
     - added ResultSetManager to schema classes
     - moved lots of model-related stuff from Module::CPANTS::Site
