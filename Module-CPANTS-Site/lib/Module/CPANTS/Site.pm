@@ -14,7 +14,7 @@ my $home=Module::CPANTS::ProcessCPAN::ConfigData->config('home');
 my $db_user=Module::CPANTS::ProcessCPAN::ConfigData->config('db_user');
 my $db_pwd=Module::CPANTS::ProcessCPAN::ConfigData->config('db_pwd');
 $Template::Directive::WHILE_MAX=3000;
-use version; our $VERSION = version->new('0.75');
+use version; our $VERSION = version->new('0.76');
 
 
 __PACKAGE__->config(
