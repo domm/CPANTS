@@ -28,4 +28,5 @@ system("$perl $bin/update_authors.pl --cpan $cpan");
 system("$perl $bin/make_graphs.pl");
 system("$perl $bin/make_distgraph.pl");
 system("$perl $bin/dump_sqlite.pl");
+Module::CPANTS::ProcessCPAN->stop_run;
 unlink($lockfile);

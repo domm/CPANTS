@@ -32,7 +32,6 @@ cpants/templates/static/graphs
 cpants/templates/static/kwalitee
 cpants/templates/static/kwalitee_april_1st_2007
 cpants/templates/static/news
-cpants/templates/widgets/distlinks
 cpants/templates/widgets/pager
 cpants/templates/wrapper
 lib/Module/CPANTS/Site.pm

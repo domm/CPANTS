@@ -44,4 +44,3 @@ foreach my $name (keys %dumps) {
     rename($dbfile.'.gz',$current.'.gz');
 }
 
-

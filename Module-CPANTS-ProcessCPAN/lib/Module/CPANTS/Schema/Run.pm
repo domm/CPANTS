@@ -40,12 +40,19 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     size => 8,
   },
+  "stop",
+  {
+    data_type => "timestamp without time zone",
+    default_value => undef,
+    is_nullable => 1,
+    size => 8,
+  },
 );
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-06-03 23:19:44
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:kSqZ9Uby1zAJHzyeZ5QLOg
+# Created by DBIx::Class::Schema::Loader v0.04004 @ 2008-08-12 08:51:36
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:+iii7Veunjp/5tbqJSEH2Q
 
 __PACKAGE__->has_many(
   "dists",

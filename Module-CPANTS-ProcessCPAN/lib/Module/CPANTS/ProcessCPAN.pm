@@ -59,6 +59,22 @@ sub start_run {
     return $me;
 }
 
+sub stop_run {
+    my $class=shift;
+    my $me = $class->new;
+    # prev run
+    my $prev=$me->db->resultset('Run')->search(
+        {},
+        {
+            order_by=>'date desc',
+            rows=>1,
+        }
+    )->first;
+    my $now=DateTime->now;
+    $prev->stop($now);
+    $prev->update;
+}
+
 sub process_cpan {
     my $me=shift;
     
