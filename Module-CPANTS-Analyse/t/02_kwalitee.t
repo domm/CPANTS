@@ -4,8 +4,8 @@ use Test::NoWarnings;
 
 use Module::CPANTS::Kwalitee;
 
-my $CORE = 25;
-my $OPTIONAL = 7;
+my $CORE = 23;
+my $OPTIONAL = 9;
 my $EXTRA = 16;
 my $METRICS = $CORE + $OPTIONAL + $EXTRA;
 

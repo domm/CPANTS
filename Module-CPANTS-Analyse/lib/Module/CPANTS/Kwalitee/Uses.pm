@@ -111,6 +111,7 @@ sub kwalitee_indicators {
             name=>'has_test_pod',
             error=>q{Doesn't include a test for pod correctness (Test::Pod)},
             remedy=>q{Add a test using Test::Pod to check for pod correctness.},
+            is_extra=>1,
             code=>sub {
                 my $d=shift;
                 return 1 if $d->{uses}->{'Test::Pod'};
@@ -121,6 +122,7 @@ sub kwalitee_indicators {
             name=>'has_test_pod_coverage',
             error=>q{Doesn't include a test for pod coverage (Test::Pod::Coverage)},
             remedy=>q{Add a test using Test::Pod::Coverage to check for POD coverage.},
+            is_extra=>1,
             code=>sub {
                 my $d=shift;
                 return 1 if $d->{uses}->{'Test::Pod::Coverage'};

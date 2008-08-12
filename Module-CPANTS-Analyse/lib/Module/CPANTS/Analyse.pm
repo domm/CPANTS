@@ -12,7 +12,7 @@ use IO::Capture::Stdout;
 use IO::Capture::Stderr;
 use YAML::Syck qw(LoadFile);
 
-use version; our $VERSION=version->new('0.82');
+use version; our $VERSION=version->new('0.82_01');
 
 # setup logger
 if (! main->can('logger')) {
