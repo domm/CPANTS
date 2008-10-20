@@ -21,6 +21,8 @@ my $dist=shift(@ARGV);
 pod2usage(-exitstatus => 0, -verbose => 0) unless $dist;
 die "Cannot find $dist\n" unless -e $dist;
 
+$ENV{CPANTS_LINT} = 1;
+
 my $mca=Module::CPANTS::Analyse->new({
     dist=>$dist,
     opts=>\%opts,
@@ -53,7 +55,7 @@ else {
         my (@core_failure,@opt_failure,@exp_failure);
         my ($core_kw,$opt_kw)=(0,0);
         my $kwl=$mca->d->{kwalitee};
-        
+ 
         my @need_db;
         foreach my $ind (@{$mca->mck->get_indicators}) {
             if ($ind->{needs_db}) {

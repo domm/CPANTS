@@ -18,6 +18,8 @@ sub analyse {
     my $class=shift;
     my $me=shift;
 
+	return if $ENV{CPANTS_LINT};
+
     if (not $debian) {
         $debian = get_debian_data();
     }
@@ -72,6 +74,8 @@ sub get_debian_data {
 ##################################################################
 
 sub kwalitee_indicators{
+	return [] if $ENV{CPANTS_LINT};
+
     return [
          {
             name=>'distributed_by_debian',
@@ -138,8 +142,10 @@ team to upgrde.},
                     my $deb = $debian->{ $d->{dist} };
                     return 1 if $deb && !$deb->{N_patches};
                     if ($deb) {
-                        my $error = "Number of patches reported: $deb->{N_patches}.";
-                        $error .= " See: <a href=http://packages.debian.org/src:$deb->{debian_pkg}>Basic homepage</a>";
+                        my $error = qq(Number of patches reported: $deb->{N_patches}.);
+                        $error .= qq( See: <a href="http://packages.debian.org/src:$deb->{debian_pkg}">Basic homepage</a>);
+                        $error .= sprintf(' <a href="http://svn.debian.org/wsvn/pkg-perl/trunk/%s/debian/patches/">svn</a>',
+                                $deb->{debian_pkg});
                         $d->{error}{ $metric->{name} } = $error;
                     } else {
                         #$d->{error}{ $metric->{name} } = 'First get your module in Debian';
