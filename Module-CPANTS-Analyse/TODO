@@ -34,6 +34,16 @@ Moose and MooseX turn on strict, so count Moose[X] as use_strict
 - same for use_strict
 
 
+- Allow the Debian and/or the Fedora packagers to "manually" report problems they 
+  encounter with certain packages directly from their systems.
+  So if there is a module that cannot automatically packaged (or tested?) because
+  they are interactive (in the wrong way) or they need network access...
+  On the Debian list it was discussed that they might start saving this information
+  from themself and then export this information with the rest of the data about
+  packages.
+
+
+
 - Signature checking ?
 - has_rating ?
 - relation of subs to lines of code ?
@@ -104,6 +114,14 @@ Moose and MooseX turn on strict, so count Moose[X] as use_strict
     (though I am not sure if that should mean the main .pm
         file only or all the files or what)
 - licenses_are_consistent
+
+Locate places where hard-coded pathes to perl (or other files?)
+are:
+>
+>       my @cmd = qw{/usr/bin/perl -Ilib -MPod::HtmlEasy -e};
+actually try to locate places where perl is called instead of $^X
+
+
 
 #-----------------------------------------------------------------
 # Other Stuff 
