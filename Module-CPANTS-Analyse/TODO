@@ -17,6 +17,10 @@ http://rt.cpan.org/Ticket/Display.html?id=21370
 
 Moose and MooseX turn on strict, so count Moose[X] as use_strict
 
+The "ownership of a modules does not seem to get updated"
+e.g. still shows DAGOLDEN even tough it should be ADAMK
+http://cpants.perl.org/dist/external/Perl-Dist-Strawberry
+
 #-----------------------------------------------------------------
 # New Metrics
 #-----------------------------------------------------------------
