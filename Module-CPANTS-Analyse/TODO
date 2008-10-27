@@ -125,6 +125,8 @@ are:
 >       my @cmd = qw{/usr/bin/perl -Ilib -MPod::HtmlEasy -e};
 actually try to locate places where perl is called instead of $^X
 
+<@Tux> has no open bugs in RT older than 2 months
+<@Tux> and debian shipped last version is only ok is last version is older than 3 months
 
 
 #-----------------------------------------------------------------
