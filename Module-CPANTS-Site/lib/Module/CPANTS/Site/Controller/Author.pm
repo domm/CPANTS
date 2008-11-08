@@ -3,18 +3,18 @@ package Module::CPANTS::Site::Controller::Author;
 use strict;
 use warnings;
 
-use base qw( Catalyst::Controller::BindLex );
+use base qw( Catalyst::Controller );
 
 sub search : Local {
     my ( $self, $c, $search ) = @_;
-    my $term : Stashed = $search || $c->req->param( 'pauseid' );
+    my $term = $c->stash->{term} = $search || $c->req->param( 'pauseid' );
  
     return unless $term;
     $term=~s/\s//g;
 
     $c->log->debug( "search author for $term" ) if $c->debug;
     
-    my $list : Stashed = $c->model( 'DBIC::Author' )->search_like(
+    my $list = $c->stash->{list} = $c->model( 'DBIC::Author' )->search_like(
         {
             pauseid => uc( $term ) . '%',
         },

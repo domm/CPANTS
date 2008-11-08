@@ -3,18 +3,18 @@ package Module::CPANTS::Site::Controller::Dist;
 use strict;
 use warnings;
 
-use base qw( Catalyst::Controller::BindLex );
+use base qw( Catalyst::Controller);
 
 sub search : Local {
     my ( $self, $c, $search ) = @_;
-    my $term : Stashed = $search || $c->req->param( 'dist' );
+    my $term = $c->stash->{'term'} = $search || $c->req->param( 'dist' );
 
     return unless $term;
 
     $c->log->debug( "search dist for $term" ) if $c->debug;
     $term=~s/::/-/g;
         
-    my $list : Stashed = $c->model( 'DBIC::Dist' )->search(
+    my $list = $c->stash->{list} = $c->model( 'DBIC::Dist' )->search(
         {
             dist => { ILIKE =>  '%' . $term . '%' },
         },
@@ -27,6 +27,7 @@ sub search : Local {
     if ($list == 1) {
         $c->response->redirect($c->uri_for('/dist/overview',$list->first->dist));
     }
+    
 }
 
 # for backward compat / google
@@ -44,7 +45,7 @@ sub overview : Local {
 sub kwalitee : Local {
     my ( $self, $c, $distname ) = @_;
     $c->forward('get_dist',[ $distname ]);
-    my $kwalitee_hash : Stashed = $c->model( 'Kwalitee' )->get_indicators_hash;
+    $c->stash->{'kwalitee_hash'}  = $c->model( 'Kwalitee' )->get_indicators_hash;
 }
 
 sub prereq : Local {
