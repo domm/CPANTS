@@ -24,6 +24,8 @@ sub hall_of_fame : Local {
     );
 }
 
+=pod
+
 sub hall_of_shame : Local {
     my ( $self, $c ) = @_;
 
@@ -42,6 +44,8 @@ sub hall_of_shame : Local {
          }
     );
 }
+
+=cut
 
 sub many : Local {
     my ( $self, $c ) = @_;
