@@ -248,8 +248,8 @@ sub kwalitee_indicators {
         remedy=>q{Add a directory matching the regex (bin|scripts?|ex|eg|examples?|samples?|demos?) or a file matching the regex /\/(examples?|samples?|demos?)\.p(m|od)$/i to your distribution that includes some scripts showing one or more use-cases of the distribution. },
         code=>sub {
             my $d=shift;
-            return 1 if grep {/^(bin|scripts?|ex|eg|examples?|samples?|demos?)\/\w/i} @{ $d->{files_array} };
-            return 1 if grep {/\/(examples?|samples?|demos?)\.p(m|od)$/i} @{ $d->{files_array} };
+            return 1 if grep {/^(bin|scripts?|ex|eg|examples?|samples?|demos?)\/\w/i} ( @{ $d->{files_array} }, @{ $d->{ignored_files_array} } );
+            return 1 if grep {/\/(examples?|samples?|demos?)\.p(m|od)$/i} ( @{ $d->{files_array} }, @{ $d->{ignored_files_array} } );
             return 0;
         },
     },
