@@ -34,14 +34,19 @@ my @bar_defaults=(
     my $mck=Module::CPANTS::Kwalitee->new;
     my @metrics=$mck->get_indicators;
     my $total_dists=$DBH->selectrow_array("select count(*) from kwalitee");
-    foreach (sort {$a->{name} cmp $b->{name}} @metrics) {
+    my %data;
+    foreach (@metrics) {
         my $m=$_->{name};
         my $ok=$DBH->selectrow_array("select count(*) from kwalitee where $m=1 group by $m") || 0;
-        push(@ok,$ok);
-        push(@fail,$total_dists-$ok);
+        $data{$m}=[$ok,$total_dists-$ok];
+    }
+   
+    foreach my $m (sort { $data{$b}->[0] <=> $data{$a}->[0] } keys %data) {
+        push(@ok,$data{$m}->[0]);
+        push(@fail,$data{$m}->[1]);
         push(@lable,$m);
     }
-    
+
     my $graph=GD::Graph::bars->new(600,600);
     $graph->set(
     cumulate=>1,
@@ -150,7 +155,6 @@ sub make_graph {
     my $gd=$graph->plot([\@x,\@y]);
     return unless $gd;
     my $outfile=catfile($outpath,$filename);
-    print $outfile,"\n";
     open(IMG, ">",$outfile) or die "$outfile: $!";
     binmode IMG;
     print IMG $gd->png;
