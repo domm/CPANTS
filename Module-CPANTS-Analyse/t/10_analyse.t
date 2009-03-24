@@ -70,8 +70,8 @@ my @tests = (
         },
         error => {
             'latest_version_distributed_by_debian' =>
-                "Seen on CPAN: '0.40'. Reported by Debian: 'not-uploaded' See: <a href=http://packages.debian.org/src:libtext-csv-xs-perl>Basic homepage</a>",
-                'has_no_patches_in_debian' => 'Number of patches reported: 1. See: <a href=http://packages.debian.org/src:libtext-csv-xs-perl>Basic homepage</a>',
+                q{Seen on CPAN: '0.40'. Reported by Debian: 'not-uploaded' See: <a href=http://packages.debian.org/src:libtext-csv-xs-perl>Basic homepage</a>},
+                'has_no_patches_in_debian' => q{Number of patches reported: 1. See: <a href="http://packages.debian.org/src:libtext-csv-xs-perl">Basic homepage</a> <a href="http://svn.debian.org/wsvn/pkg-perl/trunk/libtext-csv-xs-perl/debian/patches/">svn</a>},
         },
     },
     {
