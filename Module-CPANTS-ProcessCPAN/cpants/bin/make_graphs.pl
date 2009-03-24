@@ -91,6 +91,7 @@ foreach (
         sql=>'select extract(year from released) as year,count(*) from dist group by year order by year',
         lablex=>'Year',
         labley=>'Dists',
+        x_labels_vertical=>1,
     },
 
 ) {
@@ -142,12 +143,14 @@ sub make_graph {
 		'y_label'=>$c->{labley},
 		title=>$title." ($now)",
 		'y_max_value'=>$maxy,
+        x_labels_vertical=>$c->{x_labels_vertical} || 0,
 		@bar_defaults,
     );
 
     my $gd=$graph->plot([\@x,\@y]);
     return unless $gd;
     my $outfile=catfile($outpath,$filename);
+    print $outfile,"\n";
     open(IMG, ">",$outfile) or die "$outfile: $!";
     binmode IMG;
     print IMG $gd->png;
