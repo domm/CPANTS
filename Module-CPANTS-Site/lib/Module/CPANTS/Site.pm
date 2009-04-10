@@ -53,7 +53,7 @@ sub end : Private {
 
     $c->stash->{cpants_is_analysing}=1 if (-e catfile($home,'cpants_is_analysing'));
 
-    $c->forward( $c->view('') ) unless $c->stash->{'is_redirect'} || $c->response->body;
+    $c->forward( $c->view('TT') ) unless $c->stash->{'is_redirect'} || $c->response->body;
 }
 
 sub max_kwalitee {

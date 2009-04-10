@@ -5,7 +5,7 @@
 <li><a href="[% c.uri_for('/dist/by/size_packed') %]">by packaged size</a>
 <li><a href="[% c.uri_for('/dist/by/size_unpacked') %]">by extracted size</a>
 <li><a href="[% c.uri_for('/dist/by/files') %]">by number of files</a>
-<li><a href="[% c.uri_for('/dist/by/released') %]">by age</a>
+<li><a href="[% c.uri_for('/dist/by/age') %]">by age</a>
 <li><a href="[% c.uri_for('/dist/by/absolute_kwalitee') %]">by total kwalitee</a>
 <li><a href="[% c.uri_for('/dist/by/core_kwalitee') %]">by core kwalitee</a>
 <!--<li><a href="[% c.uri_for('/dist/by_required') %]">number of other dists requiring it</a>-->
