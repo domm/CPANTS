@@ -6,7 +6,7 @@ use Module::CPANTS::ProcessCPAN::ConfigData;
 use File::Spec::Functions;
 use Catalyst qw(Static::Simple
     Session
-    Session::Store::FastMmap
+    Session::Store::Memcached
     Session::State::Cookie
 );
 
