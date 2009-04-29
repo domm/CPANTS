@@ -20,13 +20,28 @@ my $home=Module::CPANTS::ProcessCPAN::ConfigData->config('home');
 my $bin=catdir($home,'bin');
 $force = $force ? '--force' : '';
 
+print "start\n";
 my $lockfile=catfile($home,'cpants_is_analysing');
-system("touch $lockfile");
-system("$perl $bin/analyse_cpan.pl --cpan $cpan --lint $lint $force");
-system("$perl $bin/run_complex_db_stuff.pl --cpan $cpan");
-system("$perl $bin/update_authors.pl --cpan $cpan");
-system("$perl $bin/make_graphs.pl");
-system("$perl $bin/make_distgraph.pl");
-system("$perl $bin/dump_sqlite.pl");
+system("touch $lockfile") && print "error: cant touch $lockfile: $!\n";
+
+print "analyse_cpan.pl\n";
+system("$perl $bin/analyse_cpan.pl --cpan $cpan --lint $lint $force") && print "error analyse_cpan.pl $!\n";
+
+print "run_complex_db_stuff.pl\n";
+system("$perl $bin/run_complex_db_stuff.pl --cpan $cpan") && print "error run_complex_stuff $!\n";
+
+print "update_authors\n";
+system("$perl $bin/update_authors.pl --cpan $cpan") && print "error update_authors $!\n";
+
+print "make_graphs\n";
+system("$perl $bin/make_graphs.pl") && print "error make_graphs $!\n";
+
+print "make_distgraph\n";
+system("$perl $bin/make_distgraph.pl") && print "error make_distgraph $!\n";
+
+print "dump_sqlite\n";
+system("$perl $bin/dump_sqlite.pl") && print "error dump_sqlite $!\n";
 Module::CPANTS::ProcessCPAN->stop_run;
 unlink($lockfile);
+print "done!\n";
+
