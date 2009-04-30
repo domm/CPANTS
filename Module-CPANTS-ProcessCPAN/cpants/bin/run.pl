@@ -2,6 +2,7 @@
 use strict;
 use warnings;
 use Module::CPANTS::ProcessCPAN::ConfigData;
+use Module::CPANTS::ProcessCPAN;
 use File::Spec::Functions;
 use Getopt::Long;
 use FindBin;
@@ -41,7 +42,9 @@ system("$perl $bin/make_distgraph.pl") && print "error make_distgraph $!\n";
 
 print "dump_sqlite\n";
 system("$perl $bin/dump_sqlite.pl") && print "error dump_sqlite $!\n";
+
 Module::CPANTS::ProcessCPAN->stop_run;
+
 unlink($lockfile);
 print "done!\n";
 
