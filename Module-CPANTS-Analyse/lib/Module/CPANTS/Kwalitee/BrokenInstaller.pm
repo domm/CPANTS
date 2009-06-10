@@ -129,7 +129,10 @@ Steffen Müller, <smueller@cpan.org>, http://steffen-mueller.net
 
 Thomas Klausner, <domm@cpan.org>, http://domm.zsi.at
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2003-2009  Thomas Klausner
+Copyright (C) 2006  Steffen Müller
 
 You may use and distribute this module according to the same terms
 that Perl is distributed under.

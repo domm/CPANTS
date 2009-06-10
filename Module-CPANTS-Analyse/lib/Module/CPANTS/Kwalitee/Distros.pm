@@ -247,7 +247,10 @@ Thomas Klausner, <domm@cpan.org>, http://domm.zsi.at
 and Gabor Szabo, <gabor@pti.co.il>, http://www.szabgab.com
 with the help of Martín Ferrari and the Debian Perl packaging team.
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2003-2009  Thomas Klausner
+Copyright (C) 2006-2008  Gabor Szabo
 
 You may use and distribute this module according to the same terms
 that Perl is distributed under.

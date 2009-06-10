@@ -8,6 +8,15 @@ DESCRIPTION
 AUTHOR
     Thomas Klausner, <domm@cpan.org>
 
+COPYRIGHT
+
+    Copyright (C) 2003-2009  Thomas Klausner
+    Some files are Copyright (C) 2006-2008  Gabor Szabo
+    Some files are Copyright (C) 2006  Steffen Müller
+
+    The module distributions in the t/eg/ directory are copyright by
+    their respective authors.
+
 LICENSE
     This code is distributed under the same license as Perl.
 

@@ -96,7 +96,9 @@ L<Module::CPANTS::Analyse>
 
 Gabor Szabo <gabor@pti.co.il> http://www.pti.co.il
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2006-2008  Gabor Szabo
 
 You may use and distribute this module according to the same terms
 that Perl is distributed under.

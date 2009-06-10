@@ -159,7 +159,9 @@ L<Module::CPANTS::Analyse>
 
 Thomas Klausner, <domm@cpan.org>, http://domm.zsi.at
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2003-2006, 2009  Thomas Klausner
 
 You may use and distribute this module according to the same terms
 that Perl is distributed under.
