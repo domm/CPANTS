@@ -30,7 +30,15 @@ my $build = Module::Build->new(
         'Test::Deep'                => '0',
         'Test::Warn'                => '0.11', #less problems with new Sub::Uplevel
         'Test::NoWarnings'          => '0',
-    }, 
+    },
+    meta_merge => {
+        resources => {
+            repository => 'http://github.com/domm/CPANTS/tree',
+        },
+        keywords => [
+            'CPANTS','kwalitee',
+        ],
+    },
     script_files=>[qw(bin/cpants_lint.pl)],
     create_makefile_pl=>'traditional',
 );

@@ -140,7 +140,7 @@ actually try to locate places where perl is called instead of $^X
 - Perl Critic report:
   As this is not really in the consensus probably it is better not add it as 
   a metric now but it might be nice to run it on each module 
-  (starting at leevel 5 ) and display it along with the metrics.
+  (starting at level 5 ) and display it along with the metrics.
   Maybe it can be added as an optional metric.
 
 
@@ -148,7 +148,7 @@ actually try to locate places where perl is called instead of $^X
 
 - http://cpants.perl.org/author/search should also work on partial names
   adding % % automatically (or at least tell the users on the search page to
-  use % as widecards.
+  use % as wildcards.
 
 - create stats (or metrics) for distros that were uploaded recently with failing metrics.
   e.g. the fact that 9920 Distributions failing 'metayml_has_license' is skewed by the

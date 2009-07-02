@@ -164,7 +164,7 @@ __END__
 Module::CPANTS::Analyse - Generate Kwalitee ratings for a distribution
 
 =head1 SYNOPSIS
-    
+
     use Module::CPANTS::Analyse;
 
     my $analyser=Module::CPANTS::Analyse->new({
@@ -174,7 +174,7 @@ Module::CPANTS::Analyse - Generate Kwalitee ratings for a distribution
     $analyser->analyse;
     $analyser->calc_kwalitee;
     # results are in $analyser->d;
-  
+
 =head1 DESCRIPTION
 
 =head2 Methods
