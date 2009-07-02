@@ -8,6 +8,9 @@ use File::HomeDir;
 my $build = Module::CPANTS::MyBuild->new(
     module_name => 'Module::CPANTS::ProcessCPAN',
     license     => 'perl',
+    configure_requires => {
+        'File::HomeDir'                 => '0.66', 
+    },
     build_requires => {
         'File::HomeDir'                 => '0.66', 
     },
