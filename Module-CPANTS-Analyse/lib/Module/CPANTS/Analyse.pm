@@ -1,4 +1,5 @@
 package Module::CPANTS::Analyse;
+use 5.006;
 use strict;
 use warnings;
 use base qw(Class::Accessor);

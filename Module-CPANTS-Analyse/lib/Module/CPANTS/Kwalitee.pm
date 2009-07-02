@@ -1,4 +1,5 @@
 package Module::CPANTS::Kwalitee;
+use 5.006;
 use strict;
 use warnings;
 use base qw(Class::Accessor);
@@ -134,7 +135,7 @@ Module::CPANTS::Kwalitee - Interface to Kwalitee generators
 
   my $mck=Module::CPANTS::Kwalitee->new;
   my @generators=$mck->generators;
-  
+
 =head1 DESCRIPTION
 
 =head2 Methods

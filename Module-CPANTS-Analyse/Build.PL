@@ -23,8 +23,10 @@ my $build = Module::Build->new(
         'Software::License'         => '0.003',
         'File::Slurp'               => '0',
         'Text::CSV_XS'              => '0.45',
+        'perl'                      => 5.006,
     },
     build_requires => {
+        'Test::More'                => '0',
         'Test::Deep'                => '0',
         'Test::Warn'                => '0.11', #less problems with new Sub::Uplevel
         'Test::NoWarnings'          => '0',
