@@ -1,3 +1,4 @@
+use 5.006; #warnings.pm used
 use strict;
 use warnings;
 use lib qw(lib);
@@ -25,6 +26,7 @@ my $build = Module::CPANTS::MyBuild->new(
         'DBD::Pg'                       => '1.49',
         'version'                       => '0.73',
         'File::HomeDir'                 => '0.66',
+        'perl'                          => 5.006,
     },
     
     create_makefile_pl=>'passthrough',
