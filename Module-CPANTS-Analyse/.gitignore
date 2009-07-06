@@ -3,3 +3,8 @@ Build
 Makefile.PL
 _build
 Module-CPANTS-Analyse-*
+Debian_CPANTS.txt
+Debian_CPANTS.txt-*
+blib
+*.tmp
+
