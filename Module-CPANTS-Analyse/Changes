@@ -7,9 +7,13 @@
     - add LWP::Simple to deps
     - fix calc_test_yaml_meta.t
 
+
 0.83    2009-06-10
-    - ignore no_index when searching for examples
-    ???
+    - ignore no_index when searching for examples (xdaveg)
+    - skip the debian metrics and downloading the debian file when in LINT
+      (szabgab)
+    - has_test_pod and has_test_pod_coverage are now optional metrics (domm)
+
 
 0.82	2008-07-08 10:23:30
     - update META.yml spec to 1.4
