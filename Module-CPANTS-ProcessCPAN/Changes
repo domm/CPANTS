@@ -2,6 +2,7 @@
 # Changes for Module::CPANTS::ProcessCPAN
 #-----------------------------------------------------------------
     - add File::HomeDir to configure_requires
+    - add Test::More to deps
 
 0.77	2008-08-10 13:10:56
     - added docs on how to set up a CPANTS analyser

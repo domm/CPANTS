@@ -14,6 +14,7 @@ my $build = Module::CPANTS::MyBuild->new(
     },
     build_requires => {
         'File::HomeDir'                 => '0.66', 
+        'Test::More'                    => '0',
     },
     requires    => {
         'Class::Accessor'               => '0.19',
