@@ -7,6 +7,10 @@
     - add LWP::Simple to deps
     - fix calc_test_yaml_meta.t
 
+0.83    2009-06-10
+    - ignore no_index when searching for examples
+    ???
+
 0.82	2008-07-08 10:23:30
     - update META.yml spec to 1.4
     - fixed experimental metrics
