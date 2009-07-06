@@ -23,6 +23,7 @@ my $build = Module::Build->new(
         'Software::License'         => '0.003',
         'File::Slurp'               => '0',
         'Text::CSV_XS'              => '0.45',
+        'LWP::Simple'               => 0,
         'perl'                      => 5.006,
     },
     build_requires => {
