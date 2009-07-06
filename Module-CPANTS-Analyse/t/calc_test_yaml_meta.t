@@ -1,7 +1,18 @@
 use Test::More tests => 4;
 
 use Module::CPANTS::Analyse;
+use Module::CPANTS::Kwalitee::Distros;
 use File::Spec::Functions;
+use File::Copy qw(copy);
+{
+    no warnings;
+    unlink 'Debian_CPANTS.txt';
+
+    #"mirror" is copied for LWP::Simple to this namespace by Exporter
+    *Module::CPANTS::Kwalitee::Distros::mirror = sub ($$) { 
+        copy 't/eg/Debian_CPANTS.txt', '.';
+    };
+}
 my $a=Module::CPANTS::Analyse->new({
     dist=>'t/eg/Test-YAML-Meta-0.04.tar.gz',
     _dont_cleanup=>$ENV{DONT_CLEANUP},
