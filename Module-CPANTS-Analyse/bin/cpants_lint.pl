@@ -146,17 +146,17 @@ cpants_lint.pl - commandline frontend to Module::CPANTS::Analyse
         --man               full documentation
         --verbose           print more info during run
         --no_capture        don't turn on capturing of STDERR and STDOUT
-        
+
         --dump              dump result using Data::Dumper
         --yaml              dump result as YAML
-        
+
         --to_file           dump result to a file
         --dir               directory to dump files to
 
 
 =head1 DESCRIPTION
 
-C<cpants_lint.pl> checks the B<Kwalitee> of CPAN distributions. More exact, it checks how a given tarball will be ratend on C<http://cpants.perl.org>, without needing to upload it first.
+C<cpants_lint.pl> checks the B<Kwalitee> of CPAN distributions. More exact, it checks how a given tarball will be rated on C<http://cpants.perl.org>, without needing to upload it first.
 
 C<cpants_lint.pl> is also used by C<cpants.perl.org> itself to check all dists on CPAN.
 
