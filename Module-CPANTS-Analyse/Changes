@@ -2,10 +2,13 @@
 # Changes for Module::CPANTS::Analyse
 #-----------------------------------------------------------------
 
+0.84    2009-07-08, Alexandr Ciornii
     - require Test::Warn 0.11
     - add Test::More to deps
     - add LWP::Simple to deps
     - fix calc_test_yaml_meta.t
+    - better META.yml
+    - list of changes for 0.83 (domm)
 
 
 0.83    2009-06-10
