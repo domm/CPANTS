@@ -45,13 +45,15 @@ sub get_debian_data {
 
     # debian_pkg, CPAN_dist, CPAN_vers, N_bugs, N_patches
     my $header = <$fh>;
-    chomp $header;
+    $header=~s/\s+$//s;
+    #chomp $header;
     $csv->parse($header) or die "Could not parse header:\n$header\n";
 
     my @header = $csv->fields;
     #die Dumper \@header;
     while (my $row = <$fh>) {
-        chomp $row;
+        $row=~s/\s+$//s;
+        #chomp $row;
         if ($csv->parse($row)) {
             my @values = $csv->fields;
             my %h;

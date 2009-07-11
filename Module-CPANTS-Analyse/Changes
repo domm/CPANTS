@@ -2,6 +2,9 @@
 # Changes for Module::CPANTS::Analyse
 #-----------------------------------------------------------------
 
+0.85    2009-07-12, Alexandr Ciornii
+    - Fix fails on non-Win32
+
 0.84    2009-07-08, Alexandr Ciornii
     - require Test::Warn 0.11
     - add Test::More to deps

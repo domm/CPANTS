@@ -1,6 +1,6 @@
 ---
 name: Module-CPANTS-Analyse
-version: 0.83
+version: 0.85
 author:
   - 'Thomas Klausner, <domm@cpan.org>, http://domm.zsi.at'
   - |-
@@ -20,6 +20,7 @@ requires:
   File::Find::Rule: 0
   File::Slurp: 0
   IO::Capture: 0.05
+  LWP::Simple: 0
   List::MoreUtils: 0
   Module::ExtractUse: 0.18
   Module::Pluggable: 2.96
@@ -39,7 +40,7 @@ build_requires:
 provides:
   Module::CPANTS::Analyse:
     file: lib/Module/CPANTS/Analyse.pm
-    version: 0.83
+    version: 0.85
   Module::CPANTS::Kwalitee:
     file: lib/Module/CPANTS/Kwalitee.pm
   Module::CPANTS::Kwalitee::BrokenInstaller:
