@@ -41,7 +41,7 @@ t/eg/AFS-2.4.0.tar.gz
 t/eg/App-Wack-0.05.tar.gz
 t/eg/AxKit-XSP-L10N-0.03.tar.gz
 t/eg/Capture-Tiny-0.05.tar.gz
-t/eg/DBIx-SchemaChecksum-0.06.tar.gz
+t/eg/modified/DBIx-SchemaChecksum-0.06.tar.gz
 t/eg/Debian_CPANTS.txt
 t/eg/Devel-Timer-0.02.tar.gz
 t/eg/Eg-C-0.01.tar.gz

@@ -7,7 +7,7 @@ use Test::NoWarnings;
 use Module::CPANTS::Analyse;
 use File::Spec::Functions;
 my $a=Module::CPANTS::Analyse->new({
-    dist=>'t/eg/DBIx-SchemaChecksum-0.06.tar.gz',
+    dist=>'t/eg/modified/DBIx-SchemaChecksum-0.06.tar.gz',
     _dont_cleanup=>$ENV{DONT_CLEANUP},
 });
 
