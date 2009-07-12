@@ -45,5 +45,6 @@ my $build = Module::Build->new(
 );
 
 
+$build->add_to_cleanup('Debian_CPANTS.txt');
 $build->create_build_script;
 
