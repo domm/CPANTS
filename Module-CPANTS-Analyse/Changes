@@ -2,8 +2,11 @@
 # Changes for Module::CPANTS::Analyse
 #-----------------------------------------------------------------
 
+    - fix when Moose is used and strict is not used
+    - add info about MIN_PERL_VERSION
+
 0.85    2009-07-12, Alexandr Ciornii
-    - Fix fails on non-Win32
+    - fix fails on non-Win32
 
 0.84    2009-07-08, Alexandr Ciornii
     - require Test::Warn 0.11
