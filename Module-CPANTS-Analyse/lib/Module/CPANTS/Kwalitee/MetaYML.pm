@@ -122,7 +122,7 @@ sub kwalitee_indicators{
             name=>'metayml_declares_perl_version',
             error=>q{This distribution does not declare the minimum perl version in META.yml.},
             is_experimental=>1,
-            remedy=>q{If you are using Build.PL define the {requires}{perl} = VERSION field. If you are using MakeMaker (Makefile.PL) you should upgrade ExtUtils::MakeMaker to 6.48 and use MIN_PERL_VERSION parameter.},
+            remedy=>q{If you are using Build.PL define the {requires}{perl} = VERSION field. If you are using MakeMaker (Makefile.PL) you should upgrade ExtUtils::MakeMaker to 6.48 and use MIN_PERL_VERSION parameter. Perl::MinimumVersion can help you determine which version of Perl your module needs.},
             code=>sub { 
                 my $d=shift;
                 my $yaml=$d->{meta_yml};
