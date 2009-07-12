@@ -81,8 +81,8 @@ sub kwalitee_indicators {
                 
                 my ($strict)=$uses->{'strict'};
                 my ($moose)=$uses->{'Moose'};
-                return 0 unless $strict;
-                my $total = $strict->{in_code};
+                #return 0 unless $strict;
+                my $total = $strict?$strict->{in_code}:0;
                 if ($moose) {
                     $total += $moose->{in_code};
                 }
