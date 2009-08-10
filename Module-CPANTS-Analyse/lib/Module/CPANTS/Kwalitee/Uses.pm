@@ -81,6 +81,8 @@ sub kwalitee_indicators {
                 
                 my ($strict)=$uses->{'strict'};
                 my ($moose)=$uses->{'Moose'};
+                #should also count Moose::Role, MooseX::Declare, Modern::Perl
+
                 #return 0 unless $strict;
                 my $total = $strict?$strict->{in_code}:0;
                 if ($moose) {
