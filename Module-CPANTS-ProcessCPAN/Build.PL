@@ -29,6 +29,14 @@ my $build = Module::CPANTS::MyBuild->new(
         'File::HomeDir'                 => '0.66',
         'perl'                          => 5.006,
     },
+    meta_merge => {
+        resources => {
+            repository => 'http://github.com/domm/CPANTS/tree',
+        },
+        keywords => [
+            'CPANTS','kwalitee',
+        ],
+    },
     
     create_makefile_pl=>'passthrough',
 );
