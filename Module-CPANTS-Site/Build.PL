@@ -26,6 +26,14 @@ my $build = Module::CPANTS::MyBuild->new(
         'version'                          => '0.73', 
         'Template::Plugin::Number::Format' => '1.02',
     },
+    meta_merge => {
+        resources => {
+            repository => 'http://github.com/domm/CPANTS/tree',
+        },
+        keywords => [
+            'CPANTS','kwalitee',
+        ],
+    },
     create_makefile_pl => 'traditional',
 
 );
