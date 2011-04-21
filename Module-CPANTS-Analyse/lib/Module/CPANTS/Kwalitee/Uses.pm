@@ -74,22 +74,26 @@ sub kwalitee_indicators {
             error=>q{This distribution does not 'use strict;' in all of its modules.},
             remedy=>q{Add 'use strict' to all modules.},
             code=>sub {
-                my $d=shift;
-                my $modules=$d->{modules};
-                my $uses=$d->{uses};
+                my $d       = shift;
+                my $modules = $d->{modules};
+                my $uses    = $d->{uses};
                 return 0 unless $modules && $uses;
-                
-                my ($strict)=$uses->{'strict'};
-                my ($moose)=$uses->{'Moose'};
-                #should also count Moose::Role, MooseX::Declare, Modern::Perl
 
-                #return 0 unless $strict;
-                my $total = $strict?$strict->{in_code}:0;
-                if ($moose) {
-                    $total += $moose->{in_code};
+                # There are lots of acceptable strict alternatives
+                my @strict_equivalents = qw(strict
+                    Moose MooseX::Declare Moose::Role
+                    perl5i::latest perl5i::1 perl5i::2
+                    Modern::Perl common::sense
+                );
+                my $total = 0;
+                # Count up the strict equivalents
+                foreach my $mod (@strict_equivalents) {
+                    $total += $uses->{$mod}->{in_code}
+                        if $uses->{$mod};
                 }
-                return 1 if $total >= @$modules;
-                return 0;
+
+                return 1 if $total >= @$modules; # At least one strict-equivalent per module
+                return 0; # Needs moar cowbell
             },
         },
         {
