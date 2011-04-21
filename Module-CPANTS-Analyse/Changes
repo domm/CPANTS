@@ -2,7 +2,7 @@
 # Changes for Module::CPANTS::Analyse
 #-----------------------------------------------------------------
 
-    - add several strict equivalents & make it easy to add more
+    - add several strict and warnings equivalents & make it easy to add more
     - fix when Moose is used and strict is not used
     - add info about MIN_PERL_VERSION
     - better remedy for 'metayml_declares_perl_version'

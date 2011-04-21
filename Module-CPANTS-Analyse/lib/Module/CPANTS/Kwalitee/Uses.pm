@@ -102,14 +102,23 @@ sub kwalitee_indicators {
             is_extra=>1,
             remedy=>q{Add 'use warnings' to all modules. (This will require perl > 5.6)},
             code=>sub {
-                my $d=shift;
-                my $modules=$d->{modules};
-                my $uses=$d->{uses};
+                my $d       = shift;
+                my $modules = $d->{modules};
+                my $uses    = $d->{uses};
                 return 0 unless $modules && $uses;
-                my ($warnings)=$uses->{'warnings'};
-                return 0 unless $warnings;
-                return 1 if $warnings->{in_code} >= @$modules;
-                return 0;
+
+                my @warnings_equivalents = qw(warnings
+                    Modern::Perl common::sense
+                    perl5i::latest perl5i::1 perl5i::2
+                );
+                my $total = 0;
+                foreach my $mod (@warnings_equivalents) {
+                    $total += $uses->{$mod}->{in_code}
+                        if $uses->{$mod};
+                }
+
+                return 1 if $total >= @$modules; # Minimum 1 warnings equivalent per module
+                return 0; # Needs moar triangle
             },
         },
         
