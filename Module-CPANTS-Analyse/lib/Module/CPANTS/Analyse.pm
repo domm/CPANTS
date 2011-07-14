@@ -11,9 +11,9 @@ use Carp;
 use Module::CPANTS::Kwalitee;
 use IO::Capture::Stdout;
 use IO::Capture::Stderr;
-use YAML::Syck qw(LoadFile);
+use YAML::Any qw(LoadFile);
 
-use version; our $VERSION=version->new('0.85');
+use version; our $VERSION=version->new('0.86');
 
 # setup logger
 if (! main->can('logger')) {
