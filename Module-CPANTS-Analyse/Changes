@@ -2,10 +2,15 @@
 # Changes for Module::CPANTS::Analyse
 #-----------------------------------------------------------------
 
-    - fix when Moose is used and strict is not used
-    - add info about MIN_PERL_VERSION
-    - better remedy for 'metayml_declares_perl_version'
-    - 'metayml_declares_perl_version' moved from experimental to extra
+0.86   2011-07-15, Reini Urban
+    - replace Test::YAML::Meta::Version with Test::CPAN::Meta::YAML::Version (rurban)
+    - replace YAML::Syck with YAML::Any (rurban)
+    - no_symlinks checks only files in MANIFEST, use ExtUtils::Manifest::maniread (rurban)
+    - added test 'has_better_auto_install' (ciorni)
+    - fix when Moose is used and strict is not used (ciorni)
+    - add info about MIN_PERL_VERSION (ciorni)
+    - better remedy for 'metayml_declares_perl_version' (ciorni)
+    - 'metayml_declares_perl_version' moved from experimental to extra (ciorni)
 
 0.85    2009-07-12, Alexandr Ciornii
     - fix fails on non-Win32

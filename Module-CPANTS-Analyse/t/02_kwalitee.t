@@ -4,7 +4,7 @@ use Test::NoWarnings;
 
 use Module::CPANTS::Kwalitee;
 
-my $CORE = 23;
+my $CORE = 24;
 my $OPTIONAL = 10; #is_extra set
 my $EXTRA = 15; #experimental?
 my $METRICS = $CORE + $OPTIONAL + $EXTRA;
