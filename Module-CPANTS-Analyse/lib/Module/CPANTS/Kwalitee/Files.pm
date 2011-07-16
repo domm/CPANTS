@@ -9,6 +9,7 @@ use Data::Dumper;
 use Readonly;
 use Software::LicenseUtils;
 use File::Slurp            qw(slurp);
+use ExtUtils::Manifest;
 
 sub order { 10 }
 
@@ -60,11 +61,14 @@ sub analyse {
     $me->d->{size_unpacked}=$size;
 
     # find symlinks
+    my $manifest = -f catfile($distdir, 'MANIFEST')
+                   ? ExtUtils::Manifest::maniread(catfile($distdir, 'MANIFEST'))
+		   : {};
     my @symlinks;
     foreach my $f (@dirs, @files) {
-        my $p=catfile($distdir,$f);
+        my $p = catfile($distdir,$f);
         if (-l $f) {
-            push(@symlinks,$f);
+            push(@symlinks,$f) if $manifest and exists $manifest->{$f};
         }
     }
 

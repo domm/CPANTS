@@ -1,22 +1,84 @@
 ---
-name: Module-CPANTS-Analyse
-version: 0.85
+abstract: 'Generate Kwalitee ratings for a distribution'
 author:
   - 'Thomas Klausner, <domm@cpan.org>, http://domm.zsi.at'
-  - |-
-    Based on work by Leon Brocard <acme@astray.com> and the original idea
-    proposed by Michael G. Schwern <schwern@pobox.com>
-abstract: Generate Kwalitee ratings for a distribution
+  - "Based on work by Leon Brocard <acme@astray.com> and the original idea\nproposed by Michael G. Schwern <schwern@pobox.com>"
+build_requires:
+  Test::Deep: 0
+  Test::More: 0
+  Test::NoWarnings: 0
+  Test::Warn: 0.11
+configure_requires:
+  Module::Build: 0.38
+dynamic_config: 1
+generated_by: 'Module::Build version 0.38, CPAN::Meta::Converter version 2.110440'
+keywords:
+  - CPANTS
+  - kwalitee
 license: perl
-resources:
-  license: http://dev.perl.org/licenses/
-  repository: http://github.com/domm/CPANTS/tree
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Module-CPANTS-Analyse
+provides:
+  Module::CPANTS::Analyse:
+    file: lib/Module/CPANTS/Analyse.pm
+    version: 0.86
+  Module::CPANTS::Kwalitee:
+    file: lib/Module/CPANTS/Kwalitee.pm
+    version: 0
+  Module::CPANTS::Kwalitee::BrokenInstaller:
+    file: lib/Module/CPANTS/Kwalitee/BrokenInstaller.pm
+    version: 0
+  Module::CPANTS::Kwalitee::CpantsErrors:
+    file: lib/Module/CPANTS/Kwalitee/CpantsErrors.pm
+    version: 0
+  Module::CPANTS::Kwalitee::Distname:
+    file: lib/Module/CPANTS/Kwalitee/Distname.pm
+    version: 0
+  Module::CPANTS::Kwalitee::Distros:
+    file: lib/Module/CPANTS/Kwalitee/Distros.pm
+    version: 0
+  Module::CPANTS::Kwalitee::Files:
+    file: lib/Module/CPANTS/Kwalitee/Files.pm
+    version: 0
+  Module::CPANTS::Kwalitee::FindModules:
+    file: lib/Module/CPANTS/Kwalitee/FindModules.pm
+    version: 0
+  Module::CPANTS::Kwalitee::License:
+    file: lib/Module/CPANTS/Kwalitee/License.pm
+    version: 0
+  Module::CPANTS::Kwalitee::Manifest:
+    file: lib/Module/CPANTS/Kwalitee/Manifest.pm
+    version: 0
+  Module::CPANTS::Kwalitee::MetaYML:
+    file: lib/Module/CPANTS/Kwalitee/MetaYML.pm
+    version: 0
+  Module::CPANTS::Kwalitee::NeedsCompiler:
+    file: lib/Module/CPANTS/Kwalitee/NeedsCompiler.pm
+    version: 0
+  Module::CPANTS::Kwalitee::Pod:
+    file: lib/Module/CPANTS/Kwalitee/Pod.pm
+    version: 0
+  Module::CPANTS::Kwalitee::Prereq:
+    file: lib/Module/CPANTS/Kwalitee/Prereq.pm
+    version: 0
+  Module::CPANTS::Kwalitee::Repackageable:
+    file: lib/Module/CPANTS/Kwalitee/Repackageable.pm
+    version: 0
+  Module::CPANTS::Kwalitee::Uses:
+    file: lib/Module/CPANTS/Kwalitee/Uses.pm
+    version: 0
+  Module::CPANTS::Kwalitee::Version:
+    file: lib/Module/CPANTS/Kwalitee/Version.pm
+    version: 0
 requires:
   Archive::Any: 0.06
   Archive::Tar: 1.30
   Array::Diff: 0.04
   CPAN::DistnameInfo: 0.06
   Class::Accessor: 0.19
+  ExtUtils::Manifest: 1.33
   File::Find::Rule: 0
   File::Slurp: 0
   IO::Capture: 0.05
@@ -27,56 +89,12 @@ requires:
   Pod::Simple::Checker: 2.02
   Readonly: 0
   Software::License: 0.003
-  Test::YAML::Meta::Version: 0.11
+  Test::CPAN::Meta::YAML: 0.17
   Text::CSV_XS: 0.45
-  YAML::Syck: 0.95
+  YAML::Any: 0.72
   perl: 5.006
   version: 0.73
-build_requires:
-  Test::Deep: 0
-  Test::More: 0
-  Test::NoWarnings: 0
-  Test::Warn: 0.11
-provides:
-  Module::CPANTS::Analyse:
-    file: lib/Module/CPANTS/Analyse.pm
-    version: 0.85
-  Module::CPANTS::Kwalitee:
-    file: lib/Module/CPANTS/Kwalitee.pm
-  Module::CPANTS::Kwalitee::BrokenInstaller:
-    file: lib/Module/CPANTS/Kwalitee/BrokenInstaller.pm
-  Module::CPANTS::Kwalitee::CpantsErrors:
-    file: lib/Module/CPANTS/Kwalitee/CpantsErrors.pm
-  Module::CPANTS::Kwalitee::Distname:
-    file: lib/Module/CPANTS/Kwalitee/Distname.pm
-  Module::CPANTS::Kwalitee::Distros:
-    file: lib/Module/CPANTS/Kwalitee/Distros.pm
-  Module::CPANTS::Kwalitee::Files:
-    file: lib/Module/CPANTS/Kwalitee/Files.pm
-  Module::CPANTS::Kwalitee::FindModules:
-    file: lib/Module/CPANTS/Kwalitee/FindModules.pm
-  Module::CPANTS::Kwalitee::License:
-    file: lib/Module/CPANTS/Kwalitee/License.pm
-  Module::CPANTS::Kwalitee::Manifest:
-    file: lib/Module/CPANTS/Kwalitee/Manifest.pm
-  Module::CPANTS::Kwalitee::MetaYML:
-    file: lib/Module/CPANTS/Kwalitee/MetaYML.pm
-  Module::CPANTS::Kwalitee::NeedsCompiler:
-    file: lib/Module/CPANTS/Kwalitee/NeedsCompiler.pm
-  Module::CPANTS::Kwalitee::Pod:
-    file: lib/Module/CPANTS/Kwalitee/Pod.pm
-  Module::CPANTS::Kwalitee::Prereq:
-    file: lib/Module/CPANTS/Kwalitee/Prereq.pm
-  Module::CPANTS::Kwalitee::Repackageable:
-    file: lib/Module/CPANTS/Kwalitee/Repackageable.pm
-  Module::CPANTS::Kwalitee::Uses:
-    file: lib/Module/CPANTS/Kwalitee/Uses.pm
-  Module::CPANTS::Kwalitee::Version:
-    file: lib/Module/CPANTS/Kwalitee/Version.pm
-generated_by: Module::Build version 0.33
-meta-spec:
-  url: http://module-build.sourceforge.net/META-spec-v1.4.html
-  version: 1.4
-keywords:
-  - CPANTS
-  - kwalitee
+resources:
+  license: http://dev.perl.org/licenses/
+  repository: http://github.com/domm/CPANTS/tree
+version: 0.86
